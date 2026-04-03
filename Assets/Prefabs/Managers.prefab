@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2902991301164787788}
   - component: {fileID: 6361317984613981441}
   - component: {fileID: 8556756424884105771}
+  - component: {fileID: 5870483403273057025}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -57,3 +58,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc7d88737a96e3245958ef4caec1868a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventoryManager
+--- !u!114 &5870483403273057025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7332636321573097553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7451aa2e0876cd04181cf10de1c016fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.ReferenceRegistry

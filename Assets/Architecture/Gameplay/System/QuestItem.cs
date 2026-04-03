@@ -1,22 +1,42 @@
 using Service.Framework.Quests;
 using UnityEngine;
+using Gameplay.System.GameManagement;
+using Service.Framework;
 
-public class QuestItem : MonoBehaviour
+namespace Gameplay.System
 {
-    [SerializeField]
-    private QuestItemID itemID;
+    public class QuestItem : MonoBehaviour
+    {
+        [SerializeField]
+        private QuestItemID itemID;
 
-    public QuestItemID ItemID
-    {
-        get { return itemID; }
-        set { itemID = value; }
-    }
-    
-    /// <summary>
-    /// using UI button for now
-    /// </summary>
-    public void PickUpItem()
-    {
-        InventoryManager.Instance.AddQuestItem(this);
+        public QuestItemID ItemID
+        {
+            get { return itemID; }
+            set { itemID = value; }
+        }
+
+        [SerializeField]
+        private InteractableObject interactable;
+
+        private void Start()
+        {
+            interactable.OnInteracted.AddListener(PickUpItem);
+
+        }
+
+        /// <summary>
+        /// using UI button for now
+        /// </summary>
+        public void PickUpItem()
+        {
+            InventoryManager.Instance.AddQuestItem(this);
+        }
+
+        private void OnDestroy()
+        {
+            interactable.OnInteracted.RemoveListener(PickUpItem);
+
+        }
     }
 }

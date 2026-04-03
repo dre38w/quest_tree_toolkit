@@ -20,11 +20,9 @@ namespace Service.Framework.Goals
             if (Instance != null && Instance != this)
             {
                 Destroy(this);
+                return;
             }
-            else
-            {
-                Instance = this;
-            }
+            Instance = this;
         }
 
         private void Update()

@@ -29,6 +29,7 @@ namespace Gameplay.System.Player
 
         private void Start()
         {
+            hasControl = true;
             characterController = GetComponent<CharacterController>();
             //Cursor.lockState = CursorLockMode.Locked;
             //Cursor.visible = false;

@@ -11,12 +11,23 @@ using Service.Core.Utilities;
 
 namespace Service.Framework.Goals
 {
+    public enum GoalState
+    {
+        Active,
+        Inactive,
+    }
     public class Goal : MonoBehaviour
     {
         public class OnCompleteGoalEvent : UnityEvent<Goal> { }
         public OnCompleteGoalEvent OnCompleteGoal = new OnCompleteGoalEvent();
 
+        public GoalState State { get; set; } = GoalState.Inactive;
+
         public GoalID id;
+
+        [Tooltip("Conditions to be met before the Goal can start.")]
+        [SerializeReference]
+        private List<GoalRequirement> requirements = new List<GoalRequirement>();
 
         [Tooltip("The Objective Actions required to complete in order to complete the Goal.")]
         [SerializeField]
@@ -65,9 +76,6 @@ namespace Service.Framework.Goals
             {
                 objectiveActions[actionIndex].OnActionCompleted.AddListener(CheckActionsComplete);
             }
-
-            //TODO:  only here for testing
-            InitializeGoal();
         }
 
         public virtual void InitializeGoal()
@@ -95,15 +103,20 @@ namespace Service.Framework.Goals
             }
         }
 
+        /// <summary>
+        /// In the event we want to restart or reset this goal
+        /// </summary>
         public virtual void ReinitializeGoal()
         {
             isComplete = false;
 
+            //reset all the actions
             for (int actionIndex = 0; actionIndex < objectiveActions.Count; actionIndex++)
             {
                 objectiveActions[actionIndex].ReinitializeAction();
             }
-            InitializeGoal();
+            //reset state
+            SetState(GoalState.Inactive);
         }
 
         private void CheckActionsComplete(ObjectiveAction action)
@@ -112,8 +125,7 @@ namespace Service.Framework.Goals
             //we can now complete the goal
             if (objectiveActions.All(a => a.IsComplete()))
             {
-                isComplete = true;
-                OnCompleteGoal.Invoke(this);
+                SetComplete();
                 return;
             }
             //if more actions to complete, move to the next one
@@ -131,6 +143,14 @@ namespace Service.Framework.Goals
             {
                 return;
             }
+
+            //check the requirements
+            if (State == GoalState.Inactive)
+            {
+                CheckStartRequirements(deltaTime);
+                return;
+            }
+            
             //call Update methods on the actions
             for (int actionIndex = 0; actionIndex < objectiveActions.Count; actionIndex++)
             {
@@ -142,9 +162,49 @@ namespace Service.Framework.Goals
             }
         }
 
+        public virtual void SetComplete()
+        {
+            isComplete = true;
+            OnCompleteGoal.Invoke(this);
+        }
+
+        public virtual void CheckStartRequirements(float deltaTime)
+        {
+            //if the requirements are met, we can start the goal
+            if (IsRequirementsMet())
+            {
+                SetState(GoalState.Active);
+                InitializeGoal();
+            }
+        }
+
+        /// <summary>
+        /// Check to see if all the requirements are met
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool IsRequirementsMet()
+        {
+            if (requirements.All(req => req.IsRequirementMet(this)))
+            {
+                return true;
+            }
+            return false;
+        }
+
         public virtual bool IsComplete()
         {
             return isComplete;
+        }
+
+        public virtual void SetState(GoalState currentState)
+        {
+            //only process if the state is changing to a new state
+            if (State == currentState)
+            {
+                return;
+            }
+
+            State = currentState;
         }
 
         private void OnDestroy()

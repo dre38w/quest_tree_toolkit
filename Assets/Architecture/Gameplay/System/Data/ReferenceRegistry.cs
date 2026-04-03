@@ -3,6 +3,7 @@
  */
 
 using Gameplay.System.Player;
+using Gameplay.UI;
 using UnityEngine;
 
 namespace Gameplay.System
@@ -18,6 +19,12 @@ namespace Gameplay.System
             set { player = value; }
         }
 
+        private MainUI mainUI;
+        public MainUI MainUI
+        {
+            get { return mainUI; }
+            set { mainUI = value; }
+        }
 
         private void Awake()
         {
@@ -30,6 +37,7 @@ namespace Gameplay.System
                 Instance = this;
             }
             player = GameObject.FindWithTag(TagData.PLAYER_TAG).GetComponent<PlayerController>();
+            mainUI = GameObject.FindWithTag(TagData.MAIN_UI_TAG).GetComponent<MainUI>();
         }
     }
 }

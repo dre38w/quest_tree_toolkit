@@ -1,6 +1,6 @@
 
 /*
-Description: When there is a branching subaction this handles completing all the other non-branching subactions
+Description: When there is a branching subaction this handles completing all the other non-branching actions/subactions
 */
 
 using System.Linq;

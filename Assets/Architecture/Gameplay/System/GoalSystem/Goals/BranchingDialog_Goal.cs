@@ -1,3 +1,7 @@
+/*
+ * Description: Turns on or off the dialog box for dialog based goals 
+ */
+
 using Service.Framework.Goals;
 using UnityEngine;
 
@@ -14,14 +18,10 @@ namespace Gameplay.System.Goals
             dialogBox.SetActive(true);
         }
 
-        public override void GoalUpdate(float deltaTime)
+        public override void SetComplete()
         {
-            base.GoalUpdate(deltaTime);
-
-            if (IsComplete())
-            {
-                dialogBox.SetActive(false);
-            }
+            base.SetComplete();
+            dialogBox.SetActive(false);
         }
     }
 }

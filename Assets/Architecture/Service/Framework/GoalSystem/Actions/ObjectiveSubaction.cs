@@ -25,6 +25,9 @@ namespace Service.Framework.Goals
             public ObjectiveAction objectiveAction;
         }
 
+        /// <summary>
+        /// The current running sub action
+        /// </summary>
         private ObjectiveAction currentSubAction;
         public ObjectiveAction CurrentSubaction
         {
@@ -52,7 +55,7 @@ namespace Service.Framework.Goals
                 objectiveSubactions = value;
             }
         }
-        [Tooltip("Is the player required to complete the subactions in order?")]
+        [Tooltip("Is the player required to complete the subactions in sequence?")]
         [SerializeField]
         private bool isSequential = true;
         [SerializeField]
@@ -99,10 +102,14 @@ namespace Service.Framework.Goals
             SetNextActiveAction(0);
         }
 
+        /// <summary>
+        /// Used to restart/reset the action
+        /// </summary>
         public override void ReinitializeAction()
         {
             base.ReinitializeAction();
 
+            //reinitialize all the sub actions this script manages
             for (int i = 0; i < objectiveSubactions.Count; i++)
             {
                 objectiveSubactions[i].ReinitializeAction();
@@ -110,6 +117,10 @@ namespace Service.Framework.Goals
             currentSubAction = null;
         }
 
+        /// <summary>
+        /// Do Update logic
+        /// </summary>
+        /// <param name="deltaTime"></param>
         public override void ActionUpdate(float deltaTime)
         {
             if (isComplete && State == ActionState.Inactive)
@@ -126,9 +137,48 @@ namespace Service.Framework.Goals
                     objectiveAction.ActionUpdate(deltaTime);
                 }
             }
-            HandleCurrentAction();
+            CheckCompleteActions();
         }
 
+        
+
+        /// <summary>
+        /// Handle evaluating the completion status of the actions
+        /// </summary>
+        private void CheckCompleteActions()
+        {
+            //after all sub actions are complete, we can now complete the action
+            if (objectiveSubactions.All(a => a.IsComplete()))
+            {
+                isComplete = true;
+                OnActionCompleted.Invoke(this);
+                ResetValues();
+                return;
+            }
+
+            //if more to complete, then move to the next sub action
+            MoveToNextAction();
+        }
+
+        /// <summary>
+        /// Move to the next action in the list
+        /// </summary>
+        private void MoveToNextAction()
+        {
+            //if the current action is completed, move to the next one
+            if (currentSubAction && currentSubAction.IsComplete())
+            {
+                int nextSubactionIndex = objectiveSubactions.FindIndex(data => data == currentSubAction);
+                SetNextActiveAction(nextSubactionIndex + 1);
+                //reset to 0 to avoid potential garbage data
+                nextSubactionIndex = 0;
+            }
+        }
+
+        /// <summary>
+        /// Handle activating the next action we are wanting to start
+        /// </summary>
+        /// <param name="subActionIndex"></param>
         private void SetNextActiveAction(int subActionIndex)
         {
             //if this is a non sequential action, activate all actions to allow completing them in any order
@@ -150,31 +200,15 @@ namespace Service.Framework.Goals
             }
         }
 
-        private void HandleCurrentAction()
-        {
-            //after all sub actions are complete, we can now complete the action
-            if (objectiveSubactions.All(a => a.IsComplete()))
-            {
-                isComplete = true;
-                OnActionCompleted.Invoke(this);
-                ResetValues();
-                return;
-            }
-
-            //move to the next sub action
-            if (currentSubAction && currentSubAction.IsComplete())
-            {
-                int nextSubactionIndex = objectiveSubactions.FindIndex(data => data == currentSubAction);
-                SetNextActiveAction(nextSubactionIndex + 1);
-                nextSubactionIndex = 0;
-            }
-        }
-
         public virtual bool HandleBranch(ObjectiveAction sourceAction)
         {
             return false;
         }
 
+        /// <summary>
+        /// Listener method called when one of this class's subactions completes
+        /// </summary>
+        /// <param name="action"></param>
         private void OnSubactionCompleted(ObjectiveAction action)
         {
             if (!action.IsBranching)
@@ -193,6 +227,10 @@ namespace Service.Framework.Goals
             ParentSubaction.HandleBranch(this);
         }
 
+        /// <summary>
+        /// Used to force complete all the sub actions.
+        /// Useful when handling branching, restart/reset logic, etc.
+        /// </summary>
         public void ForceCompleteSubactions()
         {
             for (int i = 0; i < objectiveSubactions.Count; i++)
