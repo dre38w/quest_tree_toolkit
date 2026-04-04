@@ -9,6 +9,7 @@ namespace Gameplay.System.Goals
 {
     public class BranchingDialog_Goal : Goal
     {
+        [Tooltip("The UI that displays the dialog.")]
         [SerializeField]
         private GameObject dialogBox;
 

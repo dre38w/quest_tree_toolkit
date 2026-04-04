@@ -27,7 +27,8 @@ namespace Service.Framework.Goals
 
         [Tooltip("Conditions to be met before the Goal can start.")]
         [SerializeReference]
-        private List<GoalRequirement> requirements = new List<GoalRequirement>();
+        internal List<GoalRequirement> requirements = new List<GoalRequirement>();
+        public List<GoalRequirement> Requirements => requirements;
 
         [Tooltip("The Objective Actions required to complete in order to complete the Goal.")]
         [SerializeField]
@@ -75,6 +76,27 @@ namespace Service.Framework.Goals
             for (int actionIndex = 0; actionIndex < objectiveActions.Count; actionIndex++)
             {
                 objectiveActions[actionIndex].OnActionCompleted.AddListener(CheckActionsComplete);
+            }
+        }
+
+        private void OnValidate()
+        {
+            ValidateRequirements();
+        }
+
+        private void ValidateRequirements()
+        {
+            if (requirements == null)
+            {
+                return;
+            }
+
+            for (int i = 0; i < requirements.Count; i++)
+            {
+                if (requirements[i] == null)
+                {
+                    Debug.LogWarning($"Missing GoalRequirement reference at index {i}", this);
+                }
             }
         }
 

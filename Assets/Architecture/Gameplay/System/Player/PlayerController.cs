@@ -31,8 +31,7 @@ namespace Gameplay.System.Player
         {
             hasControl = true;
             characterController = GetComponent<CharacterController>();
-            //Cursor.lockState = CursorLockMode.Locked;
-            //Cursor.visible = false;
+            SetCursorLocked();
         }
 
         private void Update()
@@ -56,6 +55,18 @@ namespace Gameplay.System.Player
             }
 
             characterController.Move(velocity * Time.deltaTime);
+        }
+
+        public void SetCursorLocked()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+
+        public void SetCursorUnlocked()
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
 
         public void GiveControl()

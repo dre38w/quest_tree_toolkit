@@ -14,14 +14,18 @@ namespace Service.Framework.Goals
         [SerializeField]
         private GoalID goalToCheck;
         [SerializeField]
-        private GoalID goalToRestart;
+        private GoalID[] goalsToRestart;
 
         public override void InitializeAction()
         {
             SetComplete();
+                        
             if (!GoalManager.Instance.GetGoal(goalToCheck).IsComplete())
             {
-                GoalManager.Instance.GetGoal(goalToRestart).ReinitializeGoal();
+                for (int i = 0; i < goalsToRestart.Length; i++)
+                {
+                    GoalManager.Instance.GetGoal(goalsToRestart[i]).ReinitializeGoal();
+                }
             }
         }
     }

@@ -6,103 +6,106 @@ using Service.Framework.Goals;
 using UnityEditor;
 using UnityEngine;
 
-[CustomPropertyDrawer(typeof(GoalRequirement), true)]
-public class GoalRequirementDrawer : PropertyDrawer
+namespace Support.Editor
 {
-    private static List<Type> types;
-
-    private static List<Type> GetAllTypes()
+    [CustomPropertyDrawer(typeof(GoalRequirement), true)]
+    public class GoalRequirementDrawer : PropertyDrawer
     {
-        if (types != null)
+        private static List<Type> types;
+
+        private static List<Type> GetAllTypes()
         {
+            if (types != null)
+            {
+                return types;
+            }
+            types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes())
+                .Where(t => !t.IsAbstract && typeof(GoalRequirement).IsAssignableFrom(t)).ToList();
             return types;
         }
-        types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes())
-            .Where(t => !t.IsAbstract && typeof(GoalRequirement).IsAssignableFrom(t)).ToList();
-        return types;
-    }
 
-    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-    {
-        float height = EditorGUIUtility.singleLineHeight;
-
-        if (property.managedReferenceValue != null)
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            SerializedProperty iterator = property.Copy();
-            int depth = iterator.depth;
+            float height = EditorGUIUtility.singleLineHeight;
 
-            if (iterator.NextVisible(true))
+            if (property.managedReferenceValue != null)
             {
-                do
+                SerializedProperty iterator = property.Copy();
+                int depth = iterator.depth;
+
+                if (iterator.NextVisible(true))
                 {
-                    if (iterator.depth <= depth)
+                    do
                     {
-                        break;
+                        if (iterator.depth <= depth)
+                        {
+                            break;
+                        }
+                        height += EditorGUI.GetPropertyHeight(iterator, true) + 2;
                     }
-                    height += EditorGUI.GetPropertyHeight(iterator, true) + 2;
+                    while (iterator.NextVisible(false));
                 }
-                while (iterator.NextVisible(false));
             }
+            return height + 4;
         }
-        return height + 4;
-    }
 
-    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-    {
-        EditorGUI.BeginProperty(position, label, property);
-
-        Rect dropdownRect = new Rect(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight);
-        string currentTypeName = property.managedReferenceValue != null ? property.managedReferenceValue.GetType().Name : "None";
-
-        if (EditorGUI.DropdownButton(dropdownRect, new GUIContent(currentTypeName), FocusType.Keyboard))
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            GenericMenu menu = new GenericMenu();
+            EditorGUI.BeginProperty(position, label, property);
 
-            foreach (Type type in GetAllTypes())
+            Rect dropdownRect = new Rect(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight);
+            string currentTypeName = property.managedReferenceValue != null ? property.managedReferenceValue.GetType().Name : "None";
+
+            if (EditorGUI.DropdownButton(dropdownRect, new GUIContent(currentTypeName), FocusType.Keyboard))
             {
-                menu.AddItem(new GUIContent(type.Name), false, () =>
+                GenericMenu menu = new GenericMenu();
+
+                foreach (Type type in GetAllTypes())
                 {
-                    property.managedReferenceValue = Activator.CreateInstance(type);
-                    property.serializedObject.ApplyModifiedProperties();
-                });
-            }
-            menu.AddSeparator("");
-            menu.AddItem(new GUIContent("Clear"), false, () =>
-            {
-                property.managedReferenceValue = null;
-                property.serializedObject.ApplyModifiedProperties();
-            });
-            menu.ShowAsContext();
-        }
-        if (property.managedReferenceValue != null)
-        {
-            EditorGUI.indentLevel++;
-
-            SerializedProperty iterator = property.Copy();
-            int depth = iterator.depth;
-
-            float rectY = position.y + EditorGUIUtility.singleLineHeight + 4;
-
-            if (iterator.NextVisible(true))
-            {
-                do
-                {
-                    if (iterator.depth <= depth)
+                    menu.AddItem(new GUIContent(type.Name), false, () =>
                     {
-                        break;
-                    }
-                    float height = EditorGUI.GetPropertyHeight(iterator, true);
-                    Rect fieldRect = new Rect(position.x, rectY, position.width, height);
-
-                    EditorGUI.PropertyField(fieldRect, iterator, true);
-
-                    rectY += height + 2;
+                        property.managedReferenceValue = Activator.CreateInstance(type);
+                        property.serializedObject.ApplyModifiedProperties();
+                    });
                 }
-                while (iterator.NextVisible(false));
+                //menu.AddSeparator("");
+                //menu.AddItem(new GUIContent("Clear"), false, () =>
+                //{
+                //    property.managedReferenceValue = null;
+                //    property.serializedObject.ApplyModifiedProperties();
+                //});
+                menu.ShowAsContext();
             }
-            EditorGUI.indentLevel--;
+            if (property.managedReferenceValue != null)
+            {
+                EditorGUI.indentLevel++;
+
+                SerializedProperty iterator = property.Copy();
+                int depth = iterator.depth;
+
+                float rectY = position.y + EditorGUIUtility.singleLineHeight + 4;
+
+                if (iterator.NextVisible(true))
+                {
+                    do
+                    {
+                        if (iterator.depth <= depth)
+                        {
+                            break;
+                        }
+                        float height = EditorGUI.GetPropertyHeight(iterator, true);
+                        Rect fieldRect = new Rect(position.x, rectY, position.width, height);
+
+                        EditorGUI.PropertyField(fieldRect, iterator, true);
+
+                        rectY += height + 2;
+                    }
+                    while (iterator.NextVisible(false));
+                }
+                EditorGUI.indentLevel--;
+            }
+            EditorGUI.EndProperty();
         }
-        EditorGUI.EndProperty();
     }
 }
 #endif

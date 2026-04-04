@@ -19,9 +19,6 @@ namespace Service.Framework
         public IInteractable CurrentInteractable { get; private set; }
 
         [SerializeField]
-        private InteractableHandler interactableHandler;
-
-        [SerializeField]
         private InputActionAsset inputActions;
 
         private void Awake()
@@ -45,11 +42,6 @@ namespace Service.Framework
 
         protected virtual void OnInteract(InputAction.CallbackContext context)
         {
-            //if (!context.performed)
-            //{
-            //    return;
-            //}
-
             if (context.started)
             {
                 if (CurrentInteractable?.CanInteract(gameObject) == true)
