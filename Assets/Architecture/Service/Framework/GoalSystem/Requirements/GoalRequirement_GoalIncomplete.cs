@@ -1,3 +1,7 @@
+/*
+ * Description: Checks if a goal is incomplete
+ */
+using Service.Framework.GoalManagement;
 using System;
 using UnityEngine;
 

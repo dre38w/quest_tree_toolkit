@@ -6,14 +6,22 @@ Handles running various logic for optimization such as Update methods, etc.
 
 using UnityEngine;
 using System.Collections.Generic;
+using Service.Framework.Goals;
 
-namespace Service.Framework.Goals
+namespace Service.Framework.GoalManagement
 {
     public class GoalManager : MonoBehaviour
     {
         public static GoalManager Instance;
 
         private List<Goal> goals = new List<Goal>();
+
+        private GoalBlackboard blackBoard;
+        public GoalBlackboard BlackBoard
+        {
+            get { return blackBoard; }
+            set { blackBoard = value; }
+        }
 
         private void Awake()
         {
@@ -23,6 +31,8 @@ namespace Service.Framework.Goals
                 return;
             }
             Instance = this;
+
+            BlackBoard = new GoalBlackboard();
         }
 
         private void Update()

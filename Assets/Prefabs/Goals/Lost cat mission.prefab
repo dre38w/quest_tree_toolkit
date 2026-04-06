@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2204747909493455739}
   - component: {fileID: 7852683071333537303}
   m_Layer: 0
-  m_Name: CatInTreeStartDialog
+  m_Name: LostCatStartDialog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53,7 +53,6 @@ MonoBehaviour:
   objectiveActions:
   - {fileID: 874764497918820071}
   - {fileID: 3693441010006080188}
-  - {fileID: 0}
   isRandomAtStart: 0
   isSequential: 1
   dialogBox: {fileID: 2729306928978931146}
@@ -121,6 +120,53 @@ MonoBehaviour:
   - {fileID: 2504974842111534685}
   isSequential: 1
   isRandomAtStart: 0
+--- !u!1 &1158236420665138934
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1353159882491643578}
+  - component: {fileID: 8008437696043094363}
+  m_Layer: 0
+  m_Name: activate cat
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1353159882491643578
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1158236420665138934}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 412.72714, y: 123.65475, z: -2.8238}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2852992846531733722}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8008437696043094363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1158236420665138934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44b1731982b372842a74de6b93eab970, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.ToggleObjectActiveAction
+  objectsToToggle:
+  - {fileID: 1640855286685486601}
+  setObjectActive: 1
 --- !u!1 &1309701345701519108
 GameObject:
   m_ObjectHideFlags: 0
@@ -132,7 +178,7 @@ GameObject:
   - component: {fileID: 1841784347527784751}
   - component: {fileID: 7957565522956749464}
   m_Layer: 0
-  m_Name: CatInTreeEndDialog not found
+  m_Name: LostCatEndDialog not found
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -204,7 +250,7 @@ GameObject:
   - component: {fileID: 2852992846531733722}
   - component: {fileID: 5908306819616819425}
   m_Layer: 0
-  m_Name: CatInTreeEndDialog found
+  m_Name: LostCatEndDialog found
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -224,6 +270,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5625755064747424527}
+  - {fileID: 1353159882491643578}
   m_Father: {fileID: 4905257940396134626}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5908306819616819425
@@ -244,6 +291,7 @@ MonoBehaviour:
   - rid: 1373684820112834569
   objectiveActions:
   - {fileID: 6555489617323796383}
+  - {fileID: 8008437696043094363}
   isRandomAtStart: 0
   isSequential: 1
   dialogBox: {fileID: 2729306928978931146}
@@ -375,11 +423,58 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d029f6786047ced42961395ae524d59c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.DialogAction
-  dialogBox: Great!  Now, please.  My cat is stuck in a tree.  She will cut you all
-    the way up.  So be vigilant.
+  dialogBox: Great! Now, please. My cat is lost. Can you find her for me? She will
+    cut you all the way up, so be vigilant.
   displayText: {fileID: 5482206165583131313}
   actionButton: {fileID: 6241493690058706297}
   isResponse: 0
+--- !u!1 &2301605233592183166
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1558603376233090070}
+  - component: {fileID: 5273313320735180767}
+  m_Layer: 0
+  m_Name: deactivate cat
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1558603376233090070
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2301605233592183166}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8372720885270938083}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5273313320735180767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2301605233592183166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44b1731982b372842a74de6b93eab970, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.ToggleObjectActiveAction
+  objectsToToggle:
+  - {fileID: 6301638172128911736}
+  setObjectActive: 0
 --- !u!1 &2329781284492273913
 GameObject:
   m_ObjectHideFlags: 0
@@ -700,8 +795,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d029f6786047ced42961395ae524d59c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.DialogAction
-  dialogBox: Great!  Now, please.  My cat is stuck in a tree.  She will cut you all
-    the way up.  So be vigilant.
+  dialogBox: Great! Now, please. My cat is lost. Can you find her for me? She will
+    cut you all the way up, so be vigilant.
   displayText: {fileID: 5482206165583131313}
   actionButton: {fileID: 6241493690058706297}
   isResponse: 0
@@ -1147,7 +1242,7 @@ GameObject:
   - component: {fileID: 2146097875424750225}
   - component: {fileID: 9764372104588204}
   m_Layer: 0
-  m_Name: CatInTreeEndDialog post complete
+  m_Name: LostCatEndDialog post complete
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1609,7 +1704,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d029f6786047ced42961395ae524d59c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.DialogAction
-  dialogBox: My cat?  Stuck in a tree?  Please, help.
+  dialogBox: My cat?  Is Lost?  Please, help.
   displayText: {fileID: 5482206165583131313}
   actionButton: {fileID: 6241493690058706297}
   isResponse: 0
@@ -1871,7 +1966,7 @@ GameObject:
   - component: {fileID: 8372720885270938083}
   - component: {fileID: 4893758608409338575}
   m_Layer: 0
-  m_Name: Cat in tree quest
+  m_Name: Find cat objective
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1891,6 +1986,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1167164489175984376}
+  - {fileID: 1558603376233090070}
   m_Father: {fileID: 4905257940396134626}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4893758608409338575
@@ -1910,6 +2006,7 @@ MonoBehaviour:
   - rid: 1373684834838511681
   objectiveActions:
   - {fileID: 8031279147680333343}
+  - {fileID: 5273313320735180767}
   isRandomAtStart: 0
   isSequential: 1
   references:
@@ -2499,7 +2596,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4905257940396134626}
   m_Layer: 0
-  m_Name: Cat in tree mission
+  m_Name: Lost cat mission
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2519,6 +2616,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6375473359178927939}
+  - {fileID: 1859050458839998514}
   - {fileID: 8103112586153276977}
   - {fileID: 2204747909493455739}
   - {fileID: 8372720885270938083}
@@ -2596,10 +2694,90 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dd0c12a58ae3ac4081ca750fa677223, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractTest
+--- !u!1 &6301638172128911736 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6530469526508607815, guid: 090feee1502fc2d4891c90ce3cd9635c, type: 3}
+  m_PrefabInstance: {fileID: 996150836910766143}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6375473359178927939 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6172520656175216508, guid: 090feee1502fc2d4891c90ce3cd9635c, type: 3}
   m_PrefabInstance: {fileID: 996150836910766143}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5504980253387970382
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4905257940396134626}
+    m_Modifications:
+    - target: {fileID: 6172520656175216508, guid: 090feee1502fc2d4891c90ce3cd9635c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.99
+      objectReference: {fileID: 0}
+    - target: {fileID: 6172520656175216508, guid: 090feee1502fc2d4891c90ce3cd9635c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.719
+      objectReference: {fileID: 0}
+    - target: {fileID: 6172520656175216508, guid: 090feee1502fc2d4891c90ce3cd9635c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.229
+      objectReference: {fileID: 0}
+    - target: {fileID: 6172520656175216508, guid: 090feee1502fc2d4891c90ce3cd9635c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6172520656175216508, guid: 090feee1502fc2d4891c90ce3cd9635c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6172520656175216508, guid: 090feee1502fc2d4891c90ce3cd9635c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6172520656175216508, guid: 090feee1502fc2d4891c90ce3cd9635c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6172520656175216508, guid: 090feee1502fc2d4891c90ce3cd9635c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6172520656175216508, guid: 090feee1502fc2d4891c90ce3cd9635c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6172520656175216508, guid: 090feee1502fc2d4891c90ce3cd9635c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6530469526508607815, guid: 090feee1502fc2d4891c90ce3cd9635c, type: 3}
+      propertyPath: m_Name
+      value: Cat (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6530469526508607815, guid: 090feee1502fc2d4891c90ce3cd9635c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 428858507215140946, guid: 090feee1502fc2d4891c90ce3cd9635c, type: 3}
+    - {fileID: 1356455000009341780, guid: 090feee1502fc2d4891c90ce3cd9635c, type: 3}
+    - {fileID: 1795561038343060343, guid: 090feee1502fc2d4891c90ce3cd9635c, type: 3}
+    m_RemovedGameObjects:
+    - {fileID: 5312039652756780917, guid: 090feee1502fc2d4891c90ce3cd9635c, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 090feee1502fc2d4891c90ce3cd9635c, type: 3}
+--- !u!1 &1640855286685486601 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6530469526508607815, guid: 090feee1502fc2d4891c90ce3cd9635c, type: 3}
+  m_PrefabInstance: {fileID: 5504980253387970382}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1859050458839998514 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6172520656175216508, guid: 090feee1502fc2d4891c90ce3cd9635c, type: 3}
+  m_PrefabInstance: {fileID: 5504980253387970382}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7649225630943231040
 PrefabInstance:

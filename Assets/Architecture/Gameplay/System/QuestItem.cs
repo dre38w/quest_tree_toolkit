@@ -1,7 +1,10 @@
+/*
+ * Description: Handles logic specific to quest items
+ */
+
 using Service.Framework.Quests;
 using UnityEngine;
 using Gameplay.System.GameManagement;
-using Service.Framework;
 
 namespace Gameplay.System
 {
@@ -9,12 +12,6 @@ namespace Gameplay.System
     {
         [SerializeField]
         private QuestItemID itemID;
-
-        public QuestItemID ItemID
-        {
-            get { return itemID; }
-            set { itemID = value; }
-        }
 
         [SerializeField]
         private InteractableObject interactable;
@@ -26,11 +23,11 @@ namespace Gameplay.System
         }
 
         /// <summary>
-        /// using UI button for now
+        /// Add the item to the inventory
         /// </summary>
         public void PickUpItem()
         {
-            InventoryManager.Instance.AddQuestItem(this);
+            InventoryManager.Instance.AddQuestItem(itemID);
         }
 
         private void OnDestroy()

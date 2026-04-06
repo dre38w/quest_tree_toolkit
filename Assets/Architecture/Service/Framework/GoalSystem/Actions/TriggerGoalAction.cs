@@ -1,6 +1,7 @@
 /*
  * Description: Automatically triggers a specified goal to start
  */
+using Service.Framework.GoalManagement;
 using UnityEngine;
 
 namespace Service.Framework.Goals

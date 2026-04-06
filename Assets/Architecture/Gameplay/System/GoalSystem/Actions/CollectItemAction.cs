@@ -27,7 +27,7 @@ namespace Gameplay.System.Actions
             for (int i = 0; i < InventoryManager.Instance.QuestItems.Count; i++)
             {
                 //if this isn't it, check again
-                if (InventoryManager.Instance.QuestItems[i].ItemID != questID)
+                if (InventoryManager.Instance.QuestItems[i] != questID)
                 {
                     continue;
                 }

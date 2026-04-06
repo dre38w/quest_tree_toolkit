@@ -757,6 +757,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1b56145c3a2ed0438079f44ba12d592, type: 3}
+--- !u!114 &766242481 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5273313320735180767, guid: 97b6b05b77c28ec4da5e59d2d05994cd, type: 3}
+  m_PrefabInstance: {fileID: 1153930536552026490}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44b1731982b372842a74de6b93eab970, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.ToggleObjectActiveAction
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1393,6 +1404,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1362667483}
   m_CullTransparentMesh: 1
+--- !u!1 &1493368142
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1493368144}
+  - component: {fileID: 1493368143}
+  m_Layer: 0
+  m_Name: LevelRequirementTest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1493368143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1493368142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68069d7938d24bf4791f3e3a7be8ae34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.Goal
+  id: {fileID: 11400000, guid: bba1ebc3f0ef15946b53e0c2c69efa5a, type: 2}
+  requirements:
+  - rid: 1373684878386921535
+  objectiveActions:
+  - {fileID: 1906628711}
+  isRandomAtStart: 0
+  isSequential: 1
+  references:
+    version: 2
+    RefIds:
+    - rid: 1373684878386921535
+      type: {class: GoalRequirement_CompareInt, ns: Service.Framework.Goals, asm: Assembly-CSharp}
+      data:
+        comparisonOptions: 0
+        valueToCompare: 2
+        key: Player_level
+--- !u!4 &1493368144
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1493368142}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.5988, y: -1.9844, z: 7.04753}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1906628710}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1863881502
 GameObject:
   m_ObjectHideFlags: 0
@@ -1472,6 +1544,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1906628709
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1906628710}
+  - component: {fileID: 1906628711}
+  m_Layer: 0
+  m_Name: action test
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1906628710
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1906628709}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1493368144}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1906628711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1906628709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a7fe9b830b82704e95d25666e0a408b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TestAction
+  testBool: 0
 --- !u!1 &2047204118
 GameObject:
   m_ObjectHideFlags: 0
@@ -1754,6 +1871,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4893758608409338575, guid: 97b6b05b77c28ec4da5e59d2d05994cd, type: 3}
+      propertyPath: objectiveActions.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4893758608409338575, guid: 97b6b05b77c28ec4da5e59d2d05994cd, type: 3}
+      propertyPath: 'objectiveActions.Array.data[1]'
+      value: 
+      objectReference: {fileID: 766242481}
     - target: {fileID: 4905257940396134626, guid: 97b6b05b77c28ec4da5e59d2d05994cd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1882,8 +2007,28 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2982017142855744186, guid: de6fb0815f51989439f6b57cbfbca621, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5585846627485857210}
   m_SourcePrefab: {fileID: 100100000, guid: de6fb0815f51989439f6b57cbfbca621, type: 3}
+--- !u!1 &5585846627485857209 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2982017142855744186, guid: de6fb0815f51989439f6b57cbfbca621, type: 3}
+  m_PrefabInstance: {fileID: 5585846627485857208}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5585846627485857210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5585846627485857209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa227bb424ef55e41ae23e44ba4e4d89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Player.PlayerStatExample
 --- !u!1001 &5634293936663669073
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1965,3 +2110,4 @@ SceneRoots:
   - {fileID: 1053696357}
   - {fileID: 5585846627485857208}
   - {fileID: 446541982}
+  - {fileID: 1493368144}

@@ -1,6 +1,7 @@
 
 /*
-Description: Holds a list of objective actions and checks when they have all complete
+Description: Holds a list of objective actions and checks when they have all complete.
+Handles managing the execution of the actions, validates requirements to start the goal, etc
 */
 
 using UnityEngine;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Events;
 using Service.Core.Utilities;
+using Service.Framework.GoalManagement;
 
 namespace Service.Framework.Goals
 {
@@ -73,6 +75,7 @@ namespace Service.Framework.Goals
             }
 
             GoalManager.AddGoal(this);
+            //the listeners for when the actions complete
             for (int actionIndex = 0; actionIndex < objectiveActions.Count; actionIndex++)
             {
                 objectiveActions[actionIndex].OnActionCompleted.AddListener(CheckActionsComplete);
@@ -84,6 +87,10 @@ namespace Service.Framework.Goals
             ValidateRequirements();
         }
 
+        /// <summary>
+        /// Validates that there is no null requirement in the Inspector.
+        /// This is a debug safeguard in the event a reference is lost
+        /// </summary>
         private void ValidateRequirements()
         {
             if (requirements == null)
@@ -95,7 +102,7 @@ namespace Service.Framework.Goals
             {
                 if (requirements[i] == null)
                 {
-                    Debug.LogWarning($"Missing GoalRequirement reference at index {i}", this);
+                    Debug.LogWarning($"Warning!  Missing GoalRequirement reference at index {i}.  This is a possible error and should be addressed.", this);
                 }
             }
         }
@@ -201,7 +208,7 @@ namespace Service.Framework.Goals
         }
 
         /// <summary>
-        /// Check to see if all the requirements are met
+        /// Check to see if all the requirements are met.
         /// </summary>
         /// <returns></returns>
         public virtual bool IsRequirementsMet()

@@ -2,6 +2,7 @@
  * Description: Restarts a goal that has not yet completed
  */
 
+using Service.Framework.GoalManagement;
 using UnityEngine;
 
 namespace Service.Framework.Goals

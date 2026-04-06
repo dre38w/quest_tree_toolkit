@@ -1,5 +1,5 @@
 /*
- * Description:  Used to inform systems when the player enters a trigger
+ * Description:  Used to inform systems when the player enters a trigger that initiates an interaction with interactable objects
  */
 using Service.Core;
 using UnityEngine;
@@ -28,6 +28,7 @@ namespace Service.Framework.StatusSystem
             {
                 return;
             }
+            //set the interactable we want to interact with
             interactor.SetCurrentInteractable(interactable);
             OnEnteredTriggerObject.Invoke();
         }
@@ -39,6 +40,7 @@ namespace Service.Framework.StatusSystem
             {
                 return;
             }
+            //When leaving the trigger, clear the interactable since we are no longer interacting
             interactor.ClearCurrentInteractable(interactable);
             OnExitedTriggerObject.Invoke();
         }

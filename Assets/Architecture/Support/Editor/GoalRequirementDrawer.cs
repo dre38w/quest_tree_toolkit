@@ -1,3 +1,6 @@
+/*
+ * Description: Custom editor script to allow setting references to abstract classes
+ */
 #if UNITY_EDITOR
 using System;
 using System.Collections.Generic;
@@ -68,12 +71,6 @@ namespace Support.Editor
                         property.serializedObject.ApplyModifiedProperties();
                     });
                 }
-                //menu.AddSeparator("");
-                //menu.AddItem(new GUIContent("Clear"), false, () =>
-                //{
-                //    property.managedReferenceValue = null;
-                //    property.serializedObject.ApplyModifiedProperties();
-                //});
                 menu.ShowAsContext();
             }
             if (property.managedReferenceValue != null)

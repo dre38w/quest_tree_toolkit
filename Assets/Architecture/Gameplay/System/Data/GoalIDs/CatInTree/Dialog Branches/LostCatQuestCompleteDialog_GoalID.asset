@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2adaf6a3caba1d64d8d414919896e69a, type: 3}
-  m_Name: 2_CatInTreeQuestEndDialog_GoalID
+  m_Name: LostCatQuestCompleteDialog_GoalID
   m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.GoalID
-  description: dialog when talking to npc but cat was not found yet
+  description: dialog when talking to npc and cat was found

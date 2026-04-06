@@ -1,3 +1,6 @@
+/*
+ * Description: Used to differentiate quest items
+ */
 using UnityEngine;
 
 namespace Service.Framework.Quests

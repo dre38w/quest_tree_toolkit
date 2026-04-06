@@ -25,7 +25,7 @@ namespace Gameplay.System.Actions
         [SerializeField]
         private ButtonMessenger actionButton;
 
-        [Tooltip("Is this player character dialog?")]
+        [Tooltip("Is this requiring the player to input a response?")]
         [SerializeField]
         private bool isResponse = false;
 

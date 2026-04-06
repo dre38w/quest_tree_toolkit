@@ -1,3 +1,6 @@
+/*
+ * Description: Invokes a message when a button is pressed
+ */
 using UnityEngine;
 using UnityEngine.Events;
 

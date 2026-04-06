@@ -22,6 +22,10 @@ namespace Gameplay.UI
             set { contextualButtonUi = value; }
         }
 
+        /// <summary>
+        /// Toggles on or off the contextual action button.
+        /// </summary>
+        /// <param name="state"></param>
         public void SetContextualUiVisible(bool state)
         {
             contextualButtonUi.SetActive(state);

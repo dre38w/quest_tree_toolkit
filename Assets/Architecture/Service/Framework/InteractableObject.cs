@@ -1,3 +1,6 @@
+/*
+ * Description: Handles logic for interactable objects
+ */
 using Gameplay.UI;
 using Service.Core;
 using Service.Framework;
@@ -15,12 +18,18 @@ namespace Gameplay.System
 
         private IInteractable interactable;
 
+        /// <summary>
+        /// The object that has a Trigger collider on it that initiates the interaction
+        /// </summary>
         [SerializeField]
         private InteractableTrigger interactableObject;
 
         private PlayerInteractor interactor;
         private MainUI mainUI;
 
+        /// <summary>
+        /// Used to inform systems that the player interacted
+        /// </summary>
         private bool didInteract;
         public bool DidInteract
         {
@@ -36,6 +45,11 @@ namespace Gameplay.System
 
         private void Start()
         {
+            InitializeValues();
+        }
+
+        private void InitializeValues()
+        {
             mainUI = ReferenceRegistry.Instance.MainUI;
 
             interactor = ReferenceRegistry.Instance.Player.GetComponent<PlayerInteractor>();
@@ -47,6 +61,7 @@ namespace Gameplay.System
 
         public void Interact(GameObject interactor)
         {
+            //do not allow interaction
             if (!CanInteract(interactor))
             {
                 return;
@@ -65,6 +80,9 @@ namespace Gameplay.System
 
         }
 
+        /// <summary>
+        /// Do stuff when the player pressed the interaction button
+        /// </summary>
         private void OnPlayerInteracted()
         {
             if (interactor.CurrentInteractable != interactable)
@@ -87,6 +105,12 @@ namespace Gameplay.System
             didInteract = false;
         }
 
+        /// <summary>
+        /// This is the condition that allows this to be interactable
+        /// </summary>
+        /// <param name="interactor"></param>
+        /// <returns>If the contextual button is active, 
+        ///         then return true allowing us to interact</returns>
         public bool CanInteract(GameObject interactor)
         {
             return mainUI.ContextualButtonUI.activeSelf;

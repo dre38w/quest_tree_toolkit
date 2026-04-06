@@ -1,3 +1,5 @@
+//TODO: Probably deleting this script.
+
 #if UNITY_EDITOR
 using Service.Framework.Goals;
 using UnityEditor;

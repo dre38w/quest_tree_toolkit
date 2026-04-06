@@ -43,6 +43,9 @@ namespace Service.Framework.Goals
             
         }
 
+        /// <summary>
+        /// Reset the objective action so we can run it again
+        /// </summary>
         public virtual void ReinitializeAction()
         {
             isComplete = false;
@@ -63,6 +66,9 @@ namespace Service.Framework.Goals
             return isComplete;
         }
 
+        /// <summary>
+        /// The values required to consider the action complete
+        /// </summary>
         public virtual void SetComplete()
         {
             isComplete = true;

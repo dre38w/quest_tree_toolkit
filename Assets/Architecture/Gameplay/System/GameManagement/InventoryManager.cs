@@ -4,6 +4,7 @@
 
 using UnityEngine;
 using System.Collections.Generic;
+using Service.Framework.Quests;
 
 namespace Gameplay.System.GameManagement
 {
@@ -12,8 +13,8 @@ namespace Gameplay.System.GameManagement
         public static InventoryManager Instance;
 
         //The list of quest items as a separate list to make it more efficient to iterate over
-        private List<QuestItem> questItems = new List<QuestItem>();
-        public List<QuestItem> QuestItems
+        private List<QuestItemID> questItems = new List<QuestItemID>();
+        public List<QuestItemID> QuestItems
         {
             get { return questItems; }
             set { questItems = value; }
@@ -36,7 +37,7 @@ namespace Gameplay.System.GameManagement
         /// Used by external systems to add the quest items to the inventory
         /// </summary>
         /// <param name="item"></param>
-        public void AddQuestItem(QuestItem item)
+        public void AddQuestItem(QuestItemID item)
         {
             questItems.Add(item);
         }

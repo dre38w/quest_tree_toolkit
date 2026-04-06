@@ -31,7 +31,7 @@ namespace Gameplay.System.Player
         {
             hasControl = true;
             characterController = GetComponent<CharacterController>();
-            SetCursorLocked();
+            //SetCursorLocked();
         }
 
         private void Update()

@@ -27,11 +27,19 @@ namespace Service.Framework
             InteractAction.started += OnInteract;
         }
 
+        /// <summary>
+        /// Set the object we are interacting with
+        /// </summary>
+        /// <param name="interactable"></param>
         public void SetCurrentInteractable(IInteractable interactable)
         {
             CurrentInteractable = interactable;
         }
 
+        /// <summary>
+        /// Clear the interactable object
+        /// </summary>
+        /// <param name="interactable"></param>
         public void ClearCurrentInteractable(IInteractable interactable)
         {
             if (CurrentInteractable == interactable)
@@ -46,7 +54,8 @@ namespace Service.Framework
             {
                 if (CurrentInteractable?.CanInteract(gameObject) == true)
                 {
-                    //pass this game object so systems know which object is being interacted with
+                    //pass this game object in the event there is more than one player or
+                    //other objects are interacting with the interactable objects
                     CurrentInteractable.Interact(gameObject);
                     OnInteracted.Invoke();
                 }

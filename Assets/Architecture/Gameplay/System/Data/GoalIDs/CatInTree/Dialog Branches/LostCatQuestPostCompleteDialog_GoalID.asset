@@ -10,7 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2adaf6a3caba1d64d8d414919896e69a, type: 3}
-  m_Name: 0_CatInTreeQuestStartDialog_GoalID
+  m_Name: LostCatQuestPostCompleteDialog_GoalID
   m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.GoalID
-  id: 0
-  description: Dialog to start the cat stuck in tree mission
+  description: dialog post completion of the lost cat mission

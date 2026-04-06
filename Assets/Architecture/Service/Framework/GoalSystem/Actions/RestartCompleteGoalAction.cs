@@ -1,6 +1,7 @@
 /*
  * Description: Restarts a goal that has already completed
  */
+using Service.Framework.GoalManagement;
 using UnityEngine;
 
 namespace Service.Framework.Goals
