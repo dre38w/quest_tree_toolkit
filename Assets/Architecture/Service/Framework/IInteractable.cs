@@ -4,7 +4,7 @@
 
 using UnityEngine;
 
-namespace Service.Core
+namespace Service.Framework
 {
     public interface IInteractable
     {

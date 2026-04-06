@@ -2,7 +2,6 @@
  * Description: Handles logic for interactable objects
  */
 using Gameplay.UI;
-using Service.Core;
 using Service.Framework;
 using Service.Framework.StatusSystem;
 using System.Collections;

@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Goals.BranchingDialog_Goal
   id: {fileID: 11400000, guid: 3239d8b3a6545b5488cc357a68db7d1e, type: 2}
   requirements:
-  - rid: 1373684834838511680
+  - rid: 1373684894363025475
   - rid: 1373684820112834561
   objectiveActions:
   - {fileID: 874764497918820071}
@@ -63,8 +63,8 @@ MonoBehaviour:
       type: {class: GoalRequirement_GoalIncomplete, ns: Service.Framework.Goals, asm: Assembly-CSharp}
       data:
         goalID: {fileID: 11400000, guid: 459293a47af9e134dbc5cde091bc5b18, type: 2}
-    - rid: 1373684834838511680
-      type: {class: GoalRequirement_Interact, ns: Gameplay.System.Requirements, asm: Assembly-CSharp}
+    - rid: 1373684894363025475
+      type: {class: GoalRequirement_Interact, ns: Gameplay.System, asm: Assembly-CSharp}
       data:
         interactable: {fileID: 6540553337051870864}
 --- !u!1 &1079779193782804400
@@ -215,7 +215,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Goals.BranchingDialog_Goal
   id: {fileID: 11400000, guid: 14888940c8d854e4daf8d1a95702a0c3, type: 2}
   requirements:
-  - rid: 1373684834838511682
+  - rid: 1373684894363025472
   - rid: 1373684820112834563
   - rid: 1373684820112834564
   objectiveActions:
@@ -235,8 +235,8 @@ MonoBehaviour:
       type: {class: GoalRequirement_GoalIncomplete, ns: Service.Framework.Goals, asm: Assembly-CSharp}
       data:
         goalID: {fileID: 11400000, guid: 459293a47af9e134dbc5cde091bc5b18, type: 2}
-    - rid: 1373684834838511682
-      type: {class: GoalRequirement_Interact, ns: Gameplay.System.Requirements, asm: Assembly-CSharp}
+    - rid: 1373684894363025472
+      type: {class: GoalRequirement_Interact, ns: Gameplay.System, asm: Assembly-CSharp}
       data:
         interactable: {fileID: 6540553337051870864}
 --- !u!1 &1680210426792005881
@@ -287,7 +287,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Goals.BranchingDialog_Goal
   id: {fileID: 11400000, guid: 90e68b86fca592b438c9202d627e333e, type: 2}
   requirements:
-  - rid: 1373684834838511683
+  - rid: 1373684894363025474
   - rid: 1373684820112834569
   objectiveActions:
   - {fileID: 6555489617323796383}
@@ -302,8 +302,8 @@ MonoBehaviour:
       type: {class: GoalRequirement_GoalComplete, ns: Service.Framework.Goals, asm: Assembly-CSharp}
       data:
         goalID: {fileID: 11400000, guid: 459293a47af9e134dbc5cde091bc5b18, type: 2}
-    - rid: 1373684834838511683
-      type: {class: GoalRequirement_Interact, ns: Gameplay.System.Requirements, asm: Assembly-CSharp}
+    - rid: 1373684894363025474
+      type: {class: GoalRequirement_Interact, ns: Gameplay.System, asm: Assembly-CSharp}
       data:
         interactable: {fileID: 6540553337051870864}
 --- !u!1 &2059799658809687781
@@ -1281,7 +1281,7 @@ MonoBehaviour:
   requirements:
   - rid: 1373684820112834567
   - rid: 1373684820112834566
-  - rid: 1373684834838511690
+  - rid: 1373684894363025473
   objectiveActions:
   - {fileID: 7345845465238106491}
   - {fileID: 8209401172637558163}
@@ -1299,8 +1299,8 @@ MonoBehaviour:
       type: {class: GoalRequirement_GoalComplete, ns: Service.Framework.Goals, asm: Assembly-CSharp}
       data:
         goalID: {fileID: 11400000, guid: 90e68b86fca592b438c9202d627e333e, type: 2}
-    - rid: 1373684834838511690
-      type: {class: GoalRequirement_Interact, ns: Gameplay.System.Requirements, asm: Assembly-CSharp}
+    - rid: 1373684894363025473
+      type: {class: GoalRequirement_Interact, ns: Gameplay.System, asm: Assembly-CSharp}
       data:
         interactable: {fileID: 6540553337051870864}
 --- !u!1 &4862138360162982026
@@ -2003,7 +2003,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.Goal
   id: {fileID: 11400000, guid: 459293a47af9e134dbc5cde091bc5b18, type: 2}
   requirements:
-  - rid: 1373684834838511681
+  - rid: 1373684894363025471
   objectiveActions:
   - {fileID: 8031279147680333343}
   - {fileID: 5273313320735180767}
@@ -2012,8 +2012,8 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 1373684834838511681
-      type: {class: GoalRequirement_Interact, ns: Gameplay.System.Requirements, asm: Assembly-CSharp}
+    - rid: 1373684894363025471
+      type: {class: GoalRequirement_Interact, ns: Gameplay.System, asm: Assembly-CSharp}
       data:
         interactable: {fileID: 4098895846228002820}
 --- !u!1 &6893099647082968051

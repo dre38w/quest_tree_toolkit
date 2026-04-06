@@ -5,7 +5,7 @@
 using Service.Framework.Goals;
 using System;
 
-namespace Gameplay.System.Requirements
+namespace Gameplay.System
 {
     [Serializable]
     public class GoalRequirement_Interact : GoalRequirement
