@@ -1,5 +1,7 @@
 /*
- * Description: Compares a bool value
+ * Description: Compares a bool value.  
+ *          Useful for more broadly checking completion statuses or other conditionals
+ *          from another script or system that may handle a mission logic, etc.
  */
 using Service.Framework.GoalManagement;
 using System;

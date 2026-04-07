@@ -8,7 +8,7 @@ namespace Gameplay.System.Actions
 {
     public class CollisionAction : ObjectiveAction
     {
-        [Tooltip("The object the player is colliding with.")]
+        [Tooltip("The object(s) the player is colliding with.")]
         [SerializeField]
         private CollisionActionComponent[] collisionActionComponent;
 
@@ -18,12 +18,16 @@ namespace Gameplay.System.Actions
             {
                 Debug.LogWarning("collisionActionComponent list is empty.  Please populate this in the Inspector.", gameObject);
             }
+            //use an array in the event we want to be able to collide with multiple objects
             for (int i = 0; i < collisionActionComponent.Length; i++)
             {
                 collisionActionComponent[i].OnCollided.AddListener(OnCollided);
             }
         }
 
+        /// <summary>
+        /// Called when we first collided with any one of the specified collision objects
+        /// </summary>
         private void OnCollided()
         {
             if (State == ActionState.Inactive)

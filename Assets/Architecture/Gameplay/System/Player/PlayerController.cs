@@ -2,6 +2,7 @@
  * Description: Basic player movement
  */
 
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -17,6 +18,12 @@ namespace Gameplay.System.Player
         private float terminalVelocity = -20f;
         private float yVelocity;
 
+        /// <summary>
+        /// Short delay before allowing player to have control of the character
+        /// This will allow time for the game to load some things
+        /// </summary>
+        private float delayControlTime = 3f;
+
         private Vector2 moveInput;
         private CharacterController characterController;
 
@@ -29,9 +36,15 @@ namespace Gameplay.System.Player
 
         private void Start()
         {
-            hasControl = true;
             characterController = GetComponent<CharacterController>();
-            //SetCursorLocked();
+            StartCoroutine(DelayGiveControl());
+            SetCursorLocked();
+        }
+
+        private IEnumerator DelayGiveControl()
+        {
+            yield return new WaitForSeconds(delayControlTime);
+            hasControl = true;
         }
 
         private void Update()
@@ -69,14 +82,9 @@ namespace Gameplay.System.Player
             Cursor.visible = true;
         }
 
-        public void GiveControl()
+        public void SetControl(bool state)
         {
-            hasControl = true;
-        }
-
-        public void RemoveControl()
-        {
-            hasControl = false;
+            hasControl = state;
         }
 
         public void OnMove(InputAction.CallbackContext context)

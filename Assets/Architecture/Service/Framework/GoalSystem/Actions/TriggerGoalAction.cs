@@ -8,6 +8,9 @@ namespace Service.Framework.Goals
 {
     public class TriggerGoalAction : ObjectiveAction
     {
+        /// <summary>
+        /// Use an array in the event we want to trigger multiple goals
+        /// </summary>
         [SerializeField]
         private GoalID[] goalIDsToTrigger;
 

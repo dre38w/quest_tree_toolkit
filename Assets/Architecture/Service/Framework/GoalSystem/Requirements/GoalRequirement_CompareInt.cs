@@ -1,5 +1,5 @@
 /*
- * Description: Compares an integer value
+ * Description: Compares an integer value.  Useful for checking things such as a player's level, item count, etc.
  */
 using Service.Framework.GoalManagement;
 using System;
