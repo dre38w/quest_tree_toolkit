@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Goals.BranchingDialog_Goal
   id: {fileID: 11400000, guid: 3239d8b3a6545b5488cc357a68db7d1e, type: 2}
   requirements:
-  - rid: 1373684894363025475
+  - rid: 1373684900467310662
   - rid: 1373684820112834561
   objectiveActions:
   - {fileID: 874764497918820071}
@@ -63,10 +63,54 @@ MonoBehaviour:
       type: {class: GoalRequirement_GoalIncomplete, ns: Service.Framework.Goals, asm: Assembly-CSharp}
       data:
         goalID: {fileID: 11400000, guid: 459293a47af9e134dbc5cde091bc5b18, type: 2}
-    - rid: 1373684894363025475
+    - rid: 1373684900467310662
       type: {class: GoalRequirement_Interact, ns: Gameplay.System, asm: Assembly-CSharp}
       data:
         interactable: {fileID: 6540553337051870864}
+--- !u!1 &705154191000639578
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2183810336979476719}
+  - component: {fileID: 1896764768829064930}
+  m_Layer: 0
+  m_Name: level up player
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2183810336979476719
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 705154191000639578}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2852992846531733722}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1896764768829064930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 705154191000639578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18eaa07a3bc3d7546ae9a27247d52448, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.LevelUpPlayerActionExample
 --- !u!1 &1079779193782804400
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,7 +259,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Goals.BranchingDialog_Goal
   id: {fileID: 11400000, guid: 14888940c8d854e4daf8d1a95702a0c3, type: 2}
   requirements:
-  - rid: 1373684894363025472
+  - rid: 1373684900467310663
   - rid: 1373684820112834563
   - rid: 1373684820112834564
   objectiveActions:
@@ -235,7 +279,7 @@ MonoBehaviour:
       type: {class: GoalRequirement_GoalIncomplete, ns: Service.Framework.Goals, asm: Assembly-CSharp}
       data:
         goalID: {fileID: 11400000, guid: 459293a47af9e134dbc5cde091bc5b18, type: 2}
-    - rid: 1373684894363025472
+    - rid: 1373684900467310663
       type: {class: GoalRequirement_Interact, ns: Gameplay.System, asm: Assembly-CSharp}
       data:
         interactable: {fileID: 6540553337051870864}
@@ -271,6 +315,7 @@ Transform:
   m_Children:
   - {fileID: 5625755064747424527}
   - {fileID: 1353159882491643578}
+  - {fileID: 2183810336979476719}
   m_Father: {fileID: 4905257940396134626}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5908306819616819425
@@ -287,11 +332,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Goals.BranchingDialog_Goal
   id: {fileID: 11400000, guid: 90e68b86fca592b438c9202d627e333e, type: 2}
   requirements:
-  - rid: 1373684894363025474
+  - rid: 1373684900467310665
   - rid: 1373684820112834569
   objectiveActions:
   - {fileID: 6555489617323796383}
   - {fileID: 8008437696043094363}
+  - {fileID: 1896764768829064930}
   isRandomAtStart: 0
   isSequential: 1
   dialogBox: {fileID: 2729306928978931146}
@@ -302,7 +348,7 @@ MonoBehaviour:
       type: {class: GoalRequirement_GoalComplete, ns: Service.Framework.Goals, asm: Assembly-CSharp}
       data:
         goalID: {fileID: 11400000, guid: 459293a47af9e134dbc5cde091bc5b18, type: 2}
-    - rid: 1373684894363025474
+    - rid: 1373684900467310665
       type: {class: GoalRequirement_Interact, ns: Gameplay.System, asm: Assembly-CSharp}
       data:
         interactable: {fileID: 6540553337051870864}
@@ -1279,9 +1325,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Goals.BranchingDialog_Goal
   id: {fileID: 11400000, guid: cdbc7a459e7733f4f97e5ca8c1ae602b, type: 2}
   requirements:
+  - rid: 1373684900467310664
   - rid: 1373684820112834567
   - rid: 1373684820112834566
-  - rid: 1373684894363025473
   objectiveActions:
   - {fileID: 7345845465238106491}
   - {fileID: 8209401172637558163}
@@ -1299,7 +1345,7 @@ MonoBehaviour:
       type: {class: GoalRequirement_GoalComplete, ns: Service.Framework.Goals, asm: Assembly-CSharp}
       data:
         goalID: {fileID: 11400000, guid: 90e68b86fca592b438c9202d627e333e, type: 2}
-    - rid: 1373684894363025473
+    - rid: 1373684900467310664
       type: {class: GoalRequirement_Interact, ns: Gameplay.System, asm: Assembly-CSharp}
       data:
         interactable: {fileID: 6540553337051870864}
@@ -2003,7 +2049,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.Goal
   id: {fileID: 11400000, guid: 459293a47af9e134dbc5cde091bc5b18, type: 2}
   requirements:
-  - rid: 1373684894363025471
+  - rid: 1373684900467310669
   objectiveActions:
   - {fileID: 8031279147680333343}
   - {fileID: 5273313320735180767}
@@ -2012,7 +2058,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 1373684894363025471
+    - rid: 1373684900467310669
       type: {class: GoalRequirement_Interact, ns: Gameplay.System, asm: Assembly-CSharp}
       data:
         interactable: {fileID: 4098895846228002820}
@@ -2634,21 +2680,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4905257940396134626}
     m_Modifications:
+    - target: {fileID: 1795561038343060343, guid: 090feee1502fc2d4891c90ce3cd9635c, type: 3}
+      propertyPath: m_Radius
+      value: 0.7
+      objectReference: {fileID: 0}
     - target: {fileID: 6172520656175216508, guid: 090feee1502fc2d4891c90ce3cd9635c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.84
+      value: 16.42
       objectReference: {fileID: 0}
     - target: {fileID: 6172520656175216508, guid: 090feee1502fc2d4891c90ce3cd9635c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.719
+      value: 0.179
       objectReference: {fileID: 0}
     - target: {fileID: 6172520656175216508, guid: 090feee1502fc2d4891c90ce3cd9635c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.02
+      value: 14.258
       objectReference: {fileID: 0}
     - target: {fileID: 6172520656175216508, guid: 090feee1502fc2d4891c90ce3cd9635c, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: -0.2272512
       objectReference: {fileID: 0}
     - target: {fileID: 6172520656175216508, guid: 090feee1502fc2d4891c90ce3cd9635c, type: 3}
       propertyPath: m_LocalRotation.x
@@ -2656,7 +2706,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6172520656175216508, guid: 090feee1502fc2d4891c90ce3cd9635c, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0.9738362
       objectReference: {fileID: 0}
     - target: {fileID: 6172520656175216508, guid: 090feee1502fc2d4891c90ce3cd9635c, type: 3}
       propertyPath: m_LocalRotation.z
@@ -2668,7 +2718,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6172520656175216508, guid: 090feee1502fc2d4891c90ce3cd9635c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 206.271
       objectReference: {fileID: 0}
     - target: {fileID: 6172520656175216508, guid: 090feee1502fc2d4891c90ce3cd9635c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z

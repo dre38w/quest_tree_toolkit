@@ -15,6 +15,11 @@ namespace Service.Framework.GoalManagement
         public static GoalManager Instance;
 
         private List<Goal> goals = new List<Goal>();
+        public List<Goal> Goals
+        {
+            get { return goals; }
+            set { goals = value; }
+        }
 
         private GoalBlackboard blackBoard;
         public GoalBlackboard BlackBoard

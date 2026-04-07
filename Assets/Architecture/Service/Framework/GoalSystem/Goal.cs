@@ -82,6 +82,15 @@ namespace Service.Framework.Goals
             }
         }
 
+        /// <summary>
+        /// Used to rebuild the requirements list
+        /// </summary>
+        /// <param name="reqs"></param>
+        public void ResetRequirements(List<GoalRequirement> reqs)
+        {
+            requirements = reqs;
+        }
+
         private void OnValidate()
         {
             ValidateRequirements();
