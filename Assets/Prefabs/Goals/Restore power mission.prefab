@@ -300,6 +300,7 @@ Transform:
   - {fileID: 8101999019426892114}
   - {fileID: 2288963058818609702}
   - {fileID: 5106668151753434989}
+  - {fileID: 2045047673651084001}
   m_Father: {fileID: 658828258967438874}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3996288986645045942
@@ -322,6 +323,7 @@ MonoBehaviour:
   - {fileID: 2317086748728668444}
   - {fileID: 6884181586270422256}
   - {fileID: 403838116723009843}
+  - {fileID: 8090146773032474298}
   isSequential: 1
   isRandomAtStart: 0
 --- !u!1 &1729445486776406543
@@ -371,6 +373,51 @@ MonoBehaviour:
   objectsToToggle:
   - {fileID: 4055241936895046203}
   setObjectActive: 0
+--- !u!1 &2055386880944943509
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8648644211360824774}
+  - component: {fileID: 7917241965566582841}
+  m_Layer: 0
+  m_Name: AddObjective
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8648644211360824774
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055386880944943509}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1958095132474886886}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7917241965566582841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055386880944943509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3420cffd1f4d124a9fa1f7f5f64e975, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.UpdateMissionLog
+  textBox: Find and activate 3 generators
 --- !u!1 &2159814660835999325
 GameObject:
   m_ObjectHideFlags: 0
@@ -553,6 +600,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.ToggleCursorLockAction
   isCursorLocked: 0
+--- !u!1 &3463906228479897680
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2045047673651084001}
+  - component: {fileID: 8090146773032474298}
+  m_Layer: 0
+  m_Name: UpdateLogComplete
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2045047673651084001
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3463906228479897680}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3073247401249314198}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8090146773032474298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3463906228479897680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbabd57db01b1f24ea72c17c54fd2289, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.MarkObjectiveLogComplete
 --- !u!1 &3681283399343877587
 GameObject:
   m_ObjectHideFlags: 0
@@ -1304,6 +1395,7 @@ Transform:
   - {fileID: 4905437458011885633}
   - {fileID: 15409126263458213}
   - {fileID: 4582210203491279363}
+  - {fileID: 8648644211360824774}
   m_Father: {fileID: 658828258967438874}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9208201648846133536
@@ -1326,6 +1418,7 @@ MonoBehaviour:
   - {fileID: 6498643801764973358}
   - {fileID: 7652763076634783492}
   - {fileID: 2206478248757221625}
+  - {fileID: 7917241965566582841}
   isSequential: 1
   isRandomAtStart: 0
 --- !u!1 &7087083532617489358

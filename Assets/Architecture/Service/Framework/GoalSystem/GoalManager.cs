@@ -28,6 +28,13 @@ namespace Service.Framework.GoalManagement
             set { blackBoard = value; }
         }
 
+        private GoalTrackerDatabase goalTracker;
+        public GoalTrackerDatabase GoalTracker
+        {
+            get { return goalTracker; }
+            set { goalTracker = value; }
+        }
+
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -38,6 +45,7 @@ namespace Service.Framework.GoalManagement
             Instance = this;
 
             BlackBoard = new GoalBlackboard();
+            GoalTracker = new GoalTrackerDatabase();
         }
 
         private void Update()

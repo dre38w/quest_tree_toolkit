@@ -83,6 +83,7 @@ Transform:
   - {fileID: 1979163694077918944}
   - {fileID: 3506129511684122965}
   - {fileID: 4611055225317020734}
+  - {fileID: 4724509748382548927}
   m_Father: {fileID: 4905257940396134626}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2630474381295218051
@@ -110,6 +111,7 @@ MonoBehaviour:
   - {fileID: 6194827910382128907}
   - {fileID: 1232773873895920751}
   - {fileID: 7709429071257120835}
+  - {fileID: 605530132417784454}
   isRandomAtStart: 0
   isSequential: 1
   references:
@@ -824,6 +826,51 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &2091344005517839661
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1911054964937011637}
+  - component: {fileID: 5708108026892034786}
+  m_Layer: 0
+  m_Name: UpdateMissionLog
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1911054964937011637
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091344005517839661}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8372720885270938083}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5708108026892034786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091344005517839661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3420cffd1f4d124a9fa1f7f5f64e975, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.UpdateMissionLog
+  textBox: Return the cat to PicoChan
 --- !u!1 &2123680749730430383
 GameObject:
   m_ObjectHideFlags: 0
@@ -2914,6 +2961,51 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   questID: {fileID: 11400000, guid: 19dd76b0f2b3afa418b9620f09b3c9f1, type: 2}
+--- !u!1 &6438261401129719993
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4724509748382548927}
+  - component: {fileID: 605530132417784454}
+  m_Layer: 0
+  m_Name: AddObjective
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4724509748382548927
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6438261401129719993}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2204747909493455739}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &605530132417784454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6438261401129719993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3420cffd1f4d124a9fa1f7f5f64e975, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.UpdateMissionLog
+  textBox: Find PicoChan's lost cat
 --- !u!1 &6546095586239960489
 GameObject:
   m_ObjectHideFlags: 0
@@ -2946,6 +3038,7 @@ Transform:
   m_Children:
   - {fileID: 1167164489175984376}
   - {fileID: 1558603376233090070}
+  - {fileID: 1911054964937011637}
   m_Father: {fileID: 4905257940396134626}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4893758608409338575
@@ -2966,6 +3059,7 @@ MonoBehaviour:
   objectiveActions:
   - {fileID: 8031279147680333343}
   - {fileID: 5273313320735180767}
+  - {fileID: 5708108026892034786}
   isRandomAtStart: 0
   isSequential: 1
   references:

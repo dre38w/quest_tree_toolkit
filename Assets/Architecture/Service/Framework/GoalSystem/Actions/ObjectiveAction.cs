@@ -3,6 +3,7 @@
 Description: Base class for all objective actions.
 */
 
+using Service.Framework.GoalManagement;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -24,6 +25,8 @@ namespace Service.Framework.Goals
 
         public ActionState State { get; set; } = ActionState.Inactive;
 
+        public GoalID ActionGoalID { get; private set; }
+         
         protected bool isComplete { get; set; }
 
         //if this action is part of a sequence, is it the last one?
@@ -53,6 +56,11 @@ namespace Service.Framework.Goals
             SetState(ActionState.Inactive);
         }
 
+        public void SetGoalID(GoalID id)
+        {
+            ActionGoalID = id;
+        }
+
         public virtual void ActionUpdate(float deltaTime)
         {
             if (isComplete && State == ActionState.Inactive)
@@ -72,6 +80,7 @@ namespace Service.Framework.Goals
         public virtual void SetComplete()
         {
             isComplete = true;
+
             SetState(ActionState.Inactive);
             OnActionCompleted.Invoke(this);
         }

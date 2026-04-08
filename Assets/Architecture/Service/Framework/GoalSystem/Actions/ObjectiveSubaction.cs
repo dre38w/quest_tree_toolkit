@@ -80,6 +80,7 @@ namespace Service.Framework.Goals
             {
                 //set this as the parent of the actions in the subaction list
                 action.ParentSubaction = this;
+                action.SetGoalID(ActionGoalID);
 
                 //now also initialize all actions that are subactions
                 if (action is ObjectiveSubaction sub)

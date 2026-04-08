@@ -79,6 +79,7 @@ namespace Service.Framework.Goals
             for (int actionIndex = 0; actionIndex < objectiveActions.Count; actionIndex++)
             {
                 objectiveActions[actionIndex].OnActionCompleted.AddListener(CheckActionsComplete);
+                objectiveActions[actionIndex].SetGoalID(id);
             }
         }
 
