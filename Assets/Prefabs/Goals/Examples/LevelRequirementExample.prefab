@@ -45,7 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68069d7938d24bf4791f3e3a7be8ae34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.Goal
-  id: {fileID: 11400000, guid: bba1ebc3f0ef15946b53e0c2c69efa5a, type: 2}
+  goalID: {fileID: 11400000, guid: bba1ebc3f0ef15946b53e0c2c69efa5a, type: 2}
+  questID: {fileID: 0}
   requirements:
   - rid: 1373684878386921535
   objectiveActions:

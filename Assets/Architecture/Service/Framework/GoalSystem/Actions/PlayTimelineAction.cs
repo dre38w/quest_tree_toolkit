@@ -28,6 +28,7 @@ namespace Service.Framework.Goals
 
         private void OnDirectorComplete(PlayableDirector playableDirector)
         {
+            //complete after the timeline finished playing
             SetComplete();
             timelineDirector.stopped -= OnDirectorComplete;
         }

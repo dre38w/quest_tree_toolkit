@@ -25,7 +25,9 @@ namespace Service.Framework.Goals
 
         public GoalState State { get; set; } = GoalState.Inactive;
 
-        public GoalID id;
+        public GoalID goalID;
+        [Tooltip("The quest this goal is part of.")]
+        public QuestID questID;
 
         [Tooltip("Conditions to be met before the Goal can start.")]
         [SerializeReference]
@@ -79,7 +81,7 @@ namespace Service.Framework.Goals
             for (int actionIndex = 0; actionIndex < objectiveActions.Count; actionIndex++)
             {
                 objectiveActions[actionIndex].OnActionCompleted.AddListener(CheckActionsComplete);
-                objectiveActions[actionIndex].SetGoalID(id);
+                objectiveActions[actionIndex].SetQuestID(questID);
             }
         }
 

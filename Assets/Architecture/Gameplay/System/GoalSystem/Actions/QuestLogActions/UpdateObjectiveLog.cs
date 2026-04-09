@@ -1,7 +1,9 @@
+/*
+ * Description: Updates the quest log
+ */
 using Service.Framework.GoalManagement;
 using Service.Framework.Goals;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Gameplay.System.Actions
 {
@@ -17,7 +19,7 @@ namespace Gameplay.System.Actions
 
         public override void InitializeAction()
         {
-            GoalManager.Instance.GoalTracker.AddObjective(ActionGoalID, textBox);          
+            GoalManager.Instance.GoalTracker.AddObjective(ActionQuestID, textBox);          
             SetComplete();
         }
     }

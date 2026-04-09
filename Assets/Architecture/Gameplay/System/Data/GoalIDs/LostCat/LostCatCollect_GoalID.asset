@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2adaf6a3caba1d64d8d414919896e69a, type: 3}
-  m_Name: LostCatQuest_GoalID
+  m_Name: LostCatCollect_GoalID
   m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.GoalID
-  description: The Lost Cat mission
+  description: when the player collects the cat

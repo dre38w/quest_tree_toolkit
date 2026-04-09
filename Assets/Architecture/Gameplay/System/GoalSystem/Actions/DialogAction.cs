@@ -33,6 +33,8 @@ namespace Gameplay.System.Actions
         {
             //turn on the action button
             actionButton.gameObject.SetActive(true);
+            //set the UI state so certain UIs don't cross
+            ReferenceRegistry.Instance.MainUI.SetUIState(UIState.Gameplay);
             DisplayText();
             actionButton.OnButtonPressed.AddListener(OnContinueButtonPressed);
         }
@@ -70,6 +72,8 @@ namespace Gameplay.System.Actions
 
         public override void ResetValues()
         {
+            ReferenceRegistry.Instance.MainUI.SetUIState(UIState.Default);
+
             displayText.text = string.Empty;
             actionButton.OnButtonPressed.RemoveListener(OnContinueButtonPressed);
             actionButton.gameObject.SetActive(false);

@@ -98,7 +98,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68069d7938d24bf4791f3e3a7be8ae34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.Goal
-  id: {fileID: 11400000, guid: 3239d8b3a6545b5488cc357a68db7d1e, type: 2}
+  goalID: {fileID: 11400000, guid: 3239d8b3a6545b5488cc357a68db7d1e, type: 2}
+  questID: {fileID: 11400000, guid: e62de8ef6aa9f164a9e4001337da80fe, type: 2}
   requirements:
   - rid: 1373684925732749381
   - rid: 1373684925732749383
@@ -411,7 +412,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68069d7938d24bf4791f3e3a7be8ae34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.Goal
-  id: {fileID: 11400000, guid: 14888940c8d854e4daf8d1a95702a0c3, type: 2}
+  goalID: {fileID: 11400000, guid: 14888940c8d854e4daf8d1a95702a0c3, type: 2}
+  questID: {fileID: 11400000, guid: e62de8ef6aa9f164a9e4001337da80fe, type: 2}
   requirements:
   - rid: 1373684925732749389
   - rid: 1373684925732749385
@@ -619,6 +621,7 @@ Transform:
   - {fileID: 2183810336979476719}
   - {fileID: 6182824406829083239}
   - {fileID: 6701513167421647020}
+  - {fileID: 369056185522735166}
   - {fileID: 4356424458141415945}
   m_Father: {fileID: 4905257940396134626}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -634,7 +637,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68069d7938d24bf4791f3e3a7be8ae34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.Goal
-  id: {fileID: 11400000, guid: 90e68b86fca592b438c9202d627e333e, type: 2}
+  goalID: {fileID: 11400000, guid: 90e68b86fca592b438c9202d627e333e, type: 2}
+  questID: {fileID: 11400000, guid: e62de8ef6aa9f164a9e4001337da80fe, type: 2}
   requirements:
   - rid: 1373684925732749392
   - rid: 1373684925732749393
@@ -647,6 +651,7 @@ MonoBehaviour:
   - {fileID: 1896764768829064930}
   - {fileID: 8773543208769771977}
   - {fileID: 1308277219356070939}
+  - {fileID: 3557297057137941307}
   - {fileID: 2142039720530672437}
   isRandomAtStart: 0
   isSequential: 1
@@ -661,6 +666,51 @@ MonoBehaviour:
       type: {class: GoalRequirement_GoalComplete, ns: Service.Framework.Goals, asm: Assembly-CSharp}
       data:
         goalID: {fileID: 11400000, guid: 459293a47af9e134dbc5cde091bc5b18, type: 2}
+--- !u!1 &1774679786568978037
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 458393006022701744}
+  - component: {fileID: 3567180961581169799}
+  m_Layer: 0
+  m_Name: CompleteObjective
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &458393006022701744
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1774679786568978037}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8372720885270938083}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3567180961581169799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1774679786568978037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbabd57db01b1f24ea72c17c54fd2289, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.MarkObjectiveLogComplete
+  doesCompleteQuest: 0
 --- !u!1 &1814005405344426535
 GameObject:
   m_ObjectHideFlags: 0
@@ -1892,9 +1942,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 3101636022541737138}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 200, y: -43.06125}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 400, y: 86.1225}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4965002422426371371
@@ -2094,7 +2144,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68069d7938d24bf4791f3e3a7be8ae34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.Goal
-  id: {fileID: 11400000, guid: cdbc7a459e7733f4f97e5ca8c1ae602b, type: 2}
+  goalID: {fileID: 11400000, guid: cdbc7a459e7733f4f97e5ca8c1ae602b, type: 2}
+  questID: {fileID: 11400000, guid: e62de8ef6aa9f164a9e4001337da80fe, type: 2}
   requirements:
   - rid: 1373684925732749397
   - rid: 1373684925732749398
@@ -2157,9 +2208,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 3101636022541737138}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 200, y: -130.56125}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 400, y: 88.877}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2757509044875488087
@@ -2862,6 +2913,51 @@ MonoBehaviour:
   OnButtonPressed:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &6065143919932223659
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 369056185522735166}
+  - component: {fileID: 3557297057137941307}
+  m_Layer: 0
+  m_Name: CompleteObjective (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &369056185522735166
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6065143919932223659}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 412.72714, y: 123.65475, z: -2.8238}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2852992846531733722}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3557297057137941307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6065143919932223659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbabd57db01b1f24ea72c17c54fd2289, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.MarkObjectiveLogComplete
+  doesCompleteQuest: 1
 --- !u!1 &6119537636222788128
 GameObject:
   m_ObjectHideFlags: 0
@@ -3038,6 +3134,7 @@ Transform:
   m_Children:
   - {fileID: 1167164489175984376}
   - {fileID: 1558603376233090070}
+  - {fileID: 458393006022701744}
   - {fileID: 1911054964937011637}
   m_Father: {fileID: 4905257940396134626}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3053,12 +3150,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68069d7938d24bf4791f3e3a7be8ae34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.Goal
-  id: {fileID: 11400000, guid: 459293a47af9e134dbc5cde091bc5b18, type: 2}
+  goalID: {fileID: 11400000, guid: 459293a47af9e134dbc5cde091bc5b18, type: 2}
+  questID: {fileID: 11400000, guid: e62de8ef6aa9f164a9e4001337da80fe, type: 2}
   requirements:
   - rid: 1373684900467310669
   objectiveActions:
   - {fileID: 8031279147680333343}
   - {fileID: 5273313320735180767}
+  - {fileID: 3567180961581169799}
   - {fileID: 5708108026892034786}
   isRandomAtStart: 0
   isSequential: 1

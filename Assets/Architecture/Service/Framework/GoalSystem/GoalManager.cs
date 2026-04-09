@@ -71,7 +71,7 @@ namespace Service.Framework.GoalManagement
         {
             for (int idIndex = 0; idIndex < goals.Count; idIndex++)
             {
-                if (id == goals[idIndex].id)
+                if (id == goals[idIndex].goalID)
                 {
                     return goals[idIndex];
                 }

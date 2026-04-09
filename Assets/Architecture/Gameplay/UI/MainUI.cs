@@ -2,17 +2,27 @@
  * Description: Handles main UI logic
  */
 
-using Service.Framework.GoalManagement;
-using Service.Framework.Goals;
-using TMPro;
+using Gameplay.System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Gameplay.UI
 {
+    public enum UIState
+    {
+        Default,
+        Gameplay,
+        Pause,
+    }
+    
     public class MainUI : MonoBehaviour
     {
-        public TMP_Text displayText;
-        public bool appendMode;
+        [SerializeField]
+        private InputActionAsset inputActions;
+        protected InputAction MenuButtonAction { get; set; }
+
+        [SerializeField]
+        private GameObject menu;
 
         [SerializeField]
         private GameObject contextualButtonUi;
@@ -22,38 +32,36 @@ namespace Gameplay.UI
             set { contextualButtonUi = value; }
         }
 
-        private void Start()
+        public UIState uiState;
+
+        private void Awake()
         {
-            GoalManager.Instance.GoalTracker.OnObjectivesChanged.AddListener(OnUpdateObjectives);
+            MenuButtonAction = inputActions.FindAction("Menu");
+            MenuButtonAction.started += OnToggleMenu;
         }
 
-        private void OnUpdateObjectives(GoalID goal)
+        protected virtual void OnToggleMenu(InputAction.CallbackContext context)
         {
-            var objectives = GoalManager.Instance.GoalTracker.GetObjectives(goal);
-
-            if (objectives == null || objectives.Count == 0)
+            if (uiState != UIState.Default)
             {
                 return;
             }
-            if (appendMode)
-            {
-                displayText.text = "";
-
-                foreach (var objective in objectives)
-                {
-                    displayText.text += FormatObjectiveEntry(objective) + "\n";
-                }
-            }
-            else
-            {
-                var latestEntry = objectives[objectives.Count - 1];
-                displayText.text = FormatObjectiveEntry(latestEntry);
+            if (context.started)
+            {               
+                //set the values based on the state of the menu
+                menu.SetActive(!menu.activeSelf);
+                ReferenceRegistry.Instance.Player.ToggleCursorLock(!menu.activeSelf);
+                ReferenceRegistry.Instance.Player.SetControl(!menu.activeSelf);
             }
         }
 
-        private string FormatObjectiveEntry(ObjectiveData data)
+        public void SetUIState(UIState state)
         {
-            return data.IsComplete ? $"<s>{data.ObjectiveText}</s>" : data.ObjectiveText;
+            if (uiState == state)
+            {
+                return;
+            }
+            uiState = state;
         }
 
         /// <summary>
@@ -63,6 +71,12 @@ namespace Gameplay.UI
         public void SetContextualUiVisible(bool state)
         {
             contextualButtonUi.SetActive(state);
+        }
+
+        private void OnDestroy()
+        {
+            MenuButtonAction.started -= OnToggleMenu;
+
         }
     }
 }

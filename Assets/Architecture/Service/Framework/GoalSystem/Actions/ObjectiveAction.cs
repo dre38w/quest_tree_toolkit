@@ -25,7 +25,14 @@ namespace Service.Framework.Goals
 
         public ActionState State { get; set; } = ActionState.Inactive;
 
+        /// <summary>
+        /// The goal this action is part of
+        /// </summary>
         public GoalID ActionGoalID { get; private set; }
+        /// <summary>
+        /// The quest this action is part of
+        /// </summary>
+        public QuestID ActionQuestID { get; private set; }
          
         protected bool isComplete { get; set; }
 
@@ -59,6 +66,11 @@ namespace Service.Framework.Goals
         public void SetGoalID(GoalID id)
         {
             ActionGoalID = id;
+        }
+
+        public void SetQuestID(QuestID id)
+        {
+            ActionQuestID = id;
         }
 
         public virtual void ActionUpdate(float deltaTime)
