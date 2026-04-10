@@ -15,6 +15,8 @@ namespace Gameplay.UI
         [Tooltip("Use this event to do effects when the objective is completed.")]
         public UnityEvent OnObjectiveCompleted = new UnityEvent();
 
+        private string objectiveID;
+
         [SerializeField]
         private TMP_Text objectiveText;
 
@@ -25,7 +27,13 @@ namespace Gameplay.UI
         public void Initialize(ObjectiveData data)
         {
             OnObjectiveAdded.Invoke();
+            objectiveID = data.ID;
             SetText(data);
+        }
+
+        public string GetID()
+        {
+            return objectiveID;
         }
 
         /// <summary>

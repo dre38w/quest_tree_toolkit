@@ -1,6 +1,7 @@
 /*
  * Description: Updates the quest log
  */
+using Service.Framework;
 using Service.Framework.GoalManagement;
 using Service.Framework.Goals;
 using UnityEngine;
@@ -17,9 +18,12 @@ namespace Gameplay.System.Actions
         [SerializeField]
         private string textBox;
 
+        public string CreatedObjectiveID { get; private set; }
+
         public override void InitializeAction()
         {
-            GoalManager.Instance.GoalTracker.AddObjective(ActionQuestID, textBox);          
+            ObjectiveData data = GoalManager.Instance.GoalTracker.AddObjective(ActionQuestID, textBox);
+            CreatedObjectiveID = data.ID;
             SetComplete();
         }
     }

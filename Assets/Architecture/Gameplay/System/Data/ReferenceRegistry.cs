@@ -1,5 +1,6 @@
 /*
  * Description: Holds references to objects to better organize when some objects need to be referenced many times, dynamically, etc. 
+ *              This should be tailored to your game.
  */
 
 using Gameplay.System.Player;
@@ -12,6 +13,16 @@ namespace Gameplay.System
     {
         public static ReferenceRegistry Instance;
 
+        private UIStateHandler uiStateHandler;
+        public UIStateHandler UiStateHandler
+        {
+            get { return uiStateHandler; }
+            set { uiStateHandler = value; }
+        }
+
+        /// <summary>
+        /// PlayerController is the main component on the player object and thus a reasonable point of reference
+        /// </summary>
         private PlayerController player;
         public PlayerController Player
         {
@@ -19,6 +30,9 @@ namespace Gameplay.System
             set { player = value; }
         }
 
+        /// <summary>
+        /// MainUI is the main component on the main UI object
+        /// </summary>
         private MainUI mainUI;
         public MainUI MainUI
         {
@@ -36,8 +50,9 @@ namespace Gameplay.System
             {
                 Instance = this;
             }
-            player = GameObject.FindWithTag(TagData.PLAYER_TAG).GetComponent<PlayerController>();
-            mainUI = GameObject.FindWithTag(TagData.MAIN_UI_TAG).GetComponent<MainUI>();
+            player = FindFirstObjectByType<PlayerController>();
+            mainUI = FindFirstObjectByType<MainUI>();
+            uiStateHandler = new UIStateHandler();
         }
     }
 }

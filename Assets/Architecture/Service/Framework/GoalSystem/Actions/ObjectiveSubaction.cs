@@ -141,7 +141,16 @@ namespace Service.Framework.Goals
             CheckCompleteActions();
         }
 
-        
+        public override void ForceCompleteAction()
+        {
+            base.ForceCompleteAction();
+
+            for (int i = 0; i < objectiveSubactions.Count; i++)
+            {
+                objectiveSubactions[i].ForceCompleteAction();
+            }
+            currentSubAction = null;
+        }
 
         /// <summary>
         /// Handle evaluating the completion status of the actions

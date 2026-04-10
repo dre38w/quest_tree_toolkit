@@ -1414,6 +1414,17 @@ MonoBehaviour:
   questEntryPrefab: {fileID: 79297168729941176, guid: 1c7e52c5552b4f24a8da1314fac5c732, type: 3}
   hideCompletedObjectives: 0
   hideCompletedQuests: 0
+--- !u!114 &1965183402 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3687076264880022324, guid: b1b56145c3a2ed0438079f44ba12d592, type: 3}
+  m_PrefabInstance: {fileID: 446541982}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1965183396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75626562a64c7e24ebe358312cfcd487, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.UI.MainUI
 --- !u!4 &2122066650 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 658828258967438874, guid: 2b03efe540906ef488c251bb1b281b6b, type: 3}
@@ -1743,6 +1754,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa227bb424ef55e41ae23e44ba4e4d89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Player.PlayerStatExample
+--- !u!114 &5585846627485857212 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4428589414821233456, guid: de6fb0815f51989439f6b57cbfbca621, type: 3}
+  m_PrefabInstance: {fileID: 5585846627485857208}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5585846627485857209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f94d580b9f643344ae17a8cca72affe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.PlayerInteractor
+--- !u!114 &5585846627485857213 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3049824406831839813, guid: de6fb0815f51989439f6b57cbfbca621, type: 3}
+  m_PrefabInstance: {fileID: 5585846627485857208}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5585846627485857209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8eb136e42d27134a970773fe36f8c5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Player.PlayerController
 --- !u!1001 &5634293936663669073
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1791,6 +1824,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5870483403273057025, guid: e8c0ffe9c2d8a9f4b99195ce44064b03, type: 3}
+      propertyPath: mainUI
+      value: 
+      objectReference: {fileID: 1965183402}
+    - target: {fileID: 5870483403273057025, guid: e8c0ffe9c2d8a9f4b99195ce44064b03, type: 3}
+      propertyPath: playerController
+      value: 
+      objectReference: {fileID: 5585846627485857213}
+    - target: {fileID: 5870483403273057025, guid: e8c0ffe9c2d8a9f4b99195ce44064b03, type: 3}
+      propertyPath: playerInteractor
+      value: 
+      objectReference: {fileID: 5585846627485857212}
     - target: {fileID: 7332636321573097553, guid: e8c0ffe9c2d8a9f4b99195ce44064b03, type: 3}
       propertyPath: m_Name
       value: Managers
@@ -1851,6 +1896,10 @@ PrefabInstance:
     - target: {fileID: 5933852832591609305, guid: 2b03efe540906ef488c251bb1b281b6b, type: 3}
       propertyPath: m_Name
       value: Restore power mission
+      objectReference: {fileID: 0}
+    - target: {fileID: 9149487814297965640, guid: 2b03efe540906ef488c251bb1b281b6b, type: 3}
+      propertyPath: mainUI
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

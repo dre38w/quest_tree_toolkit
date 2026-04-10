@@ -1,11 +1,12 @@
 /*
  * Description:  Used to inform systems when the player enters a trigger that initiates an interaction with interactable objects
  */
-using Service.Core;
+
+using Service.Framework;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Service.Framework.StatusSystem
+namespace Gameplay.System.Player
 {
     public class InteractableTrigger : MonoBehaviour
     {

@@ -2,12 +2,12 @@
  * Description: Generic script that serves as the handshake for interactable objects
  */
 
-using Service.Core;
+using Service.Framework;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-namespace Service.Framework
+namespace Gameplay.System.Player
 {
     public class PlayerInteractor : MonoBehaviour
     {

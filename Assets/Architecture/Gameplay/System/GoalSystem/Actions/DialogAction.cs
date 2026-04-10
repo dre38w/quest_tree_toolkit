@@ -34,7 +34,8 @@ namespace Gameplay.System.Actions
             //turn on the action button
             actionButton.gameObject.SetActive(true);
             //set the UI state so certain UIs don't cross
-            ReferenceRegistry.Instance.MainUI.SetUIState(UIState.Gameplay);
+            //consider the dialog boxes to be part of the Gameplay UI state layer
+            ReferenceRegistry.Instance.UiStateHandler.SetUIState(UIStateHandler.UIState.Gameplay);
             DisplayText();
             actionButton.OnButtonPressed.AddListener(OnContinueButtonPressed);
         }
@@ -72,7 +73,7 @@ namespace Gameplay.System.Actions
 
         public override void ResetValues()
         {
-            ReferenceRegistry.Instance.MainUI.SetUIState(UIState.Default);
+            ReferenceRegistry.Instance.UiStateHandler.SetUIState(UIStateHandler.UIState.Default);
 
             displayText.text = string.Empty;
             actionButton.OnButtonPressed.RemoveListener(OnContinueButtonPressed);

@@ -710,6 +710,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbabd57db01b1f24ea72c17c54fd2289, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.MarkObjectiveLogComplete
+  targetObjective: {fileID: 605530132417784454}
   doesCompleteQuest: 0
 --- !u!1 &1814005405344426535
 GameObject:
@@ -2957,6 +2958,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbabd57db01b1f24ea72c17c54fd2289, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.MarkObjectiveLogComplete
+  targetObjective: {fileID: 5708108026892034786}
   doesCompleteQuest: 1
 --- !u!1 &6119537636222788128
 GameObject:
@@ -3233,7 +3235,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Dialog goes here
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

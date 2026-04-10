@@ -3,7 +3,6 @@
 Description: Base class for all objective actions.
 */
 
-using Service.Framework.GoalManagement;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -84,6 +83,11 @@ namespace Service.Framework.Goals
         public virtual bool IsComplete()
         {
             return isComplete;
+        }
+
+        public virtual void ForceCompleteAction()
+        {
+            SetComplete();
         }
 
         /// <summary>

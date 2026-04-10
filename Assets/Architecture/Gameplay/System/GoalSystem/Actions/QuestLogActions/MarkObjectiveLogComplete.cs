@@ -9,13 +9,21 @@ namespace Gameplay.System.Actions
 {
     public class MarkObjectiveLogComplete : ObjectiveAction
     {
+        [SerializeField]
+        private UpdateObjectiveLog targetObjective;
+
         [Tooltip("Does this objective complete the quest?")]
         [SerializeField]
         private bool doesCompleteQuest;
 
         public override void InitializeAction()
         {
-            GoalManager.Instance.GoalTracker.CompleteLatestObjective(ActionQuestID);
+            if (targetObjective != null)
+            {
+                string objectiveID = targetObjective.CreatedObjectiveID;
+                GoalManager.Instance.GoalTracker.MarkObjectiveComplete(ActionQuestID, objectiveID);
+            }
+            //GoalManager.Instance.GoalTracker.CompleteLatestObjective(ActionQuestID);
             //does this objective also complete the quest its associated with?
             if (doesCompleteQuest)
             {

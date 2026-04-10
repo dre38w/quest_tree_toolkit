@@ -38,7 +38,8 @@ namespace Gameplay.System.Player
         {
             characterController = GetComponent<CharacterController>();
             StartCoroutine(DelayGiveControl());
-            SetCursorLocked();
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
 
         private IEnumerator DelayGiveControl()
@@ -46,30 +47,7 @@ namespace Gameplay.System.Player
             yield return new WaitForSeconds(delayControlTime);
             hasControl = true;
         }
-
-        private void Update()
-        {
-            if (characterController.isGrounded && yVelocity < 0)
-            {
-                yVelocity = -2;
-            }
-
-            Vector3 movePlayer = transform.right * moveInput.x + transform.forward * moveInput.y;
-
-            yVelocity += gravity * Time.deltaTime;
-            yVelocity = Mathf.Max(yVelocity, terminalVelocity);
-
-            Vector3 velocity = movePlayer * moveSpeed;
-            velocity.y = yVelocity;
-
-            if (!hasControl)
-            {
-                return;
-            }
-
-            characterController.Move(velocity * Time.deltaTime);
-        }
-
+                
         public void ToggleCursorLock(bool lockState)
         {
             if (lockState)
@@ -84,21 +62,38 @@ namespace Gameplay.System.Player
             }
         }
 
-        public void SetCursorLocked()
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
-
-        public void SetCursorUnlocked()
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-
+        /// <summary>
+        /// Used to give or remove control from the player
+        /// </summary>
+        /// <param name="state"></param>
         public void SetControl(bool state)
         {
             hasControl = state;
+        }
+
+        private void Update()
+        {
+            if (characterController.isGrounded && yVelocity < 0)
+            {
+                yVelocity = -2;
+            }
+
+            Vector3 movePlayer = transform.right * moveInput.x + transform.forward * moveInput.y;
+
+            //continuously apply gravity
+            yVelocity += gravity * Time.deltaTime;
+            yVelocity = Mathf.Max(yVelocity, terminalVelocity);
+
+            Vector3 velocity = movePlayer * moveSpeed;
+            velocity.y = yVelocity;
+
+            //do not allow input from the player if they don't have control
+            if (!hasControl)
+            {
+                return;
+            }
+
+            characterController.Move(velocity * Time.deltaTime);
         }
 
         public void OnMove(InputAction.CallbackContext context)

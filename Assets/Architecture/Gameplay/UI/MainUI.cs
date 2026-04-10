@@ -1,5 +1,5 @@
 /*
- * Description: Handles main UI logic
+ * Description: Handles main UI logic.  This is a simple example and should be tailored to your game
  */
 
 using Gameplay.System;
@@ -7,14 +7,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Gameplay.UI
-{
-    public enum UIState
-    {
-        Default,
-        Gameplay,
-        Pause,
-    }
-    
+{    
     public class MainUI : MonoBehaviour
     {
         [SerializeField]
@@ -32,7 +25,7 @@ namespace Gameplay.UI
             set { contextualButtonUi = value; }
         }
 
-        public UIState uiState;
+        private UIStateHandler stateHandler;
 
         private void Awake()
         {
@@ -40,28 +33,45 @@ namespace Gameplay.UI
             MenuButtonAction.started += OnToggleMenu;
         }
 
+        private void Start()
+        {
+            stateHandler = ReferenceRegistry.Instance.UiStateHandler;
+            stateHandler.OnUiStateChanged.AddListener(OnStateChanged);
+        }
+
         protected virtual void OnToggleMenu(InputAction.CallbackContext context)
         {
-            if (uiState != UIState.Default)
+            //consider this menu part of the "default" ui state layer.
+            //this is to prevent other UI logic from interrupting or conflicting
+            if (stateHandler.uiState != UIStateHandler.UIState.Default)
             {
+                menu.SetActive(false);
                 return;
             }
             if (context.started)
             {               
-                //set the values based on the state of the menu
+                //set the values based on the opposite state of the menu
                 menu.SetActive(!menu.activeSelf);
                 ReferenceRegistry.Instance.Player.ToggleCursorLock(!menu.activeSelf);
                 ReferenceRegistry.Instance.Player.SetControl(!menu.activeSelf);
             }
         }
 
-        public void SetUIState(UIState state)
+        private void OnStateChanged(UIStateHandler.UIState state)
         {
-            if (uiState == state)
+            //set default values when entering a new state
+            if (stateHandler.uiState == UIStateHandler.UIState.Default)
             {
-                return;
+
             }
-            uiState = state;
+            else if (stateHandler.uiState == UIStateHandler.UIState.Gameplay)
+            {
+                menu.SetActive(false);
+            }
+            else if (stateHandler.uiState == UIStateHandler.UIState.Pause)
+            {
+                menu.SetActive(false);
+            }
         }
 
         /// <summary>
@@ -76,6 +86,7 @@ namespace Gameplay.UI
         private void OnDestroy()
         {
             MenuButtonAction.started -= OnToggleMenu;
+            stateHandler.OnUiStateChanged.RemoveListener(OnStateChanged);
 
         }
     }

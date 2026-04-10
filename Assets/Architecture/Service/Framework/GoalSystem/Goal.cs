@@ -160,6 +160,16 @@ namespace Service.Framework.Goals
             SetState(GoalState.Inactive);
         }
 
+        public virtual void ForceCompleteGoal()
+        {
+            SetComplete();
+
+            for (int i = 0; i < objectiveActions.Count; i++)
+            {
+                objectiveActions[i].ForceCompleteAction();
+            }
+        }
+
         private void CheckActionsComplete(ObjectiveAction action)
         {
             //all actions are complete.

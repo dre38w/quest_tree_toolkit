@@ -1,5 +1,50 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &168647217073131889
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4539075279387090037}
+  - component: {fileID: 6903329942018721680}
+  m_Layer: 0
+  m_Name: AddObjective (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4539075279387090037
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 168647217073131889}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1958095132474886886}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6903329942018721680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 168647217073131889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3420cffd1f4d124a9fa1f7f5f64e975, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.UpdateMissionLog
+  textBox: Find and activate generator 2
 --- !u!1 &510636677882456321
 GameObject:
   m_ObjectHideFlags: 0
@@ -157,6 +202,97 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.TogglePlayerControlAction
   playerHasControl: 0
+--- !u!1 &1094372549439649773
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2758400636505700636}
+  - component: {fileID: 6308773727117064132}
+  m_Layer: 0
+  m_Name: AddObjective (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2758400636505700636
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1094372549439649773}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1958095132474886886}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6308773727117064132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1094372549439649773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3420cffd1f4d124a9fa1f7f5f64e975, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.UpdateMissionLog
+  textBox: Find and activate generator 3
+--- !u!1 &1166740256050040843
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5229786964340014520}
+  - component: {fileID: 872913939195899290}
+  m_Layer: 0
+  m_Name: complete objective (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5229786964340014520
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1166740256050040843}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3601497844930906288}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &872913939195899290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1166740256050040843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbabd57db01b1f24ea72c17c54fd2289, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.MarkObjectiveLogComplete
+  targetObjective: {fileID: 6308773727117064132}
+  doesCompleteQuest: 0
 --- !u!1 &1242787945759278118
 GameObject:
   m_ObjectHideFlags: 0
@@ -190,6 +326,7 @@ Transform:
   - {fileID: 8126455146577335887}
   - {fileID: 6510340128702969550}
   - {fileID: 1941823672302950991}
+  - {fileID: 5229786964340014520}
   m_Father: {fileID: 1910437293454340594}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3534544910676964461
@@ -208,6 +345,7 @@ MonoBehaviour:
   - {fileID: 5090350663934227699}
   - {fileID: 7540510772256331397}
   - {fileID: 9144196675880668456}
+  - {fileID: 872913939195899290}
   isSequential: 1
   isRandomAtStart: 0
 --- !u!1 &1253003587557923774
@@ -243,6 +381,7 @@ Transform:
   - {fileID: 5963495449459221712}
   - {fileID: 3579993160363169345}
   - {fileID: 2262042945550744332}
+  - {fileID: 3945284558181235259}
   m_Father: {fileID: 1910437293454340594}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5318813136086214962
@@ -261,8 +400,55 @@ MonoBehaviour:
   - {fileID: 1478459121181531231}
   - {fileID: 3482192530856747017}
   - {fileID: 1905670203806945396}
+  - {fileID: 265717146057648275}
   isSequential: 1
   isRandomAtStart: 0
+--- !u!1 &1551702782633111553
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2217520617142205515}
+  - component: {fileID: 5263939460753387732}
+  m_Layer: 0
+  m_Name: complete objective
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2217520617142205515
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1551702782633111553}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 606192682820069345}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5263939460753387732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1551702782633111553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbabd57db01b1f24ea72c17c54fd2289, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.MarkObjectiveLogComplete
+  targetObjective: {fileID: 7917241965566582841}
+  doesCompleteQuest: 0
 --- !u!1 &1620650592234105456
 GameObject:
   m_ObjectHideFlags: 0
@@ -417,7 +603,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3420cffd1f4d124a9fa1f7f5f64e975, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.UpdateMissionLog
-  textBox: Find and activate 3 generators
+  textBox: Find and activate generator 1
 --- !u!1 &2159814660835999325
 GameObject:
   m_ObjectHideFlags: 0
@@ -1314,6 +1500,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbabd57db01b1f24ea72c17c54fd2289, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.MarkObjectiveLogComplete
+  targetObjective: {fileID: 0}
   doesCompleteQuest: 1
 --- !u!1 &6926231109611255370
 GameObject:
@@ -1398,6 +1585,8 @@ Transform:
   - {fileID: 15409126263458213}
   - {fileID: 4582210203491279363}
   - {fileID: 8648644211360824774}
+  - {fileID: 4539075279387090037}
+  - {fileID: 2758400636505700636}
   m_Father: {fileID: 658828258967438874}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9208201648846133536
@@ -1421,8 +1610,56 @@ MonoBehaviour:
   - {fileID: 7652763076634783492}
   - {fileID: 2206478248757221625}
   - {fileID: 7917241965566582841}
+  - {fileID: 6903329942018721680}
+  - {fileID: 6308773727117064132}
   isSequential: 1
   isRandomAtStart: 0
+--- !u!1 &7065763023138743782
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3945284558181235259}
+  - component: {fileID: 265717146057648275}
+  m_Layer: 0
+  m_Name: complete objective (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3945284558181235259
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7065763023138743782}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8608049889026161581}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &265717146057648275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7065763023138743782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbabd57db01b1f24ea72c17c54fd2289, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.MarkObjectiveLogComplete
+  targetObjective: {fileID: 6903329942018721680}
+  doesCompleteQuest: 0
 --- !u!1 &7087083532617489358
 GameObject:
   m_ObjectHideFlags: 0
@@ -1604,6 +1841,7 @@ Transform:
   - {fileID: 8714466389286503104}
   - {fileID: 8911633300449277501}
   - {fileID: 7289604842023802803}
+  - {fileID: 2217520617142205515}
   m_Father: {fileID: 1910437293454340594}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5995425472430252188
@@ -1622,6 +1860,7 @@ MonoBehaviour:
   - {fileID: 1804768086711895571}
   - {fileID: 314513950256929912}
   - {fileID: 8501786087705805265}
+  - {fileID: 5263939460753387732}
   isSequential: 1
   isRandomAtStart: 0
 --- !u!1 &8843762989457602810

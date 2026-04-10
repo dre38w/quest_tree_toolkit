@@ -1,9 +1,9 @@
 /*
  * Description: Handles logic for interactable objects
  */
+using Gameplay.System.Player;
 using Gameplay.UI;
 using Service.Framework;
-using Service.Framework.StatusSystem;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
@@ -50,21 +50,12 @@ namespace Gameplay.System
         private void InitializeValues()
         {
             mainUI = ReferenceRegistry.Instance.MainUI;
-
             interactor = ReferenceRegistry.Instance.Player.GetComponent<PlayerInteractor>();
+
             interactor.OnInteracted.AddListener(OnPlayerInteracted);
 
             interactableObject.OnEnteredTriggerObject.AddListener(OnInteracting);
             interactableObject.OnExitedTriggerObject.AddListener(OnNotInteracting);
-        }
-
-        public void Interact(GameObject interactor)
-        {
-            //do not allow interaction
-            if (!CanInteract(interactor))
-            {
-                return;
-            }
         }
 
         private void OnInteracting()
@@ -79,6 +70,15 @@ namespace Gameplay.System
 
         }
 
+        public void Interact(GameObject interactor)
+        {
+            //do not allow interaction
+            if (!CanInteract(interactor))
+            {
+                return;
+            }
+        }
+
         /// <summary>
         /// Do stuff when the player pressed the interaction button
         /// </summary>
@@ -89,7 +89,7 @@ namespace Gameplay.System
                 return;
             }
             didInteract = true;
-            mainUI.SetContextualUiVisible(false);
+            OnNotInteracting();
             OnInteracted.Invoke();
             StartCoroutine(ResetInteracted());
         }
