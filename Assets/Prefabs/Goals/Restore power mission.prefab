@@ -292,6 +292,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.MarkObjectiveLogComplete
   targetObjective: {fileID: 6308773727117064132}
+  doesCompleteTargetObjective: 1
   doesCompleteQuest: 0
 --- !u!1 &1242787945759278118
 GameObject:
@@ -448,6 +449,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.MarkObjectiveLogComplete
   targetObjective: {fileID: 7917241965566582841}
+  doesCompleteTargetObjective: 1
   doesCompleteQuest: 0
 --- !u!1 &1620650592234105456
 GameObject:
@@ -1501,6 +1503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.MarkObjectiveLogComplete
   targetObjective: {fileID: 0}
+  doesCompleteTargetObjective: 0
   doesCompleteQuest: 1
 --- !u!1 &6926231109611255370
 GameObject:
@@ -1659,6 +1662,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.MarkObjectiveLogComplete
   targetObjective: {fileID: 6903329942018721680}
+  doesCompleteTargetObjective: 1
   doesCompleteQuest: 0
 --- !u!1 &7087083532617489358
 GameObject:

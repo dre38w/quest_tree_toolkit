@@ -1495,6 +1495,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 586743011}
     m_Modifications:
+    - target: {fileID: 3567180961581169799, guid: 97b6b05b77c28ec4da5e59d2d05994cd, type: 3}
+      propertyPath: doesCompleteTargetObjective
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4905257940396134626, guid: 97b6b05b77c28ec4da5e59d2d05994cd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.95102
@@ -1896,10 +1900,6 @@ PrefabInstance:
     - target: {fileID: 5933852832591609305, guid: 2b03efe540906ef488c251bb1b281b6b, type: 3}
       propertyPath: m_Name
       value: Restore power mission
-      objectReference: {fileID: 0}
-    - target: {fileID: 9149487814297965640, guid: 2b03efe540906ef488c251bb1b281b6b, type: 3}
-      propertyPath: mainUI
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

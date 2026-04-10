@@ -12,18 +12,29 @@ namespace Gameplay.System.Actions
         [SerializeField]
         private UpdateObjectiveLog targetObjective;
 
+        [Tooltip("True = This targets a specific objective to complete\n" +
+            "False = This completes the previous entry")]
+        [SerializeField]
+        private bool doesCompleteTargetObjective;
+
         [Tooltip("Does this objective complete the quest?")]
         [SerializeField]
         private bool doesCompleteQuest;
 
         public override void InitializeAction()
         {
-            if (targetObjective != null)
+            if (doesCompleteTargetObjective)
             {
-                string objectiveID = targetObjective.CreatedObjectiveID;
-                GoalManager.Instance.GoalTracker.MarkObjectiveComplete(ActionQuestID, objectiveID);
+                if (targetObjective != null)
+                {
+                    string objectiveID = targetObjective.CreatedObjectiveID;
+                    GoalManager.Instance.GoalTracker.MarkObjectiveComplete(ActionQuestID, objectiveID);
+                }
             }
-            //GoalManager.Instance.GoalTracker.CompleteLatestObjective(ActionQuestID);
+            else
+            {
+                GoalManager.Instance.GoalTracker.CompleteLatestObjective(ActionQuestID);
+            }
             //does this objective also complete the quest its associated with?
             if (doesCompleteQuest)
             {
