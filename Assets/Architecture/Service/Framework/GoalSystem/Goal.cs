@@ -18,7 +18,7 @@ namespace Service.Framework.Goals
         Active,
         Inactive,
     }
-    public class Goal : MonoBehaviour
+    public class Goal : MonoBehaviour, INodeContainer
     {
         public class OnCompleteGoalEvent : UnityEvent<Goal> { }
         public OnCompleteGoalEvent OnCompleteGoal = new OnCompleteGoalEvent();
@@ -48,6 +48,9 @@ namespace Service.Framework.Goals
                 objectiveActions = value;
             }
         }
+
+        public List<ObjectiveAction> GetChildren() => objectiveActions;
+
         private ObjectiveAction currentObjectiveAction;
         public ObjectiveAction CurrentObjectiveAction
         {

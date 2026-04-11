@@ -13,8 +13,8 @@ using UnityEngine;
 namespace Service.Framework.Goals
 {
     [Serializable]
-    public class ObjectiveSubaction : ObjectiveAction
-    {
+    public class ObjectiveSubaction : ObjectiveAction, INodeContainer
+    {        
         /// <summary>
         /// Can use sub and single actions
         /// </summary>
@@ -55,6 +55,9 @@ namespace Service.Framework.Goals
                 objectiveSubactions = value;
             }
         }
+
+        public List<ObjectiveAction> GetChildren() => objectiveSubactions;
+
         [Tooltip("Is the player required to complete the subactions in sequence?")]
         [SerializeField]
         private bool isSequential = true;

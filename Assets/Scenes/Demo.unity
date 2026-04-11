@@ -119,6 +119,57 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &368866727
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 368866729}
+  - component: {fileID: 368866728}
+  m_Layer: 0
+  m_Name: BranchingSubactionTest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &368866728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 368866727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 108d4fea4c79f1543aec978b4d0829e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.BranchingSubaction
+  objectiveSubactions:
+  - {fileID: 1599977726}
+  - {fileID: 593804215}
+  isSequential: 0
+  isRandomAtStart: 0
+--- !u!4 &368866729
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 368866727}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1599977725}
+  - {fileID: 593804216}
+  m_Father: {fileID: 1918577869}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -729,6 +780,100 @@ Transform:
   - {fileID: 1663243403}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &593804214
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 593804216}
+  - component: {fileID: 593804215}
+  m_Layer: 0
+  m_Name: ObjectiveSubaction2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &593804215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 593804214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 124a104ac8de25e44904a90ddb0a42d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.ObjectiveSubaction
+  objectiveSubactions:
+  - {fileID: 699055613}
+  isSequential: 1
+  isRandomAtStart: 0
+--- !u!4 &593804216
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 593804214}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 699055614}
+  m_Father: {fileID: 368866729}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &699055612
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 699055614}
+  - component: {fileID: 699055613}
+  m_Layer: 0
+  m_Name: UpdateObjectiveLog
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &699055613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 699055612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3420cffd1f4d124a9fa1f7f5f64e975, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.UpdateObjectiveLog
+  textBox: Testing the other one
+--- !u!4 &699055614
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 699055612}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 593804216}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -880,6 +1025,95 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 092ff157c25b74b48892f3b4a6193bdb, type: 3}
+--- !u!1 &1055030765
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1055030767}
+  - component: {fileID: 1055030766}
+  m_Layer: 0
+  m_Name: DebugPrintAction
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1055030766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055030765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a7fe9b830b82704e95d25666e0a408b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DebugPrintAction
+--- !u!4 &1055030767
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055030765}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1918577869}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1196309513
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1196309514}
+  - component: {fileID: 1196309515}
+  m_Layer: 0
+  m_Name: UpdateObjectiveLog2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1196309514
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196309513}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1599977725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1196309515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196309513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3420cffd1f4d124a9fa1f7f5f64e975, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.UpdateObjectiveLog
+  textBox: Testing2
 --- !u!1 &1274344923
 GameObject:
   m_ObjectHideFlags: 0
@@ -1132,6 +1366,57 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1509428525}
   m_CullTransparentMesh: 1
+--- !u!1 &1599977724
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1599977725}
+  - component: {fileID: 1599977726}
+  m_Layer: 0
+  m_Name: ObjectiveSubaction1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1599977725
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1599977724}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1959526363}
+  - {fileID: 1196309514}
+  m_Father: {fileID: 368866729}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1599977726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1599977724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 124a104ac8de25e44904a90ddb0a42d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.ObjectiveSubaction
+  objectiveSubactions:
+  - {fileID: 1959526364}
+  - {fileID: 1196309515}
+  isSequential: 1
+  isRandomAtStart: 0
 --- !u!1 &1663243402
 GameObject:
   m_ObjectHideFlags: 0
@@ -1393,6 +1678,108 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1918577867
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1918577869}
+  - component: {fileID: 1918577868}
+  m_Layer: 0
+  m_Name: BranchTest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1918577868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1918577867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68069d7938d24bf4791f3e3a7be8ae34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.Goal
+  goalID: {fileID: 11400000, guid: bba1ebc3f0ef15946b53e0c2c69efa5a, type: 2}
+  questID: {fileID: 11400000, guid: 5c918453e4a62d948b2699743edab020, type: 2}
+  requirements: []
+  objectiveActions:
+  - {fileID: 1055030766}
+  - {fileID: 368866728}
+  isRandomAtStart: 0
+  isSequential: 1
+  references:
+    version: 2
+    RefIds: []
+--- !u!4 &1918577869
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1918577867}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1055030767}
+  - {fileID: 368866729}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1959526362
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1959526363}
+  - component: {fileID: 1959526364}
+  m_Layer: 0
+  m_Name: UpdateObjectiveLog1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1959526363
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1959526362}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1599977725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1959526364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1959526362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3420cffd1f4d124a9fa1f7f5f64e975, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.UpdateObjectiveLog
+  textBox: Testing1
 --- !u!1 &1965183396 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7576169723602953007, guid: b1b56145c3a2ed0438079f44ba12d592, type: 3}
@@ -1482,6 +1869,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelRequirementExample
       objectReference: {fileID: 0}
+    - target: {fileID: 8230107018941476618, guid: b21e021b09d192f458e0badcb8d94729, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1495,6 +1886,42 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 586743011}
     m_Modifications:
+    - target: {fileID: 2630474381295218051, guid: 97b6b05b77c28ec4da5e59d2d05994cd, type: 3}
+      propertyPath: 'managedReferences[-2]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2630474381295218051, guid: 97b6b05b77c28ec4da5e59d2d05994cd, type: 3}
+      propertyPath: requirements.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2630474381295218051, guid: 97b6b05b77c28ec4da5e59d2d05994cd, type: 3}
+      propertyPath: 'requirements.Array.data[2]'
+      value: 1373684992931528770
+      objectReference: {fileID: 0}
+    - target: {fileID: 2630474381295218051, guid: 97b6b05b77c28ec4da5e59d2d05994cd, type: 3}
+      propertyPath: objectiveActions.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2630474381295218051, guid: 97b6b05b77c28ec4da5e59d2d05994cd, type: 3}
+      propertyPath: 'objectiveActions.Array.data[9]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2630474381295218051, guid: 97b6b05b77c28ec4da5e59d2d05994cd, type: 3}
+      propertyPath: 'managedReferences[1373684992931528769]'
+      value: Assembly-CSharp Service.Core.DefaultRequirement
+      objectReference: {fileID: 0}
+    - target: {fileID: 2630474381295218051, guid: 97b6b05b77c28ec4da5e59d2d05994cd, type: 3}
+      propertyPath: 'managedReferences[1373684992931528770]'
+      value: Assembly-CSharp Service.Framework.Goals.GoalRequirement_CompareBool
+      objectReference: {fileID: 0}
+    - target: {fileID: 2630474381295218051, guid: 97b6b05b77c28ec4da5e59d2d05994cd, type: 3}
+      propertyPath: managedReferences[1373684992931528770].key
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2630474381295218051, guid: 97b6b05b77c28ec4da5e59d2d05994cd, type: 3}
+      propertyPath: managedReferences[1373684992931528770].comparisonValue
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3567180961581169799, guid: 97b6b05b77c28ec4da5e59d2d05994cd, type: 3}
       propertyPath: doesCompleteTargetObjective
       value: 0
@@ -1910,6 +2337,7 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1918577869}
   - {fileID: 5634293936663669073}
   - {fileID: 410087041}
   - {fileID: 832575519}
