@@ -1,7 +1,13 @@
+/*
+ * Description: Interface that allows the custom UI editor to reference the Goal and ObjectiveAction classes
+ */
 using Service.Framework.Goals;
 using System.Collections.Generic;
 
-public interface INodeContainer
+namespace Service.Framework
 {
-    List<ObjectiveAction> GetChildren();
+    public interface INodeContainer
+    {
+        List<ObjectiveAction> GetChildren();
+    }
 }

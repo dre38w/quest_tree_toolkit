@@ -1,5 +1,8 @@
-﻿#if UNITY_EDITOR
-using PlasticGui.WorkspaceWindow;
+﻿/*
+ * Description: A custom Editor UI that handles creating and organizing the Goal and Objective Actions
+ */
+#if UNITY_EDITOR
+using Service.Framework;
 using Service.Framework.Goals;
 using System;
 using System.Collections.Generic;
@@ -13,9 +16,14 @@ namespace Support.Editor
 {
     public class QuestTreeEditorWindow : EditorWindow
     {
-        private const float MIN_LEFT_COLUMN_WIDTH = 180f;
-        private const float MIN_RIGHT_COLUMN_WIDTH = 260f;
-        private const float MIN_CENTER_COLUMN_WIDTH = 240f;
+        private const string PROPERTY_ACTIONS_NAME = "objectiveActions";
+        private const string PROPERTY_SUBACTIONS_NAME = "objectiveSubactions";
+        
+        //default width of the panels
+        private const float MIN_LEFT_PANEL_WIDTH = 180f;
+        private const float MIN_RIGHT_PANEL_WIDTH = 260f;
+        private const float MIN_CENTER_PANEL_WIDTH = 240f;
+        //width of the splitters that separate the panels
         private const float SPLITTER_WIDTH = 4f;
         private const int MAX_BREADCRUMBS_VISIBLE = 4;
 
@@ -24,21 +32,19 @@ namespace Support.Editor
 
         private bool isDraggingLeftSplitter;
         private bool isDraggingRightSplitter;
-        private bool isResizingLeft;
-        private bool isResizingRight;
 
-        private bool goalListNeedsRefresh = true; //confirm the point
+        private bool isRebuildGoalList = true;
 
-        private Vector2 leftColumnScroll;
-        private Vector2 centerColumnScroll;
-        private Vector2 rightColumnScroll;
+        private Vector2 leftPanelScroll;
+        private Vector2 centerPanelScroll;
+        private Vector2 rightPanelScroll;
 
         private UnityObject currentNode;
         private UnityObject selectedNode;
 
         private UnityEditor.Editor cachedEditor;
-        private ReorderableList childrenList; //probably change the name
-        private SerializedObject childrenSerializedObject; //change the name
+        private ReorderableList nestedActionsList;
+        private SerializedObject nestedActionsSerializedObject;
 
         private Goal selectedGoal;
 
@@ -47,11 +53,17 @@ namespace Support.Editor
         private UnityObject nodeParent;
         private int nodeIndexToDelete = -1;
 
+        private GUIStyle breadcrumbArrowStyle;
+
         private ReorderableList goalList;
         private List<Goal> cachedGoals = new List<Goal>();
 
+        //holds a history of where we were in the stack
         private readonly Stack<UnityObject> navigationStack = new Stack<UnityObject>();
 
+        /// <summary>
+        /// Create the window
+        /// </summary>
         [MenuItem("Tools/Quest Tree Editor")]
         public static void ShowWindow()
         {
@@ -60,12 +72,12 @@ namespace Support.Editor
 
         private void OnGUI()
         {
-            //clamp the window to be no smaller than the sum of the columns' widths
-            //this will prevent the columns from overlapping each other if resized too small
-            minSize = new Vector2(MIN_LEFT_COLUMN_WIDTH + MIN_CENTER_COLUMN_WIDTH + MIN_RIGHT_COLUMN_WIDTH + (SPLITTER_WIDTH * 2f), 300f);
+            //clamp the window to be no smaller than the sum of the panels' widths
+            //this will prevent the panels from overlapping each other if resized too small
+            minSize = new Vector2(MIN_LEFT_PANEL_WIDTH + MIN_CENTER_PANEL_WIDTH + MIN_RIGHT_PANEL_WIDTH + (SPLITTER_WIDTH * 2f), 300f);
 
             HandleSplitters();
-            ClampPanelWidths();
+            HandleResizingPanels();
 
             float windowWidth = position.width;
             float windowHeight = position.height;
@@ -78,17 +90,17 @@ namespace Support.Editor
 
             Rect centerRect = new Rect(leftSplitterRect.xMax, 0f, rightSplitterRect.xMin - leftSplitterRect.xMax, windowHeight);
 
-            //draw left column
+            //draw left panel
             GUILayout.BeginArea(leftRect);
             DrawLeftPanel();
             GUILayout.EndArea();
 
-            //draw center column
+            //draw center panel
             GUILayout.BeginArea(centerRect);
             DrawCenterPanel();
             GUILayout.EndArea();
 
-            //draw right column
+            //draw right panel
             GUILayout.BeginArea(rightRect);
             DrawRightPanel();
             GUILayout.EndArea();
@@ -100,6 +112,9 @@ namespace Support.Editor
         }
 
         #region Handle Window
+        /// <summary>
+        /// Handle dragging the splitters
+        /// </summary>
         private void HandleSplitters()
         {
             Event currentEvent = Event.current;
@@ -112,6 +127,7 @@ namespace Support.Editor
 
             switch (currentEvent.type)
             {
+                //select left or right splitter
                 case EventType.MouseDown:
                     if (leftSplitterRect.Contains(currentEvent.mousePosition))
                     {
@@ -124,22 +140,29 @@ namespace Support.Editor
                         currentEvent.Use();
                     }
                     break;
+                    //drag left or right splitter
                 case EventType.MouseDrag:
+                    //resize the left panel
                     if (isDraggingLeftSplitter)
                     {
+                        //update the width that we'll use to resize the panel
                         leftWidth = currentEvent.mousePosition.x;
-                        ClampPanelWidths();
+                        //resize the panel now that we're dragging the splitter
+                        HandleResizingPanels();
+                        //repaint the UI to visually update it
                         Repaint();
                         currentEvent.Use();
                     }
+                    //resize the right panel
                     else if (isDraggingRightSplitter)
                     {
                         rightWidth = position.width - currentEvent.mousePosition.x - SPLITTER_WIDTH;
-                        ClampPanelWidths();
+                        HandleResizingPanels();
                         Repaint();
                         currentEvent.Use();
                     }
                     break;
+                    //release splitters
                 case EventType.MouseUp:
                     if (isDraggingLeftSplitter || isDraggingRightSplitter)
                     {
@@ -151,89 +174,73 @@ namespace Support.Editor
             }
         }
 
+        /// <summary>
+        /// Draw the splitters
+        /// </summary>
+        /// <param name="rect"></param>
         private void DrawSplitter(Rect rect)
         {
             EditorGUI.DrawRect(rect, new Color(0.18f, 0.18f, 0.18f, 1));
         }
 
-        private void ClampPanelWidths()
+        /// <summary>
+        /// Calculate the panel size when user resizes them via dragging the splitters
+        /// </summary>
+        private void HandleResizingPanels()
         {
             float totalWidth = position.width;
             float availableSpaceForPanels = totalWidth - (SPLITTER_WIDTH * 2f);
 
-            float maxLeft = availableSpaceForPanels - MIN_CENTER_COLUMN_WIDTH - MIN_RIGHT_COLUMN_WIDTH;
-            float maxRight = availableSpaceForPanels - MIN_CENTER_COLUMN_WIDTH - MIN_LEFT_COLUMN_WIDTH;
+            float maxLeft = availableSpaceForPanels - MIN_CENTER_PANEL_WIDTH - MIN_RIGHT_PANEL_WIDTH;
+            float maxRight = availableSpaceForPanels - MIN_CENTER_PANEL_WIDTH - MIN_LEFT_PANEL_WIDTH;
 
-            maxLeft = Mathf.Max(MIN_LEFT_COLUMN_WIDTH, maxLeft);
-            maxRight = Mathf.Max(MIN_RIGHT_COLUMN_WIDTH, maxRight);
+            maxLeft = Mathf.Max(MIN_LEFT_PANEL_WIDTH, maxLeft);
+            maxRight = Mathf.Max(MIN_RIGHT_PANEL_WIDTH, maxRight);
 
-            leftWidth = Mathf.Clamp(leftWidth, MIN_LEFT_COLUMN_WIDTH, maxLeft);
-            rightWidth = Mathf.Clamp(rightWidth, MIN_RIGHT_COLUMN_WIDTH, maxRight);
+            leftWidth = Mathf.Clamp(leftWidth, MIN_LEFT_PANEL_WIDTH, maxLeft);
+            rightWidth = Mathf.Clamp(rightWidth, MIN_RIGHT_PANEL_WIDTH, maxRight);
 
-/* TODO */  float centerWidth = availableSpaceForPanels - leftWidth - rightWidth; //TODO: comment out to see what happens
+            //the amount of space the center panel has remaining if user is resizing the window
+            float centerWidth = availableSpaceForPanels - leftWidth - rightWidth;
 
-            if (centerWidth < MIN_CENTER_COLUMN_WIDTH)
+            if (centerWidth < MIN_CENTER_PANEL_WIDTH)
             {
-/* TODO */      float widthDeficit = MIN_CENTER_COLUMN_WIDTH - centerWidth; //what this?
+                //the amount of space the center panel is missing.
+                //this is used for layout correction when resizing the window
+                float centerWidthNeeded = MIN_CENTER_PANEL_WIDTH - centerWidth;
 
-                //shrink the larger side first for UX
+                //do the layout correction when resizing the right panel:
+                //shrink the larger side first for a more natural feel while resizing
                 if (rightWidth > leftWidth)
                 {
-                    float newRight = Mathf.Max(MIN_RIGHT_COLUMN_WIDTH, rightWidth - widthDeficit);
-                    widthDeficit -= rightWidth - newRight;
+                    float newRight = Mathf.Max(MIN_RIGHT_PANEL_WIDTH, rightWidth - centerWidthNeeded);
+                    //the amount of layout correction we made
+                    centerWidthNeeded -= rightWidth - newRight;
                     rightWidth = newRight;
 
-                    if (widthDeficit > 0f)
+                    //if the right panel couldn't correct the layout, use the left panel to correct it
+                    if (centerWidthNeeded > 0f)
                     {
-                        leftWidth = Mathf.Max(MIN_LEFT_COLUMN_WIDTH, leftWidth - widthDeficit);
+                        leftWidth = Mathf.Max(MIN_LEFT_PANEL_WIDTH, leftWidth - centerWidthNeeded);
                     }
                 }
+                //do layout correction when resizing the left panel
                 else
                 {
-                    float newLeft = Mathf.Max(MIN_LEFT_COLUMN_WIDTH, leftWidth - widthDeficit);
-                    widthDeficit -= leftWidth - newLeft;
+                    float newLeft = Mathf.Max(MIN_LEFT_PANEL_WIDTH, leftWidth - centerWidthNeeded);
+                    centerWidthNeeded -= leftWidth - newLeft;
                     leftWidth = newLeft;
 
-                    if (widthDeficit > 0f)
+                    if (centerWidthNeeded > 0f)
                     {
-                        rightWidth = Mathf.Max(MIN_RIGHT_COLUMN_WIDTH, rightWidth - widthDeficit);
+                        rightWidth = Mathf.Max(MIN_RIGHT_PANEL_WIDTH, rightWidth - centerWidthNeeded);
                     }
                 }
-            }
-        }
-
-        private void HandleResize(Rect splitter, ref float newSize, bool isLeft)
-        {
-            EditorGUIUtility.AddCursorRect(splitter, MouseCursor.ResizeHorizontal);
-
-            if (Event.current.type == EventType.MouseDown && splitter.Contains(Event.current.mousePosition))
-            {
-                if (isLeft)
-                {
-                    isResizingLeft = true;
-                }
-                else
-                {
-                    isResizingRight = true;
-                }
-            }
-            if (Event.current.type == EventType.MouseDrag)
-            {
-                if (isLeft && isResizingLeft)
-                {
-                    newSize = Mathf.Clamp(Event.current.mousePosition.x, MIN_LEFT_COLUMN_WIDTH, position.width - rightWidth - MIN_CENTER_COLUMN_WIDTH);
-                    Repaint();
-                }
-            }
-            if (Event.current.type == EventType.MouseUp)
-            {
-                isResizingLeft = false;
-                isResizingRight = false;
             }
         }
         #endregion
 
-        #region Configure and manage left column and the list of Goals
+        #region Configure and manage left panel and the list of Goals
         /// <summary>
         /// Left panel contains a list of all the Goals in the scene
         /// </summary>
@@ -244,30 +251,44 @@ namespace Support.Editor
 
             ValidateGoalList();
 
-            leftColumnScroll = EditorGUILayout.BeginScrollView(leftColumnScroll);
+            leftPanelScroll = EditorGUILayout.BeginScrollView(leftPanelScroll);
 
+            //have the list do the list things
             if (goalList != null)
             {
                 goalList.DoLayoutList();
             }
             EditorGUILayout.EndScrollView();
 
+            //create a button to add a new goal
             if (GUILayout.Button("Create New Goal"))
             {
                 ShowCreateGoalMenu();
-                //CreateNewGoal();
-                //goalListNeedsRefresh = true;
             }
             EditorGUILayout.EndVertical();
         }
 
+        /// <summary>
+        /// Validate whether we need to rebuild the list or not
+        /// </summary>
         private void ValidateGoalList()
         {
-            if (!goalListNeedsRefresh && goalList != null)
+            if (!isRebuildGoalList && goalList != null)
             {
                 return;
             }
+            BuildGoalList();            
+            isRebuildGoalList = false;
+        }
+
+        /// <summary>
+        /// Visually build the goal list
+        /// </summary>
+        private void BuildGoalList()
+        {
+            //clear previous
             cachedGoals.Clear();
+            //add all those in the hierarchy
             cachedGoals.AddRange(FindObjectsByType<Goal>(FindObjectsSortMode.None));
 
             //sort by sibling index so we can match the hierarchy panel's order
@@ -289,6 +310,8 @@ namespace Support.Editor
                 {
                     return;
                 }
+                //create the rows by adding a value to the previous value
+                //then we'll apply this to the rects
                 rect.y += 2f;
                 rect.height = EditorGUIUtility.singleLineHeight;
 
@@ -300,6 +323,7 @@ namespace Support.Editor
                 //the delete goal button
                 Rect deleteRect = new Rect(rect.x + width - 55f, rect.y, 50f, rect.height);
 
+                //allow renaming of the Goal
                 string newName = EditorGUI.TextField(nameRect, goal.name);
 
                 if (newName != goal.name)
@@ -307,16 +331,20 @@ namespace Support.Editor
                     RenameObject(goal, newName);
                 }
 
+                //select the goal to show its contents in the center panel
                 if (GUI.Button(selectRect, "Select"))
                 {
                     SelectGoal(goal);
                 }
+                //delete the goal from the hierarchy and from the tool
                 if (GUI.Button(deleteRect, "Delete"))
                 {
+                    //mark it for deletion
                     goalToDelete = goal;
                 }
             };
 
+            //callback for dragging and reordering the goals in the tool
             goalList.onReorderCallback = list =>
             {
                 for (int i = 0; i < cachedGoals.Count; i++)
@@ -324,79 +352,27 @@ namespace Support.Editor
                     if (cachedGoals[i] != null)
                     {
                         Undo.RecordObject(cachedGoals[i].transform, "Reorder Goals");
+                        //apply changes to the moved goal
                         cachedGoals[i].transform.SetSiblingIndex(i);
                     }
                 }
-                goalListNeedsRefresh = true;
+                isRebuildGoalList = true;
             };
-            goalListNeedsRefresh = false;
-        }
-
-        private void RefreshGoalList()
-        {
-            cachedGoals.Clear();
-            cachedGoals.AddRange(FindObjectsByType<Goal>(FindObjectsSortMode.None));
-            goalList = new ReorderableList(cachedGoals, typeof(Goal), true, true, false, false);
-
-            goalList.drawHeaderCallback = rect =>
-            {
-                EditorGUI.LabelField(rect, "Goals");
-            };
-            goalList.drawElementCallback = (rect, index, active, focused) =>
-            {
-                Goal goal = cachedGoals[index];
-
-                rect.y += 2;
-                rect.height = EditorGUIUtility.singleLineHeight;
-
-                float rectWidth = rect.width;
-
-                Rect nameRect = new Rect(rect.x, rect.y, rectWidth - 120f, rect.height);
-                Rect selectRect = new Rect(rect.x + rectWidth - 115f, rect.y, 55f, rect.height);
-                Rect deleteRect = new Rect(rect.x + rectWidth - 55f, rect.y, 50f, rect.height);
-
-                string newName = EditorGUI.TextField(nameRect, goal.name);
-
-                if (newName != goal.name)
-                {
-                    RenameObject(goal, newName);
-                }
-
-                if (GUI.Button(selectRect, "Select"))
-                {
-                    SelectGoal(goal);
-                }
-                if (GUI.Button(deleteRect, "Delete"))
-                {
-                    goalToDelete = goal;
-                }
-            };
-
-            goalList.onReorderCallback = list =>
-            {
-                for (int i = 0; i < cachedGoals.Count; i++)
-                {
-                    if (cachedGoals[i] != null)
-                    {
-                        cachedGoals[i].transform.SetSiblingIndex(i);
-                    }
-                }
-            };
-        }
-
-        private void GenerateGoalCallbacks()
-        {
-
         }
         #endregion
 
 
 
-        #region Handle drawing the center column and manage the Actions in it
+        #region Handle drawing the center panel and manage the Actions in it
+        /// <summary>
+        /// Draw the center panel
+        /// </summary>
         private void DrawCenterPanel()
         {
             EditorGUILayout.BeginVertical();
 
+            //display an info message informing the user to select a goal
+            //if no goal is selected, then no content is shown
             if (selectedGoal == null)
             {
                 EditorGUILayout.HelpBox("Select a Goal", MessageType.Info);
@@ -405,13 +381,17 @@ namespace Support.Editor
             }
             DrawHeader();
 
-            centerColumnScroll = EditorGUILayout.BeginScrollView(centerColumnScroll);
-            DrawChildrenList();
+            //create a scroll view in the event we have a long list of actions
+            centerPanelScroll = EditorGUILayout.BeginScrollView(centerPanelScroll);
+            DrawNestedActionsList();
 
             EditorGUILayout.EndScrollView();
             EditorGUILayout.EndVertical();
         }
 
+        /// <summary>
+        /// Draw the center panel's header
+        /// </summary>
         private void DrawHeader()
         {
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
@@ -478,8 +458,12 @@ namespace Support.Editor
 
                 if (i < path.Count - 1)
                 {
-                    GUIStyle arrowStyle = new GUIStyle(EditorStyles.label);
-                    arrowStyle.normal.textColor = Color.grey;
+                    //create new guistyle if one doesn't exist
+                    if (breadcrumbArrowStyle == null)
+                    {
+                        breadcrumbArrowStyle = new GUIStyle(EditorStyles.label);
+                        breadcrumbArrowStyle.normal.textColor = Color.grey;
+                    }
                     GUILayout.Label(">", GUILayout.Width(10));
                 }
             }
@@ -505,105 +489,138 @@ namespace Support.Editor
             selectedNode = currentNode;
         }
 
-        private void DrawChildrenList()
+        /// <summary>
+        /// Draw the nested actions.  Nested actions are child actions of other actions
+        /// </summary>
+        private void DrawNestedActionsList()
         {
             if (currentNode == null)
             {
                 return;
             }
+            //get a reference to the current action using its interface
             INodeContainer container = currentNode as INodeContainer;
 
+            //this action does not have this interface and therefore it cannot contain a child action
             if (container == null)
             {
-                EditorGUILayout.HelpBox("This Action cannot have another Action.", MessageType.Info);
+                EditorGUILayout.HelpBox("This Action cannot have another Action added to it.", MessageType.Info);
                 return;
             }
+            //validate and draw
             ValidateActionList();
 
-            childrenSerializedObject.Update();
-            childrenList.DoLayoutList();
-            childrenSerializedObject.ApplyModifiedProperties();
+            //update the new object and do the list things
+            nestedActionsSerializedObject.Update();
+            nestedActionsList.DoLayoutList();
+            nestedActionsSerializedObject.ApplyModifiedProperties();
+
+            SyncSelectionNode();
         }
 
+        /// <summary>
+        /// Validate and draw the actions
+        /// </summary>
         private void ValidateActionList()
         {
-            if (childrenSerializedObject != null && childrenSerializedObject.targetObject == currentNode)
+            if (nestedActionsSerializedObject != null && nestedActionsSerializedObject.targetObject == currentNode)
             {
                 return;
             }
-            childrenSerializedObject = new SerializedObject(currentNode);
-            SerializedProperty property = childrenSerializedObject.FindProperty("objectiveActions");
+            nestedActionsSerializedObject = new SerializedObject(currentNode);
+            SerializedProperty property = GetNestedActionsProperty(nestedActionsSerializedObject);
 
-            if (property == null)
-            {
-                property = childrenSerializedObject.FindProperty("objectiveSubactions");
-            }
-
-            childrenList = new ReorderableList(childrenSerializedObject, property, true, true, true, true);
-            childrenList.drawHeaderCallback = rect =>
+            //make them a reorderable list
+            nestedActionsList = new ReorderableList(nestedActionsSerializedObject, property, true, true, true, true);
+            nestedActionsList.drawHeaderCallback = rect =>
             {
                 EditorGUI.LabelField(rect, "Actions");
             };
 
-            childrenList.drawElementCallback = (rect, index, active, focused) =>
-            {                
+            nestedActionsList.onSelectCallback = list =>
+            {
+                SyncSelectionNode();
+            };
+
+            //callback to draw the list onto the tool UI
+            nestedActionsList.drawElementCallback = (rect, index, active, focused) =>
+            {
                 SerializedProperty element = property.GetArrayElementAtIndex(index);
                 ObjectiveAction node = element.objectReferenceValue as ObjectiveAction;
 
+                //create some rows
                 rect.y += 2;
                 rect.height = EditorGUIUtility.singleLineHeight;
 
                 float rectWidth = rect.width;
 
+                //select button's rect
                 Rect selectRect = new Rect(rect.x, rect.y, 24, rect.height);
-                Rect objectRect = new Rect(rect.x + 44, rect.y, rectWidth - 112, rect.height);
-                Rect openRect = new Rect(rect.x + rectWidth - 60, rect.y, 30, rect.height);
-                Rect pingRect = new Rect(rect.x + rectWidth - 30, rect.y, 30, rect.height);
+                //text field's rect
+                Rect objectRect = new Rect(rect.x + 44, rect.y, rectWidth - 175, rect.height);
+                //duplicate button
+                Rect duplicateRect = new Rect(rect.x + rectWidth - 120, rect.y, 30, rect.height);
+                //'+' button's rect
+                Rect openRect = new Rect(rect.x + rectWidth - 80, rect.y, 30, rect.height);
+                //ping button
+                Rect pingRect = new Rect(rect.x + rectWidth - 40, rect.y, 40, rect.height);
 
-                if (selectedNode == node)
+                //highlight the selection
+                if (nestedActionsList != null && nestedActionsList.index == index)
                 {
-                    EditorGUI.DrawRect(rect, new Color(0.3f, 0.5f, 0.2f, 0.25f));
+                    EditorGUI.DrawRect(rect, new Color(0.3f, 0.5f, 0.2f, 0.75f));
                 }
 
                 if (node != null)
                 {
+                    //select the action
                     if (GUI.Button(selectRect, "S"))
                     {
                         SelectAction(node);
                     }
 
+                    //create the text field and allow rename
                     string newName = EditorGUI.TextField(objectRect, node.name);
 
+                    //if its not equal to the class's name that means we renamed it
                     if (newName != node.name)
                     {
                         RenameObject(node, newName);
                     }
 
-                    bool clickableRow = Event.current.type == EventType.MouseDown && 
+                    //duplicate the entry
+                    if (GUI.Button(duplicateRect, "D"))
+                    {
+                        DuplicateNode(node);
+                    }
+
+                    //create the space we're allowed to double click on
+                    bool clickableRow = Event.current.type == EventType.MouseDown &&
+                        Event.current.clickCount == 2 &&
                         rect.Contains(Event.current.mousePosition) &&
                         !objectRect.Contains(Event.current.mousePosition) &&
                         !openRect.Contains(Event.current.mousePosition) &&
-                        !pingRect.Contains(Event.current.mousePosition);
-                
+                        !pingRect.Contains(Event.current.mousePosition) &&
+                        !duplicateRect.Contains(Event.current.mousePosition);
 
-                    if (clickableRow)
-                    {
-                        SelectAction(node);
-                        //GUI.FocusControl(null);
-                        if (Event.current.clickCount == 2 && node is INodeContainer)
-                        {
-                            NavigateInto(node);
-                        }
-                        Event.current.Use();
-                    }
                     if (node is INodeContainer)
                     {
+                        if (clickableRow)
+                        {
+                            NavigateInto(node);
+                            Event.current.Use();
+                        }
+                    }
+                    //check that this entry can have actions nested in it
+                    if (node is INodeContainer)
+                    {
+                        //use the + button to navigate in
                         if (GUI.Button(openRect, "+"))
                         {
                             NavigateInto(node);
                         }
                     }
-
+                    //ping the object in the hierarchy
                     if (GUI.Button(pingRect, "Ping"))
                     {
                         EditorGUIUtility.PingObject(node.gameObject);
@@ -611,12 +628,13 @@ namespace Support.Editor
                 }
             };
 
-            childrenList.onAddDropdownCallback = (rect, list) =>
+            nestedActionsList.onAddDropdownCallback = (rect, list) =>
             {
                 ShowAddMenu();
             };
 
-            childrenList.onRemoveCallback = list =>
+            //callback when trying to delete an action
+            nestedActionsList.onRemoveCallback = list =>
             {
                 SerializedProperty property = list.serializedProperty;
 
@@ -624,9 +642,11 @@ namespace Support.Editor
                 {
                     return;
                 }
+                //get the one we selected
                 SerializedProperty element = property.GetArrayElementAtIndex(list.index);
                 ObjectiveAction node = element.objectReferenceValue as ObjectiveAction;
 
+                //display a confirmation popup window
                 bool confirm = EditorUtility.DisplayDialog("Remove Action", node != null ?
                     $"Remove '{node.name}?" : "Remove this element?", "Remove", "Cancel");
 
@@ -639,8 +659,41 @@ namespace Support.Editor
                 nodeParent = currentNode;
                 nodeIndexToDelete = list.index;
             };
+        }
 
-            
+        private void DuplicateNode(ObjectiveAction sourceNode)
+        {
+            if (sourceNode == null)
+            {
+                return;
+            }
+
+            if (!(currentNode is Component parent))
+            {
+                Debug.LogError("Current node is not a valid parent.");
+                return;
+            }
+
+            GameObject clone = Instantiate(sourceNode.gameObject, parent.transform);
+            clone.name = sourceNode.name + "_Clone";
+
+            Undo.RegisterCreatedObjectUndo(clone, "Duplicate Node");
+            ObjectiveAction newNode = clone.GetComponent<ObjectiveAction>();
+
+            SerializedObject newSerializedObject = new SerializedObject(currentNode);
+            SerializedProperty property = GetNestedActionsProperty(newSerializedObject);
+
+            int propertyIndex = property.arraySize;
+            property.InsertArrayElementAtIndex(propertyIndex);
+            property.GetArrayElementAtIndex(propertyIndex).objectReferenceValue = newNode;
+
+            newSerializedObject.ApplyModifiedProperties();
+
+            nestedActionsList.index = propertyIndex;
+            selectedNode = newNode;
+            Selection.activeObject = newNode;
+
+            EditorGUIUtility.PingObject(newNode.gameObject);
         }
         #endregion
 
@@ -651,7 +704,7 @@ namespace Support.Editor
 
             GUILayout.Label("Configure", EditorStyles.boldLabel);
 
-            rightColumnScroll = EditorGUILayout.BeginScrollView(rightColumnScroll);
+            rightPanelScroll = EditorGUILayout.BeginScrollView(rightPanelScroll);
 
             if (selectedNode != null)
             {
@@ -664,7 +717,12 @@ namespace Support.Editor
                     }
                     UnityEditor.Editor.CreateCachedEditor(selectedNode, null, ref cachedEditor);
                 }
-                cachedEditor.OnInspectorGUI();
+                if (cachedEditor.serializedObject != null)
+                {
+                    cachedEditor.serializedObject.Update();
+                    cachedEditor.OnInspectorGUI();
+                    cachedEditor.serializedObject.ApplyModifiedProperties();
+                }
             }
             EditorGUILayout.EndScrollView();
             EditorGUILayout.EndVertical();
@@ -672,6 +730,10 @@ namespace Support.Editor
         #endregion
 
         #region Handle navigating the interface
+        /// <summary>
+        /// Set the selected goal
+        /// </summary>
+        /// <param name="goal"></param>
         private void SelectGoal(Goal goal)
         {
             selectedGoal = goal;
@@ -679,38 +741,102 @@ namespace Support.Editor
             selectedNode = goal;
             navigationStack.Clear();
         }
-
+                
         private void SelectAction(UnityObject node)
         {
             selectedNode = node;
+            //highlight the selected object in the hierarchy
             Selection.activeObject = node;
+
+            if (nestedActionsList != null)
+            {
+                //get the list of actions
+                SerializedProperty property = nestedActionsList.serializedProperty;
+                //clear the list indices to avoid pointing to a null index
+                nestedActionsList.index = -1;
+
+                for (int i = 0; i < property.arraySize; i++)
+                {
+                    //find the index by the provided node reference
+                    if (property.GetArrayElementAtIndex(i).objectReferenceValue == node)
+                    {
+                        //apply the index
+                        nestedActionsList.index = i;
+                        break;
+                    }
+                }
+            }
         }
-        
+
+        /// <summary>
+        /// Sync to Unity's global internal selection so the selected element in the list
+        /// is accurate to what Unity is registering as a selection
+        /// User selects the row rather than a rect, button, etc, so update to match that
+        /// </summary>
+        private void SyncSelectionNode()
+        {
+            if (nestedActionsList == null)
+            {
+                return;
+            }
+
+            SerializedProperty property = nestedActionsList.serializedProperty;
+            //get the selected index
+            int index = nestedActionsList.index;
+
+            if (index >= 0 && index < property.arraySize)
+            {
+                //get the referenced object
+                UnityObject node = property.GetArrayElementAtIndex(index).objectReferenceValue;
+                //set the selected node to that internal selection
+                selectedNode = node;
+                Repaint();
+            }
+        }
+
+        /// <summary>
+        /// Navigate to a specific layer in the breadcrumb
+        /// </summary>
+        /// <param name="node"></param>
         private void NavigateInto(UnityObject node)
         {
+            //navigate to it
             navigationStack.Push(currentNode);
             currentNode = node;
             selectedNode = node;
         }
 
+        /// <summary>
+        /// Go back one layer
+        /// </summary>
         private void NavigateBack()
         {
             if (navigationStack.Count > 0)
             {
+                //go back to the previous one
                 currentNode = navigationStack.Pop();
                 selectedNode = currentNode;
             }
         }
 
+        /// <summary>
+        /// Get the navigation path that
+        /// </summary>
+        /// <returns></returns>
         private List<UnityObject> GetNavigationPath()
         {
             List<UnityObject> path = new List<UnityObject>();
 
+            //returns the reverse order of how we want to navigate
+            //returns the most recent at the bottom of the list
             UnityObject[] stackItems = navigationStack.ToArray();
+            //reverse it so we can properly navigate backwards
+            //having the most recent added to the stack as the first in the array
             Array.Reverse(stackItems);
-
+            
             path.AddRange(stackItems);
 
+            //add the current node to the array since the stack does not hold history to the current entry, only previous entries
             if (currentNode != null)
             {
                 path.Add(currentNode);
@@ -720,39 +846,25 @@ namespace Support.Editor
         #endregion
 
         #region Handle adding nodes
+        /// <summary>
+        /// Show the create actions menu
+        /// </summary>
         private void ShowAddMenu()
         {
             GenericMenu menu = new GenericMenu();
-            TypeCache.TypeCollection types = TypeCache.GetTypesDerivedFrom<ObjectiveAction>();
-            List<Type> validTypes = new List<Type>();
 
-            if (!typeof(ObjectiveAction).IsAbstract)
-            {
-                validTypes.Add(typeof(ObjectiveAction));
-            }
-
-            foreach (Type type in types)
-            {
-                if (type.IsAbstract)
-                {
-                    continue;
-                }
-
-                if (!validTypes.Contains(type))
-                { 
-                    validTypes.Add(type);
-                }
-            }
-
-            validTypes.Sort((a, b) => string.Compare(a.Name, b.Name, StringComparison.Ordinal));
-
-            foreach (Type type in validTypes)
+            //show and select an entry in the menu
+            foreach (Type type in GetValidTypes<ObjectiveAction>())
             {
                 menu.AddItem(new GUIContent(type.Name), false, () => CreateNode(type));
             }
             menu.ShowAsContext();
         }
 
+        /// <summary>
+        /// Handle creating the new action
+        /// </summary>
+        /// <param name="type"></param>
         private void CreateNode(Type type)
         {
             if (!(currentNode is Component parent))
@@ -760,122 +872,152 @@ namespace Support.Editor
                 return;
             }
 
+            //create the object in the hiearchy
             GameObject newObject = new GameObject(type.Name);
+            //set its parent to be the object that holds the list this entry is being added to
             newObject.transform.SetParent(parent.transform);
 
+            //now add the chosen class component
             ObjectiveAction newNode = (ObjectiveAction)newObject.AddComponent(type);
             SerializedObject newSerializedObject = new SerializedObject(currentNode);
-            SerializedProperty property = newSerializedObject.FindProperty("objectiveActions") ??
-                newSerializedObject.FindProperty("objectiveSubactions");
-            
+            SerializedProperty property = GetNestedActionsProperty(newSerializedObject);
+
             int propIndex = property.arraySize;
-            
+
+            //place them in the tool list
             property.InsertArrayElementAtIndex(propIndex);
             property.GetArrayElementAtIndex(propIndex).objectReferenceValue = newNode;
 
             newSerializedObject.ApplyModifiedProperties();
-            selectedNode = newNode;
+
+            //and set it to be the selected entry
+            SelectAction(newNode);
         }
 
+        /// <summary>
+        /// Show the create goal menu
+        /// </summary>
         private void ShowCreateGoalMenu()
         {
             GenericMenu menu = new GenericMenu();
+            List<Type> validTypes = GetValidTypes<Goal>();
 
-            TypeCache.TypeCollection types = TypeCache.GetTypesDerivedFrom<Goal>();
-            List<Type> validTypes = new List<Type>();
-
-            if (!typeof(Goal).IsAbstract)
-            {
-                validTypes.Add(typeof(Goal));
-            }
-
-            foreach (Type type in types)
-            {
-                if (type.IsAbstract)
-                {
-                    continue;
-                }
-                if (!validTypes.Contains(type))
-                {
-                    validTypes.Add(type);
-                }
-            }
-            validTypes.Sort((a, b) => string.Compare(a.Name, b.Name, StringComparison.Ordinal));
-
+            //ensure we have goals created to add
             if (validTypes.Count == 0)
             {
                 menu.AddDisabledItem(new GUIContent("No Goal types found"));
             }
             else
             {
+                //go through all of them and then add them to the list
                 foreach (Type type in validTypes)
                 {
+                    //the callback that allows us to call CreateGoal when clicking an item in the menu
                     menu.AddItem(new GUIContent(type.Name), false, () => CreateGoal(type));
                 }
             }
             menu.ShowAsContext();
         }
 
+        /// <summary>
+        /// Add the new goal to the game
+        /// </summary>
+        /// <param name="type"></param>
         private void CreateGoal(Type type)
         {
+            //create the game object in the hierarchy
             GameObject newObject = new GameObject(type.Name);
+            //allow undo
             Undo.RegisterCreatedObjectUndo(newObject, "Create Goal");
+            //add the chosen goal component
             Goal newGoal = (Goal)newObject.AddComponent(type);
 
             SelectGoal(newGoal);
 
-            goalListNeedsRefresh = true;
+            isRebuildGoalList = true;
             Selection.activeGameObject = newObject;
             EditorGUIUtility.PingObject(newObject);
         }
 
+        /// <summary>
+        /// Apply the new name
+        /// </summary>
+        /// <param name="targetObject"></param>
+        /// <param name="newName"></param>
         private void RenameObject(UnityObject targetObject, string newName)
         {
             if (targetObject is Component comp)
             {
+                //allow undo
                 Undo.RecordObject(comp.gameObject, "Rename Node");
+                //apply the new name to the game object in the hierarchy
                 comp.gameObject.name = newName;
-                EditorUtility.SetDirty(comp.gameObject); 
+                EditorUtility.SetDirty(comp.gameObject);
             }
         }
         #endregion
 
 
         #region Handle deleting the Goals/Actions
+        /// <summary>
+        /// Handle the goals or actions that are being marked for deletion
+        /// </summary>
         private void HandleDeferredDeletes()
         {
+            //if this is a goal we're deleting
             if (goalToDelete != null)
             {
                 DeleteGoal(goalToDelete);
+                //make sure this is now clear for the next one
                 goalToDelete = null;
+                //avoid running anything else
                 GUIUtility.ExitGUI();
             }
+
+            //if this is an objective action to delete
             if (nodeIndexToDelete != -1 && nodeParent != null)
             {
+                //get the type of action
                 SerializedObject newNodeParent = new SerializedObject(nodeParent);
-                SerializedProperty property = newNodeParent.FindProperty("objectiveActions") ?? newNodeParent.FindProperty("objectiveSubactions");
-
+                SerializedProperty property = GetNestedActionsProperty(newNodeParent);
+                                
                 if (property != null && nodeIndexToDelete < property.arraySize)
                 {
+                    //delete it from the tool
                     property.DeleteArrayElementAtIndex(nodeIndexToDelete);
                     newNodeParent.ApplyModifiedProperties();
-                }
-                if (actionToDelete != null)
-                {
-                    if (selectedNode == actionToDelete)
+
+                    //allow undo and destroy the gameobject
+                    if (actionToDelete != null)
                     {
-                        selectedNode = currentNode;
+                        Undo.DestroyObjectImmediate(actionToDelete.gameObject);
                     }
-                    Undo.DestroyObjectImmediate(actionToDelete.gameObject);
+                    //go to the parent node
+                    selectedNode = currentNode;
+                    Selection.activeObject = currentNode;
+
+                    //avoid pointing to a null entry
+                    if (nestedActionsList != null)
+                    {
+                        nestedActionsList.index = -1;
+                    }
+                    //refresh the UI
+                    Repaint();
                 }
+                //reset the values
                 actionToDelete = null;
                 nodeParent = null;
                 nodeIndexToDelete = -1;
 
+                //exit
                 GUIUtility.ExitGUI();
             }
         }
 
+        /// <summary>
+        /// Delete the goal
+        /// </summary>
+        /// <param name="targetGoal"></param>
         private void DeleteGoal(Goal targetGoal)
         {
             if (targetGoal == null)
@@ -883,14 +1025,16 @@ namespace Support.Editor
                 return;
             }
 
-            bool confirm = EditorUtility.DisplayDialog("Delete Goal", 
-                $"Delete '{targetGoal.name} and all its child objects?", "Delete", "Cancel");
-            
+            //display confirmation window
+            bool confirm = EditorUtility.DisplayDialog("Delete Goal",
+                $"Delete '{targetGoal.name}' and all its child objects?", "Delete", "Cancel");
+
             if (!confirm)
             {
                 return;
             }
 
+            //clear the references
             if (selectedGoal == targetGoal)
             {
                 selectedGoal = null;
@@ -898,16 +1042,76 @@ namespace Support.Editor
                 selectedNode = null;
                 navigationStack.Clear();
             }
+            //allow undo and destroy it
             Undo.DestroyObjectImmediate(targetGoal.gameObject);
-            goalListNeedsRefresh = true;
+            isRebuildGoalList = true;
         }
         #endregion
 
+        /// <summary>
+        /// If the hiearchy is updated, make sure the tool syncs
+        /// </summary>
         private void OnHierarchyChange()
         {
-            goalListNeedsRefresh = true;
+            isRebuildGoalList = true;
             Repaint();
         }
+
+        #region Helper methods
+        private List<Type> GetValidTypes<T>()
+        {
+            List<Type> validTypes = new List<Type>();
+
+            //allow base classes
+            if (!typeof(T).IsAbstract)
+            {
+                validTypes.Add(typeof(T));
+            }
+
+            //get derived classes
+            foreach (Type type in TypeCache.GetTypesDerivedFrom<T>())
+            {
+                if (type.IsAbstract)
+                {
+                    continue;
+                }
+                //if it doesn't contain the requested type, add it
+                if (!validTypes.Contains(type))
+                {
+                    validTypes.Add(type);
+                }
+            }
+            //sort them alphabetically
+            validTypes.Sort((a, b) => string.Compare(a.Name, b.Name, StringComparison.Ordinal));
+
+            return validTypes;
+        }
+
+        /// <summary>
+        /// Get the objective actions property
+        /// </summary>
+        /// <param name="serializedObject">Pass the object we want to find the property of</param>
+        /// <returns>Return either actions or subactions depending upon the object we passed</returns>
+        private SerializedProperty GetNestedActionsProperty(SerializedObject serializedObject)
+        {
+            SerializedProperty actionsProperty = serializedObject.FindProperty(PROPERTY_ACTIONS_NAME);
+            SerializedProperty subactionsProperty = serializedObject.FindProperty(PROPERTY_SUBACTIONS_NAME);
+            
+            return actionsProperty ?? subactionsProperty;
+        }
+
+        /// <summary>
+        /// Do clean up
+        /// </summary>
+        private void OnDisable()
+        {
+            if (cachedEditor != null)
+            {
+                DestroyImmediate(cachedEditor);
+                cachedEditor = null;
+            }
+        }
+        #endregion
     }
 }
 #endif
