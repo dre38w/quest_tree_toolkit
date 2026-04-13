@@ -27,12 +27,15 @@ namespace Support.Editor
         private const float SPLITTER_WIDTH = 4f;
         private const int MAX_BREADCRUMBS_VISIBLE = 4;
 
+        //the adjustable width of the left and right panels
         private float leftWidth = 220f;
         private float rightWidth = 320f;
 
         private bool isDraggingLeftSplitter;
         private bool isDraggingRightSplitter;
 
+        //used to indicate when a redraw is required
+        //TODO:  may not need this
         private bool isRebuildGoalList = true;
 
         private Vector2 leftPanelScroll;
@@ -82,6 +85,7 @@ namespace Support.Editor
             float windowWidth = position.width;
             float windowHeight = position.height;
 
+            //handle drawing the window rects
             Rect leftRect = new Rect(0, 0, leftWidth, windowHeight);
             Rect leftSplitterRect = new Rect(leftRect.xMax, 0, SPLITTER_WIDTH, windowHeight);
 
@@ -249,7 +253,7 @@ namespace Support.Editor
             EditorGUILayout.BeginVertical();
             GUILayout.Label("Goals", EditorStyles.boldLabel);
 
-            ValidateGoalList();
+            HandleGoalList();
 
             leftPanelScroll = EditorGUILayout.BeginScrollView(leftPanelScroll);
 
@@ -257,6 +261,7 @@ namespace Support.Editor
             if (goalList != null)
             {
                 goalList.DoLayoutList();
+                SyncGoalSelection();
             }
             EditorGUILayout.EndScrollView();
 
@@ -269,23 +274,14 @@ namespace Support.Editor
         }
 
         /// <summary>
-        /// Validate whether we need to rebuild the list or not
+        /// Draw and handle input for the goal list
         /// </summary>
-        private void ValidateGoalList()
+        private void HandleGoalList()
         {
             if (!isRebuildGoalList && goalList != null)
             {
                 return;
             }
-            BuildGoalList();            
-            isRebuildGoalList = false;
-        }
-
-        /// <summary>
-        /// Visually build the goal list
-        /// </summary>
-        private void BuildGoalList()
-        {
             //clear previous
             cachedGoals.Clear();
             //add all those in the hierarchy
@@ -302,6 +298,24 @@ namespace Support.Editor
             };
 
             goalList.elementHeight = EditorGUIUtility.singleLineHeight + 6f;
+
+            goalList.index = -1;
+            if (selectedGoal != null)
+            {
+                for (int i = 0; i < cachedGoals.Count; i++)
+                {
+                    if (cachedGoals[i] == selectedGoal)
+                    {
+                        goalList.index = i;
+                        break;
+                    }
+                }
+            }
+
+            goalList.onSelectCallback = list =>
+            {
+                SyncGoalSelection();
+            };
 
             goalList.drawElementCallback = (rect, index, active, focused) =>
             {
@@ -358,6 +372,7 @@ namespace Support.Editor
                 }
                 isRebuildGoalList = true;
             };
+            isRebuildGoalList = false;
         }
         #endregion
 
@@ -508,20 +523,20 @@ namespace Support.Editor
                 return;
             }
             //validate and draw
-            ValidateActionList();
+            HandleActionsList();
 
             //update the new object and do the list things
             nestedActionsSerializedObject.Update();
             nestedActionsList.DoLayoutList();
             nestedActionsSerializedObject.ApplyModifiedProperties();
 
-            SyncSelectionNode();
+            SyncActionSelection();
         }
 
         /// <summary>
-        /// Validate and draw the actions
+        /// Draw and handle input for the actions
         /// </summary>
-        private void ValidateActionList()
+        private void HandleActionsList()
         {
             if (nestedActionsSerializedObject != null && nestedActionsSerializedObject.targetObject == currentNode)
             {
@@ -532,6 +547,21 @@ namespace Support.Editor
 
             //make them a reorderable list
             nestedActionsList = new ReorderableList(nestedActionsSerializedObject, property, true, true, true, true);
+
+            nestedActionsList.index = -1;
+
+            if (selectedNode != null)
+            {
+                for (int i = 0; i < property.arraySize; i++)
+                {
+                    if (property.GetArrayElementAtIndex(i).objectReferenceValue == selectedNode)
+                    {
+                        nestedActionsList.index = i;
+                        break;
+                    }
+                }
+            }
+
             nestedActionsList.drawHeaderCallback = rect =>
             {
                 EditorGUI.LabelField(rect, "Actions");
@@ -539,7 +569,7 @@ namespace Support.Editor
 
             nestedActionsList.onSelectCallback = list =>
             {
-                SyncSelectionNode();
+                SyncActionSelection();
             };
 
             //callback to draw the list onto the tool UI
@@ -668,31 +698,36 @@ namespace Support.Editor
                 return;
             }
 
-            if (!(currentNode is Component parent))
+            if (currentNode is not Component parent)
             {
                 Debug.LogError("Current node is not a valid parent.");
                 return;
             }
 
+            //copy by instantiating the object we are selected on
             GameObject clone = Instantiate(sourceNode.gameObject, parent.transform);
             clone.name = sourceNode.name + "_Clone";
 
+            //allow undo
             Undo.RegisterCreatedObjectUndo(clone, "Duplicate Node");
             ObjectiveAction newNode = clone.GetComponent<ObjectiveAction>();
 
             SerializedObject newSerializedObject = new SerializedObject(currentNode);
             SerializedProperty property = GetNestedActionsProperty(newSerializedObject);
 
+            //place it in the list array
             int propertyIndex = property.arraySize;
             property.InsertArrayElementAtIndex(propertyIndex);
             property.GetArrayElementAtIndex(propertyIndex).objectReferenceValue = newNode;
 
             newSerializedObject.ApplyModifiedProperties();
 
+            //select the new copy
             nestedActionsList.index = propertyIndex;
             selectedNode = newNode;
             Selection.activeObject = newNode;
 
+            //ping the game object in the hierarchy for visual clarity
             EditorGUIUtility.PingObject(newNode.gameObject);
         }
         #endregion
@@ -702,10 +737,11 @@ namespace Support.Editor
         {
             EditorGUILayout.BeginVertical();
 
-            GUILayout.Label("Configure", EditorStyles.boldLabel);
+            GUILayout.Label("Configure Settings", EditorStyles.boldLabel);
 
             rightPanelScroll = EditorGUILayout.BeginScrollView(rightPanelScroll);
 
+            //make sure something is selected before trying to draw its component on the panel
             if (selectedNode != null)
             {
                 if (cachedEditor == null || cachedEditor.target != selectedNode)
@@ -717,9 +753,12 @@ namespace Support.Editor
                     }
                     UnityEditor.Editor.CreateCachedEditor(selectedNode, null, ref cachedEditor);
                 }
+                //the right panel functions very similar to Unity's inspector
+                //it only displays the ObjectiveActions and Goal components
                 if (cachedEditor.serializedObject != null)
                 {
                     cachedEditor.serializedObject.Update();
+                    //view as inspector
                     cachedEditor.OnInspectorGUI();
                     cachedEditor.serializedObject.ApplyModifiedProperties();
                 }
@@ -736,12 +775,42 @@ namespace Support.Editor
         /// <param name="goal"></param>
         private void SelectGoal(Goal goal)
         {
+            if (goal == null)
+            {
+                return;
+            }
+
             selectedGoal = goal;
             currentNode = goal;
             selectedNode = goal;
+            //clear the navigation stack because this is the beginning of our navigation tree
+            //this avoids navigating back to a previous goal selection
             navigationStack.Clear();
+
+            if (goalList != null)
+            {
+                goalList.index = -1;
+
+                for (int i = 0; i < cachedGoals.Count; i++)
+                {
+                    if (cachedGoals[i] == goal)
+                    {
+                        goalList.index = i;
+                        break;
+                    }
+                }
+            }
+            nestedActionsSerializedObject = null;
+            nestedActionsList = null;
+            Repaint();
         }
                 
+        /// <summary>
+        /// Used to auto select objects and set a selection as the active object in our list
+        /// Primarily used when requiring a selection without the user's input
+        /// or when utilizing the custom input rather than Unity's.  (buttons, rect based selection, etc)
+        /// </summary>
+        /// <param name="node"></param>
         private void SelectAction(UnityObject node)
         {
             selectedNode = node;
@@ -773,7 +842,7 @@ namespace Support.Editor
         /// is accurate to what Unity is registering as a selection
         /// User selects the row rather than a rect, button, etc, so update to match that
         /// </summary>
-        private void SyncSelectionNode()
+        private void SyncActionSelection()
         {
             if (nestedActionsList == null)
             {
@@ -790,6 +859,40 @@ namespace Support.Editor
                 UnityObject node = property.GetArrayElementAtIndex(index).objectReferenceValue;
                 //set the selected node to that internal selection
                 selectedNode = node;
+                Repaint();
+            }
+        }
+
+        private void SyncGoalSelection()
+        {
+            if (goalList == null)
+            {
+                return;
+            }
+
+            int index = goalList.index;
+
+            if (index >= 0 && index < cachedGoals.Count)
+            {
+                Goal goal = cachedGoals[index];
+
+                if (goal == null)
+                {
+                    return;
+                }
+
+                if (selectedGoal == goal)
+                {
+                    return;
+                }
+
+                selectedGoal = goal;
+                currentNode = goal;
+                selectedNode = goal;
+                navigationStack.Clear();
+
+                nestedActionsSerializedObject = null;
+                nestedActionsList = null;
                 Repaint();
             }
         }

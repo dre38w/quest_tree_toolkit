@@ -1,5 +1,5 @@
 /*
- * Description: Interface that allows the custom UI editor to reference the Goal and ObjectiveAction classes
+ * Description: Interface that allows the custom UI editor, or other systems, to reference the Goal and ObjectiveAction classes
  */
 using Service.Framework.Goals;
 using System.Collections.Generic;
