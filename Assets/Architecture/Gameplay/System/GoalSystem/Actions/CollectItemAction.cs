@@ -3,6 +3,7 @@
  */
 
 using Gameplay.System.GameManagement;
+using Service.Core;
 using Service.Framework.Goals;
 using Service.Framework.Quests;
 using UnityEngine;
@@ -10,6 +11,7 @@ using UnityEngine.Events;
 
 namespace Gameplay.System.Actions
 {
+    [Submenu("Player/Check For Quest Item")]
     public class CollectItemAction : ObjectiveAction
     {
         [HideInInspector]

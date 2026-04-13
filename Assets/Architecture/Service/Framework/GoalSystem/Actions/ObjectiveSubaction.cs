@@ -4,6 +4,7 @@ Description: Handles sub actions allowing a completed action to trigger other ac
 Serving as a conditional action.
 Able to take both single actions and subactions, creating nesting conditional actions
 */
+using Service.Core;
 using Service.Core.Utilities;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ using UnityEngine;
 
 namespace Service.Framework.Goals
 {
+    [Submenu("Logic/Subaction")]
     [Serializable]
     public class ObjectiveSubaction : ObjectiveAction, INodeContainer
     {        

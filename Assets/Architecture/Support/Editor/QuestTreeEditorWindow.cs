@@ -2,6 +2,7 @@
  * Description: A custom Editor UI that handles creating and organizing the Goal and Objective Actions
  */
 #if UNITY_EDITOR
+using Service.Core;
 using Service.Framework;
 using Service.Framework.Goals;
 using System;
@@ -959,9 +960,21 @@ namespace Support.Editor
             //show and select an entry in the menu
             foreach (Type type in GetValidTypes<ObjectiveAction>())
             {
-                menu.AddItem(new GUIContent(type.Name), false, () => CreateNode(type));
+                string path = GetMenuPath(type);
+                menu.AddItem(new GUIContent(path), false, () => CreateNode(type));
             }
             menu.ShowAsContext();
+        }
+
+        private string GetMenuPath(Type type)
+        {
+            SubmenuAttribute menuAttribute = (SubmenuAttribute)Attribute.GetCustomAttribute(type, typeof(SubmenuAttribute));
+
+            if (menuAttribute != null && !string.IsNullOrEmpty(menuAttribute.Path))
+            {
+                return menuAttribute.Path;
+            }
+            return "Other/" + type.Name;
         }
 
         /// <summary>
@@ -1185,7 +1198,7 @@ namespace Support.Editor
                 }
             }
             //sort them alphabetically
-            validTypes.Sort((a, b) => string.Compare(a.Name, b.Name, StringComparison.Ordinal));
+            validTypes.Sort((a, b) => string.Compare(GetMenuPath(a), GetMenuPath(b), StringComparison.Ordinal));
 
             return validTypes;
         }

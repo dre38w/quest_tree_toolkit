@@ -1,11 +1,13 @@
 /*
  * Description: Action that completes when collision was detected
  */
+using Service.Core;
 using Service.Framework.Goals;
 using UnityEngine;
 
 namespace Gameplay.System.Actions
 {
+    [Submenu("Logic/Collision Detection")]
     public class CollisionAction : ObjectiveAction
     {
         [Tooltip("The object(s) the player is colliding with.")]

@@ -1,11 +1,13 @@
 /*
  * Description: Completes when the player presses the interact button.
  */
+using Service.Core;
 using Service.Framework.Goals;
 using UnityEngine;
 
 namespace Gameplay.System.Actions
 {
+    [Submenu("Player/Player Interact")]
     public class PlayerInteractAction : ObjectiveAction
     {
         [SerializeField]

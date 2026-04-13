@@ -2,11 +2,13 @@
  * Description: Restarts a goal that has not yet completed
  */
 
+using Service.Core;
 using Service.Framework.GoalManagement;
 using UnityEngine;
 
 namespace Service.Framework.Goals
 {
+    [Submenu("Goal Management/Restart Incomplete Goal")]
     public class RestartIncompleteGoalAction : ObjectiveAction
     {
         /// <summary>

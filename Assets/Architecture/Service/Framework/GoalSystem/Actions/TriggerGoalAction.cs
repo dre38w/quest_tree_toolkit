@@ -1,11 +1,13 @@
 /*
  * Description: Automatically triggers a specified goal to start
  */
+using Service.Core;
 using Service.Framework.GoalManagement;
 using UnityEngine;
 
 namespace Service.Framework.Goals
 {
+    [Submenu("Goal Management/Trigger Goal Start")]
     public class TriggerGoalAction : ObjectiveAction
     {
         /// <summary>

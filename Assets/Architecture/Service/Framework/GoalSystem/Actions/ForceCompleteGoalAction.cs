@@ -1,9 +1,11 @@
+using Service.Core;
 using Service.Framework.GoalManagement;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Service.Framework.Goals
 {
+    [Submenu("Goal Management/Force Complete Goal")]
     public class ForceCompleteGoalAction : ObjectiveAction
     {
         public UnityEvent<QuestID> OnQuestFailed = new UnityEvent<QuestID>();

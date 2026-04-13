@@ -2,12 +2,14 @@
  * Description: Toggles the player having control of the character.  
  *          Useful for cutscenes, scene transitions, dialog interactions, etc.
  */
+using Service.Core;
 using Service.Framework.Goals;
 using System.Collections;
 using UnityEngine;
 
 namespace Gameplay.System.Actions
 {
+    [Submenu("Player/Toggle Player Control")]
     public class TogglePlayerControlAction : ObjectiveAction
     {
         [SerializeField]

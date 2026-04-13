@@ -23,7 +23,7 @@ namespace Gameplay.System.Actions
 
         [Tooltip("The button that will advance the dialog.")]
         [SerializeField]
-        private ButtonMessenger actionButton;
+        private ActionButtonMessenger actionButton;
 
         [Tooltip("Is this requiring the player to input a response?")]
         [SerializeField]
@@ -37,7 +37,7 @@ namespace Gameplay.System.Actions
             //consider the dialog boxes to be part of the Gameplay UI state layer
             ReferenceRegistry.Instance.UiStateHandler.SetUIState(UIStateHandler.UIState.Gameplay);
             DisplayText();
-            actionButton.OnButtonPressed.AddListener(OnContinueButtonPressed);
+            actionButton.OnActionButtonPressed.AddListener(OnContinueButtonPressed);
         }
 
         public override void ReinitializeAction()
@@ -76,7 +76,7 @@ namespace Gameplay.System.Actions
             ReferenceRegistry.Instance.UiStateHandler.SetUIState(UIStateHandler.UIState.Default);
 
             displayText.text = string.Empty;
-            actionButton.OnButtonPressed.RemoveListener(OnContinueButtonPressed);
+            actionButton.OnActionButtonPressed.RemoveListener(OnContinueButtonPressed);
             actionButton.gameObject.SetActive(false);
 
         }

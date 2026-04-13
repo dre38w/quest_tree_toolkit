@@ -1,6 +1,7 @@
 /*
  * Description: Updates the quest log
  */
+using Service.Core;
 using Service.Framework;
 using Service.Framework.GoalManagement;
 using Service.Framework.Goals;
@@ -8,6 +9,7 @@ using UnityEngine;
 
 namespace Gameplay.System.Actions
 {
+    [Submenu("Quest Log Management/Update Objective")]
     public class UpdateObjectiveLog : ObjectiveAction
     {       
         /// <summary>

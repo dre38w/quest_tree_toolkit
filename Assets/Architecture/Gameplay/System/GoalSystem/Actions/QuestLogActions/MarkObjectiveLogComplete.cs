@@ -1,12 +1,14 @@
 /*
  * Description: Marks an objective complete.
  */
+using Service.Core;
 using Service.Framework.GoalManagement;
 using Service.Framework.Goals;
 using UnityEngine;
 
 namespace Gameplay.System.Actions
 {
+    [Submenu("Quest Log Management/Mark Objective Complete")]
     public class MarkObjectiveLogComplete : ObjectiveAction
     {
         [SerializeField]

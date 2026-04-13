@@ -3,10 +3,12 @@
 Description: When there is a branching subaction this handles completing all the other non-branching actions/subactions
 */
 
+using Service.Core;
 using System.Linq;
 
 namespace Service.Framework.Goals
 {
+    [Submenu("Logic/Conditional Branch")]
     public class BranchingSubaction : ObjectiveSubaction
     {
         public override bool HandleBranch(ObjectiveAction sourceAction)

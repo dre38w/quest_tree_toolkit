@@ -1,12 +1,14 @@
 /*
  * Description: Plays a timeline.  Useful for triggering cut scenes, playing animations on objects, etc.
  */
+using Service.Core;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
 namespace Service.Framework.Goals
 {
+    [Submenu("Animation/Play Timeline")]
     public class PlayTimelineAction : ObjectiveAction
     {
         [SerializeField]
