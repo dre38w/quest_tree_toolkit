@@ -1,50 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &269185302357452420
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3506129511684122965}
-  - component: {fileID: 1232773873895920751}
-  m_Layer: 0
-  m_Name: DeactivateCursor
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3506129511684122965
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 269185302357452420}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2204747909493455739}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1232773873895920751
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 269185302357452420}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a3675f871b6c4d4da56f08609dacd91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.ToggleCursorLockAction
-  isCursorLocked: 1
 --- !u!1 &501820479767133954
 GameObject:
   m_ObjectHideFlags: 0
@@ -76,12 +31,10 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6179344191775596869}
-  - {fileID: 8039449150735337967}
   - {fileID: 294676916901258083}
   - {fileID: 8147654918232987489}
   - {fileID: 7408746588681242687}
   - {fileID: 1979163694077918944}
-  - {fileID: 3506129511684122965}
   - {fileID: 4611055225317020734}
   - {fileID: 4724509748382548927}
   m_Father: {fileID: 4905257940396134626}
@@ -105,12 +58,10 @@ MonoBehaviour:
   - rid: 1373684925732749383
   objectiveActions:
   - {fileID: 4317520953707269586}
-  - {fileID: 5792546270135114509}
   - {fileID: 4747139351057024997}
   - {fileID: 874764497918820071}
   - {fileID: 3693441010006080188}
   - {fileID: 6194827910382128907}
-  - {fileID: 1232773873895920751}
   - {fileID: 7709429071257120835}
   - {fileID: 605530132417784454}
   isRandomAtStart: 0
@@ -170,51 +121,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18eaa07a3bc3d7546ae9a27247d52448, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.LevelUpPlayerActionExample
---- !u!1 &792765494236174663
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6859029642874068747}
-  - component: {fileID: 2281800794948374376}
-  m_Layer: 0
-  m_Name: ActivateCursor (3)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6859029642874068747
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 792765494236174663}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.24869, y: 1.9844, z: -2.8238}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2146097875424750225}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2281800794948374376
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 792765494236174663}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a3675f871b6c4d4da56f08609dacd91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.ToggleCursorLockAction
-  isCursorLocked: 0
 --- !u!1 &1053870069927708595
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,6 +166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.TogglePlayerControlAction
   playerHasControl: 0
+  isCursorLocked: 0
 --- !u!1 &1079779193782804400
 GameObject:
   m_ObjectHideFlags: 0
@@ -391,11 +298,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8769875533086160060}
-  - {fileID: 7463211119944887526}
   - {fileID: 4856099717223467230}
   - {fileID: 7252659124221326922}
   - {fileID: 2310416753295859223}
-  - {fileID: 6541014851891368362}
   - {fileID: 4404969675068650165}
   - {fileID: 2761847180726562812}
   m_Father: {fileID: 4905257940396134626}
@@ -420,11 +325,9 @@ MonoBehaviour:
   - rid: 1373684925732749387
   objectiveActions:
   - {fileID: 8862353081381655769}
-  - {fileID: 6378456622336070627}
   - {fileID: 5935637333982451027}
   - {fileID: 2472641851115629131}
   - {fileID: 5768381021093764937}
-  - {fileID: 1595614712199470907}
   - {fileID: 7644600663214411257}
   - {fileID: 4388270299276433631}
   isRandomAtStart: 0
@@ -538,51 +441,6 @@ MonoBehaviour:
   objectsToToggle:
   - {fileID: 7533498154813661333}
   setObjectActive: 0
---- !u!1 &1676338307612060317
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6541014851891368362}
-  - component: {fileID: 1595614712199470907}
-  m_Layer: 0
-  m_Name: DeactivateCursor (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6541014851891368362
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1676338307612060317}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.24869, y: 1.9844, z: -2.8238}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1841784347527784751}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1595614712199470907
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1676338307612060317}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a3675f871b6c4d4da56f08609dacd91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.ToggleCursorLockAction
-  isCursorLocked: 1
 --- !u!1 &1680210426792005881
 GameObject:
   m_ObjectHideFlags: 0
@@ -614,13 +472,11 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7885464651391361443}
-  - {fileID: 7346918457735931216}
   - {fileID: 3731177076317393574}
   - {fileID: 5625755064747424527}
   - {fileID: 1353159882491643578}
   - {fileID: 2183810336979476719}
   - {fileID: 6182824406829083239}
-  - {fileID: 6701513167421647020}
   - {fileID: 369056185522735166}
   - {fileID: 4356424458141415945}
   m_Father: {fileID: 4905257940396134626}
@@ -644,13 +500,11 @@ MonoBehaviour:
   - rid: 1373684925732749393
   objectiveActions:
   - {fileID: 1496533581259570540}
-  - {fileID: 2007834980608171048}
   - {fileID: 8445245749412352694}
   - {fileID: 6555489617323796383}
   - {fileID: 8008437696043094363}
   - {fileID: 1896764768829064930}
   - {fileID: 8773543208769771977}
-  - {fileID: 1308277219356070939}
   - {fileID: 3557297057137941307}
   - {fileID: 2142039720530672437}
   isRandomAtStart: 0
@@ -711,52 +565,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.MarkObjectiveLogComplete
   targetObjective: {fileID: 605530132417784454}
+  doesCompleteTargetObjective: 0
   doesCompleteQuest: 0
---- !u!1 &1814005405344426535
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6196147247286785935}
-  - component: {fileID: 4501863793446150398}
-  m_Layer: 0
-  m_Name: DeactivateCursor (3)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6196147247286785935
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1814005405344426535}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.24869, y: 1.9844, z: -2.8238}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2146097875424750225}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4501863793446150398
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1814005405344426535}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a3675f871b6c4d4da56f08609dacd91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.ToggleCursorLockAction
-  isCursorLocked: 1
 --- !u!1 &1843113533856148124
 GameObject:
   m_ObjectHideFlags: 0
@@ -967,6 +777,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.TogglePlayerControlAction
   playerHasControl: 0
+  isCursorLocked: 0
 --- !u!1 &2252183212958704357
 GameObject:
   m_ObjectHideFlags: 0
@@ -1208,7 +1019,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a2a217c15c865648bfa9be0093435cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.UI.ButtonMessenger
-  OnButtonPressed:
+  OnActionButtonPressed:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &2566351564851296423
@@ -1482,6 +1293,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.TogglePlayerControlAction
   playerHasControl: 0
+  isCursorLocked: 0
 --- !u!1 &3151923944454695507
 GameObject:
   m_ObjectHideFlags: 0
@@ -1574,51 +1386,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.TogglePlayerControlAction
   playerHasControl: 0
---- !u!1 &3206836911393357579
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6701513167421647020}
-  - component: {fileID: 1308277219356070939}
-  m_Layer: 0
-  m_Name: DeactivateCursor (2)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6701513167421647020
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3206836911393357579}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.24869, y: 1.9844, z: -2.8238}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2852992846531733722}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1308277219356070939
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3206836911393357579}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a3675f871b6c4d4da56f08609dacd91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.ToggleCursorLockAction
-  isCursorLocked: 1
+  isCursorLocked: 0
 --- !u!1 &3361650376584724930
 GameObject:
   m_ObjectHideFlags: 0
@@ -1908,7 +1676,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a2a217c15c865648bfa9be0093435cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.UI.ButtonMessenger
-  OnButtonPressed:
+  OnActionButtonPressed:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &3735019385480421803
@@ -2048,51 +1816,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!1 &4249952405956346471
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8039449150735337967}
-  - component: {fileID: 5792546270135114509}
-  m_Layer: 0
-  m_Name: ActivateCursor
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8039449150735337967
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4249952405956346471}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2204747909493455739}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5792546270135114509
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4249952405956346471}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a3675f871b6c4d4da56f08609dacd91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.ToggleCursorLockAction
-  isCursorLocked: 0
 --- !u!1 &4804752976918320145
 GameObject:
   m_ObjectHideFlags: 0
@@ -2124,11 +1847,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5043872500921813645}
-  - {fileID: 6859029642874068747}
   - {fileID: 3202066594277694955}
   - {fileID: 2414856889173436124}
   - {fileID: 8842902234336418711}
-  - {fileID: 6196147247286785935}
   - {fileID: 8858882531768850577}
   - {fileID: 7830236225190938395}
   m_Father: {fileID: 4905257940396134626}
@@ -2153,11 +1874,9 @@ MonoBehaviour:
   - rid: 1373684925732749399
   objectiveActions:
   - {fileID: 7757968107712027834}
-  - {fileID: 2281800794948374376}
   - {fileID: 461478006484498156}
   - {fileID: 7345845465238106491}
   - {fileID: 1324812365153908062}
-  - {fileID: 4501863793446150398}
   - {fileID: 2237299918563991505}
   - {fileID: 8209401172637558163}
   isRandomAtStart: 0
@@ -2626,6 +2345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.TogglePlayerControlAction
   playerHasControl: 1
+  isCursorLocked: 1
 --- !u!1 &5424943803966812341
 GameObject:
   m_ObjectHideFlags: 0
@@ -2674,51 +2394,6 @@ MonoBehaviour:
   displayText: {fileID: 5482206165583131313}
   actionButton: {fileID: 6241493690058706297}
   isResponse: 0
---- !u!1 &5595339798536982637
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7346918457735931216}
-  - component: {fileID: 2007834980608171048}
-  m_Layer: 0
-  m_Name: ActivateCursor (2)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7346918457735931216
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5595339798536982637}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.24869, y: 1.9844, z: -2.8238}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2852992846531733722}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2007834980608171048
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5595339798536982637}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a3675f871b6c4d4da56f08609dacd91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.ToggleCursorLockAction
-  isCursorLocked: 0
 --- !u!1 &5637518241163098612
 GameObject:
   m_ObjectHideFlags: 0
@@ -2911,7 +2586,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a2a217c15c865648bfa9be0093435cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.UI.ButtonMessenger
-  OnButtonPressed:
+  OnActionButtonPressed:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &6065143919932223659
@@ -2959,6 +2634,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.MarkObjectiveLogComplete
   targetObjective: {fileID: 5708108026892034786}
+  doesCompleteTargetObjective: 0
   doesCompleteQuest: 1
 --- !u!1 &6119537636222788128
 GameObject:
@@ -3399,6 +3075,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.TogglePlayerControlAction
   playerHasControl: 1
+  isCursorLocked: 1
 --- !u!1 &7147762151368053292
 GameObject:
   m_ObjectHideFlags: 0
@@ -3628,6 +3305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.TogglePlayerControlAction
   playerHasControl: 1
+  isCursorLocked: 1
 --- !u!1 &7533498154813661333
 GameObject:
   m_ObjectHideFlags: 0
@@ -3777,51 +3455,6 @@ MonoBehaviour:
   goalToCheck: {fileID: 11400000, guid: 14888940c8d854e4daf8d1a95702a0c3, type: 2}
   goalsToRestart:
   - {fileID: 11400000, guid: 14888940c8d854e4daf8d1a95702a0c3, type: 2}
---- !u!1 &8830805555634745682
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7463211119944887526}
-  - component: {fileID: 6378456622336070627}
-  m_Layer: 0
-  m_Name: ActivateCursor (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7463211119944887526
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8830805555634745682}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.24869, y: 1.9844, z: -2.8238}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1841784347527784751}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6378456622336070627
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8830805555634745682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a3675f871b6c4d4da56f08609dacd91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.ToggleCursorLockAction
-  isCursorLocked: 0
 --- !u!1 &8873270595021567565
 GameObject:
   m_ObjectHideFlags: 0
@@ -3967,6 +3600,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.TogglePlayerControlAction
   playerHasControl: 1
+  isCursorLocked: 1
 --- !u!1 &8970835636176052357
 GameObject:
   m_ObjectHideFlags: 0

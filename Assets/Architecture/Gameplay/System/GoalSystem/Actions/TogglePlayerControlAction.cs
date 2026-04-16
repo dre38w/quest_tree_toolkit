@@ -1,5 +1,5 @@
 /*
- * Description: Toggles the player having control of the character.  
+ * Description: Handles toggleable player controls such as locked/unlocked cursor, giving/removing input control, etc.
  *          Useful for cutscenes, scene transitions, dialog interactions, etc.
  */
 using Service.Core;
@@ -13,7 +13,9 @@ namespace Gameplay.System.Actions
     public class TogglePlayerControlAction : ObjectiveAction
     {
         [SerializeField]
-        private bool playerHasControl;
+        private bool playerHasControl = true;
+        [SerializeField]
+        private bool isCursorLocked = true;
 
         public override void InitializeAction()
         {
@@ -27,6 +29,7 @@ namespace Gameplay.System.Actions
         private IEnumerator SetPlayerControl()
         {
             yield return null;
+            ReferenceRegistry.Instance.Player.ToggleCursorLock(isCursorLocked);
             ReferenceRegistry.Instance.Player.SetControl(playerHasControl);
             SetComplete();
         }

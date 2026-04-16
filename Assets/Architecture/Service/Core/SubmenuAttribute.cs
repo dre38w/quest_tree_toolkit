@@ -1,3 +1,6 @@
+/*
+ * Description: The custom attribute that allows for creating submenus
+ */
 using System;
 
 namespace Service.Core

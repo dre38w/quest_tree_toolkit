@@ -43,6 +43,9 @@ namespace Support.Editor
         private Vector2 centerPanelScroll;
         private Vector2 rightPanelScroll;
 
+        /// <summary>
+        /// Nodes encompass both goals and objective actions
+        /// </summary>
         private UnityObject currentNode;
         private UnityObject selectedNode;
 
@@ -54,8 +57,8 @@ namespace Support.Editor
 
         private Goal goalToDelete;
         private ObjectiveAction actionToDelete;
-        private UnityObject nodeParent;
-        private int nodeIndexToDelete = -1;
+        private UnityObject actionParent;
+        private int actionIndexToDelete = -1;
 
         private GUIStyle breadcrumbArrowStyle;
 
@@ -116,7 +119,7 @@ namespace Support.Editor
             HandleDeferredDeletes();
         }
 
-        #region Handle Window
+        #region Handle drawing and resizing Window
         /// <summary>
         /// Handle dragging the splitters
         /// </summary>
@@ -377,8 +380,6 @@ namespace Support.Editor
         }
         #endregion
 
-
-
         #region Handle drawing the center panel and manage the Actions in it
         /// <summary>
         /// Draw the center panel
@@ -467,6 +468,7 @@ namespace Support.Editor
                     continue;
                 }
 
+                //make the breadcrumbs clickable
                 if (GUILayout.Button(node.name, EditorStyles.linkLabel, GUILayout.ExpandWidth(false)))
                 {
                     JumpToBreadcrumb(i);
@@ -487,6 +489,10 @@ namespace Support.Editor
             EditorGUILayout.EndHorizontal();
         }
 
+        /// <summary>
+        /// Jump to the selected page
+        /// </summary>
+        /// <param name="target"></param>
         private void JumpToBreadcrumb(int target)
         {
             List<UnityObject> path = GetNavigationPath();
@@ -495,8 +501,10 @@ namespace Support.Editor
             {
                 return;
             }
+            //clear the stack so we can manually add the path
             navigationStack.Clear();
 
+            //create the new navigation path
             for (int i = 0; i < target; i++)
             {
                 navigationStack.Push(path[i]);
@@ -548,11 +556,12 @@ namespace Support.Editor
 
             //make them a reorderable list
             nestedActionsList = new ReorderableList(nestedActionsSerializedObject, property, true, true, true, true);
-
+            //make sure the list is cleared
             nestedActionsList.index = -1;
 
             if (selectedNode != null)
             {
+                //get the index of the entry we selected to use for later indexing
                 for (int i = 0; i < property.arraySize; i++)
                 {
                     if (property.GetArrayElementAtIndex(i).objectReferenceValue == selectedNode)
@@ -568,6 +577,7 @@ namespace Support.Editor
                 EditorGUI.LabelField(rect, "Actions");
             };
 
+            //make sure the selection is synced to Unity's backend selection
             nestedActionsList.onSelectCallback = list =>
             {
                 SyncActionSelection();
@@ -577,7 +587,7 @@ namespace Support.Editor
             nestedActionsList.drawElementCallback = (rect, index, active, focused) =>
             {
                 SerializedProperty element = property.GetArrayElementAtIndex(index);
-                ObjectiveAction node = element.objectReferenceValue as ObjectiveAction;
+                ObjectiveAction action = element.objectReferenceValue as ObjectiveAction;
 
                 //create some rows
                 rect.y += 2;
@@ -602,27 +612,27 @@ namespace Support.Editor
                     EditorGUI.DrawRect(rect, new Color(0.3f, 0.5f, 0.2f, 0.75f));
                 }
 
-                if (node != null)
+                if (action != null)
                 {
                     //select the action
                     if (GUI.Button(selectRect, "S"))
                     {
-                        SelectAction(node);
+                        SelectAction(action);
                     }
 
                     //create the text field and allow rename
-                    string newName = EditorGUI.TextField(objectRect, node.name);
+                    string newName = EditorGUI.TextField(objectRect, action.name);
 
                     //if its not equal to the class's name that means we renamed it
-                    if (newName != node.name)
+                    if (newName != action.name)
                     {
-                        RenameObject(node, newName);
+                        RenameObject(action, newName);
                     }
 
                     //duplicate the entry
                     if (GUI.Button(duplicateRect, "D"))
                     {
-                        DuplicateNode(node);
+                        DuplicateNode(action);
                     }
 
                     //create the space we're allowed to double click on
@@ -634,27 +644,27 @@ namespace Support.Editor
                         !pingRect.Contains(Event.current.mousePosition) &&
                         !duplicateRect.Contains(Event.current.mousePosition);
 
-                    if (node is INodeContainer)
+                    if (action is INodeContainer)
                     {
                         if (clickableRow)
                         {
-                            NavigateInto(node);
+                            NavigateInto(action);
                             Event.current.Use();
                         }
                     }
                     //check that this entry can have actions nested in it
-                    if (node is INodeContainer)
+                    if (action is INodeContainer)
                     {
                         //use the + button to navigate in
                         if (GUI.Button(openRect, "+"))
                         {
-                            NavigateInto(node);
+                            NavigateInto(action);
                         }
                     }
                     //ping the object in the hierarchy
                     if (GUI.Button(pingRect, "Ping"))
                     {
-                        EditorGUIUtility.PingObject(node.gameObject);
+                        EditorGUIUtility.PingObject(action.gameObject);
                     }
                 }
             };
@@ -675,26 +685,26 @@ namespace Support.Editor
                 }
                 //get the one we selected
                 SerializedProperty element = property.GetArrayElementAtIndex(list.index);
-                ObjectiveAction node = element.objectReferenceValue as ObjectiveAction;
+                ObjectiveAction action = element.objectReferenceValue as ObjectiveAction;
 
                 //display a confirmation popup window
-                bool confirm = EditorUtility.DisplayDialog("Remove Action", node != null ?
-                    $"Remove '{node.name}?" : "Remove this element?", "Remove", "Cancel");
+                bool confirm = EditorUtility.DisplayDialog("Remove Action", action != null ?
+                    $"Remove '{action.name}?" : "Remove this element?", "Remove", "Cancel");
 
                 if (!confirm)
                 {
                     return;
                 }
 
-                actionToDelete = node;
-                nodeParent = currentNode;
-                nodeIndexToDelete = list.index;
+                actionToDelete = action;
+                actionParent = currentNode;
+                actionIndexToDelete = list.index;
             };
         }
 
-        private void DuplicateNode(ObjectiveAction sourceNode)
+        private void DuplicateNode(ObjectiveAction sourceAction)
         {
-            if (sourceNode == null)
+            if (sourceAction == null)
             {
                 return;
             }
@@ -706,12 +716,12 @@ namespace Support.Editor
             }
 
             //copy by instantiating the object we are selected on
-            GameObject clone = Instantiate(sourceNode.gameObject, parent.transform);
-            clone.name = sourceNode.name + "_Clone";
+            GameObject clone = Instantiate(sourceAction.gameObject, parent.transform);
+            clone.name = sourceAction.name + "_Clone";
 
             //allow undo
             Undo.RegisterCreatedObjectUndo(clone, "Duplicate Node");
-            ObjectiveAction newNode = clone.GetComponent<ObjectiveAction>();
+            ObjectiveAction newAction = clone.GetComponent<ObjectiveAction>();
 
             SerializedObject newSerializedObject = new SerializedObject(currentNode);
             SerializedProperty property = GetNestedActionsProperty(newSerializedObject);
@@ -719,17 +729,17 @@ namespace Support.Editor
             //place it in the list array
             int propertyIndex = property.arraySize;
             property.InsertArrayElementAtIndex(propertyIndex);
-            property.GetArrayElementAtIndex(propertyIndex).objectReferenceValue = newNode;
+            property.GetArrayElementAtIndex(propertyIndex).objectReferenceValue = newAction;
 
             newSerializedObject.ApplyModifiedProperties();
 
             //select the new copy
             nestedActionsList.index = propertyIndex;
-            selectedNode = newNode;
-            Selection.activeObject = newNode;
+            selectedNode = newAction;
+            Selection.activeObject = newAction;
 
             //ping the game object in the hierarchy for visual clarity
-            EditorGUIUtility.PingObject(newNode.gameObject);
+            EditorGUIUtility.PingObject(newAction.gameObject);
         }
         #endregion
 
@@ -811,12 +821,12 @@ namespace Support.Editor
         /// Primarily used when requiring a selection without the user's input
         /// or when utilizing the custom input rather than Unity's.  (buttons, rect based selection, etc)
         /// </summary>
-        /// <param name="node"></param>
-        private void SelectAction(UnityObject node)
+        /// <param name="action"></param>
+        private void SelectAction(UnityObject action)
         {
-            selectedNode = node;
+            selectedNode = action;
             //highlight the selected object in the hierarchy
-            Selection.activeObject = node;
+            Selection.activeObject = action;
 
             if (nestedActionsList != null)
             {
@@ -827,8 +837,8 @@ namespace Support.Editor
 
                 for (int i = 0; i < property.arraySize; i++)
                 {
-                    //find the index by the provided node reference
-                    if (property.GetArrayElementAtIndex(i).objectReferenceValue == node)
+                    //find the index by the provided action reference
+                    if (property.GetArrayElementAtIndex(i).objectReferenceValue == action)
                     {
                         //apply the index
                         nestedActionsList.index = i;
@@ -857,13 +867,16 @@ namespace Support.Editor
             if (index >= 0 && index < property.arraySize)
             {
                 //get the referenced object
-                UnityObject node = property.GetArrayElementAtIndex(index).objectReferenceValue;
+                UnityObject action = property.GetArrayElementAtIndex(index).objectReferenceValue;
                 //set the selected node to that internal selection
-                selectedNode = node;
+                selectedNode = action;
                 Repaint();
             }
         }
 
+        /// <summary>
+        /// Sync to Unity's global backend selection processes
+        /// </summary>
         private void SyncGoalSelection()
         {
             if (goalList == null)
@@ -887,9 +900,11 @@ namespace Support.Editor
                     return;
                 }
 
+                //set the selected goal
                 selectedGoal = goal;
                 currentNode = goal;
                 selectedNode = goal;
+                //clear the stack because this is always the beginning of the navigation
                 navigationStack.Clear();
 
                 nestedActionsSerializedObject = null;
@@ -924,7 +939,7 @@ namespace Support.Editor
         }
 
         /// <summary>
-        /// Get the navigation path that
+        /// Get the navigation path that we'll use to navigate through the breadcrumbs, back button, etc
         /// </summary>
         /// <returns></returns>
         private List<UnityObject> GetNavigationPath()
@@ -949,7 +964,7 @@ namespace Support.Editor
         }
         #endregion
 
-        #region Handle adding nodes
+        #region Handle adding objective actions
         /// <summary>
         /// Show the create actions menu
         /// </summary>
@@ -961,19 +976,26 @@ namespace Support.Editor
             foreach (Type type in GetValidTypes<ObjectiveAction>())
             {
                 string path = GetMenuPath(type);
-                menu.AddItem(new GUIContent(path), false, () => CreateNode(type));
+                menu.AddItem(new GUIContent(path), false, () => CreateAction(type));
             }
             menu.ShowAsContext();
         }
 
+        /// <summary>
+        /// Create the submenus for organization
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         private string GetMenuPath(Type type)
         {
+            //get the custom attribute to use
             SubmenuAttribute menuAttribute = (SubmenuAttribute)Attribute.GetCustomAttribute(type, typeof(SubmenuAttribute));
 
             if (menuAttribute != null && !string.IsNullOrEmpty(menuAttribute.Path))
             {
                 return menuAttribute.Path;
             }
+            //any class that does not have this attribute added will go in the 'Other' menu
             return "Other/" + type.Name;
         }
 
@@ -981,7 +1003,7 @@ namespace Support.Editor
         /// Handle creating the new action
         /// </summary>
         /// <param name="type"></param>
-        private void CreateNode(Type type)
+        private void CreateAction(Type type)
         {
             if (!(currentNode is Component parent))
             {
@@ -994,7 +1016,7 @@ namespace Support.Editor
             newObject.transform.SetParent(parent.transform);
 
             //now add the chosen class component
-            ObjectiveAction newNode = (ObjectiveAction)newObject.AddComponent(type);
+            ObjectiveAction newAction = (ObjectiveAction)newObject.AddComponent(type);
             SerializedObject newSerializedObject = new SerializedObject(currentNode);
             SerializedProperty property = GetNestedActionsProperty(newSerializedObject);
 
@@ -1002,12 +1024,12 @@ namespace Support.Editor
 
             //place them in the tool list
             property.InsertArrayElementAtIndex(propIndex);
-            property.GetArrayElementAtIndex(propIndex).objectReferenceValue = newNode;
+            property.GetArrayElementAtIndex(propIndex).objectReferenceValue = newAction;
 
             newSerializedObject.ApplyModifiedProperties();
 
             //and set it to be the selected entry
-            SelectAction(newNode);
+            SelectAction(newAction);
         }
 
         /// <summary>
@@ -1073,7 +1095,6 @@ namespace Support.Editor
         }
         #endregion
 
-
         #region Handle deleting the Goals/Actions
         /// <summary>
         /// Handle the goals or actions that are being marked for deletion
@@ -1091,16 +1112,16 @@ namespace Support.Editor
             }
 
             //if this is an objective action to delete
-            if (nodeIndexToDelete != -1 && nodeParent != null)
+            if (actionIndexToDelete != -1 && actionParent != null)
             {
                 //get the type of action
-                SerializedObject newNodeParent = new SerializedObject(nodeParent);
+                SerializedObject newNodeParent = new SerializedObject(actionParent);
                 SerializedProperty property = GetNestedActionsProperty(newNodeParent);
                                 
-                if (property != null && nodeIndexToDelete < property.arraySize)
+                if (property != null && actionIndexToDelete < property.arraySize)
                 {
                     //delete it from the tool
-                    property.DeleteArrayElementAtIndex(nodeIndexToDelete);
+                    property.DeleteArrayElementAtIndex(actionIndexToDelete);
                     newNodeParent.ApplyModifiedProperties();
 
                     //allow undo and destroy the gameobject
@@ -1122,8 +1143,8 @@ namespace Support.Editor
                 }
                 //reset the values
                 actionToDelete = null;
-                nodeParent = null;
-                nodeIndexToDelete = -1;
+                actionParent = null;
+                actionIndexToDelete = -1;
 
                 //exit
                 GUIUtility.ExitGUI();

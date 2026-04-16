@@ -14,7 +14,7 @@ namespace Service.Framework.Goals
     {
         [Header("Reference the object you want this action to trigger.")]
         [SerializeField]
-        private GenericQuestTreeMessenger[] genericMessengers;
+        private GenericQuestTreeListener[] genericMessengers;
 
         public override void InitializeAction()
         {
