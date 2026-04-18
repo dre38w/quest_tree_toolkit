@@ -2,6 +2,7 @@
 /*
  * Description: Handles displaying the quest title on the quest log UI
  */
+using Gameplay.System;
 using Service.Framework;
 using Service.Framework.Goals;
 using System.Collections.Generic;
@@ -49,6 +50,11 @@ namespace Gameplay.UI
             newObjective.Initialize(data);
 
             spawnedObjectives.Add(newObjective);
+        }
+
+        public void SetActiveQuest()
+        {
+            ReferenceRegistry.Instance.MainUI.GetComponent<QuestLogUI>().SetTrackedQuest(questID);
         }
 
         public void RefreshObjectives(List<ObjectiveData> objectives, bool hideComplete)

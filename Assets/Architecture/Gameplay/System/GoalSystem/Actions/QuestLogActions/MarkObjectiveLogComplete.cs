@@ -1,7 +1,9 @@
 /*
  * Description: Marks an objective complete.
  */
+using NUnit.Framework;
 using Service.Core;
+using Service.Framework;
 using Service.Framework.GoalManagement;
 using Service.Framework.Goals;
 using UnityEngine;

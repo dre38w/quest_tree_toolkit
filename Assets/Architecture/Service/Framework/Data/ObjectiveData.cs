@@ -4,6 +4,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 
 namespace Service.Framework
 {
@@ -12,12 +13,18 @@ namespace Service.Framework
         public string ID;
         public string ObjectiveText;
         public bool IsComplete;
+        public bool IsSubObjective;
 
-        public ObjectiveData(string textEntry)
+        public string ParentObjectiveID;
+        public List<string> SubObjectivesIDs = new List<string>();
+
+        public ObjectiveData(string textEntry, bool isSubObjective, string parentID = null)
         {
             ID = Guid.NewGuid().ToString();
             ObjectiveText = textEntry;
             IsComplete = false;
+            IsSubObjective = isSubObjective;
+            ParentObjectiveID = parentID;
         }
     }
 }

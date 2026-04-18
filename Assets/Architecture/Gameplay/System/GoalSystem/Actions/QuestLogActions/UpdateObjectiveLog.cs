@@ -19,13 +19,26 @@ namespace Gameplay.System.Actions
         [TextAreaAttribute(3, 10)]
         [SerializeField]
         private string textBox;
+        [SerializeField]
+        private bool isSubObjective;
+        [SerializeField]
+        private UpdateObjectiveLog parentObjective;
 
         public string CreatedObjectiveID { get; private set; }
 
         public override void InitializeAction()
         {
-            ObjectiveData data = GoalManager.Instance.GoalTracker.AddObjective(ActionQuestID, textBox);
+            string parentID = null;
+
+            if (isSubObjective && parentObjective != null)
+            {
+                parentID = parentObjective.CreatedObjectiveID;
+            }
+
+            ObjectiveData data = GoalManager.Instance.GoalTracker.AddObjective(ActionQuestID, textBox, isSubObjective, parentID);
             CreatedObjectiveID = data.ID;
+
+            //GoalManager.Instance.GoalTracker.NotifyObjectiveChanges(ActionQuestID);
             SetComplete();
         }
     }

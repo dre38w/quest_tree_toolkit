@@ -3,6 +3,7 @@
  *          Can be accessed to use for quest log, future quest can access past quest data, etc.
  */
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.Events;
 
 namespace Service.Framework.Goals
@@ -19,16 +20,25 @@ namespace Service.Framework.Goals
         /// </summary>
         /// <param name="id"></param>
         /// <param name="objectiveText">The text we want to access for more front end gameplay</param>
-        public ObjectiveData AddObjective(QuestID id, string objectiveText)
+        public ObjectiveData AddObjective(QuestID id, string objectiveText, bool isSubObjective, string parentID = null)
         {
             if (!questObjectives.ContainsKey(id))
             {
                 questObjectives[id] = new List<ObjectiveData>();
             }
 
-            ObjectiveData data = new ObjectiveData(objectiveText);           
+            ObjectiveData data = new ObjectiveData(objectiveText, isSubObjective, parentID);
             questObjectives[id].Add(data);
 
+            if (isSubObjective && parentID != null)
+            {
+                ObjectiveData baseObjective = questObjectives[id].Find(b => b.ID == parentID);
+
+                if (baseObjective != null)
+                {
+                    baseObjective.SubObjectivesIDs.Add(data.ID);
+                }
+            }
             OnObjectivesChanged.Invoke(id);
 
             return data;
@@ -54,20 +64,25 @@ namespace Service.Framework.Goals
         /// <param name="objectiveIndex"></param>
         public void MarkObjectiveComplete(QuestID id, string objectiveID)
         {
-            if (questObjectives.ContainsKey(id))
+            if (!questObjectives.ContainsKey(id))
             {
-                List<ObjectiveData> dataList = questObjectives[id];
+                return;
+            }
+            List<ObjectiveData> dataList = questObjectives[id];
+            ObjectiveData target = dataList.Find(o => o.ID == objectiveID);
 
-                for (int i = 0; i < dataList.Count; i++)
+            target.IsComplete = true;
+
+            if (target.IsSubObjective && !string.IsNullOrEmpty(target.ParentObjectiveID))
+            {
+                ObjectiveData parentObjective = dataList.Find(p => p.ID == target.ParentObjectiveID);
+
+                if (parentObjective.SubObjectivesIDs.All(subID => dataList.Find(o => o.ID == subID).IsComplete == true))
                 {
-                    if (dataList[i].ID == objectiveID)
-                    {
-                        dataList[i].IsComplete = true;
-                        OnObjectivesChanged.Invoke(id);
-                        return;
-                    }
+                    parentObjective.IsComplete = true;
                 }
             }
+            OnObjectivesChanged.Invoke(id);
         }
 
         /// <summary>

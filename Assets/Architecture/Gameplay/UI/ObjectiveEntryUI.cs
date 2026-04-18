@@ -16,6 +16,11 @@ namespace Gameplay.UI
         public UnityEvent OnObjectiveCompleted = new UnityEvent();
 
         private string objectiveID;
+        public string ObjectiveID
+        {
+            get { return objectiveID; }
+            set { objectiveID = value; }
+        }
 
         [SerializeField]
         private TMP_Text objectiveText;
@@ -29,11 +34,6 @@ namespace Gameplay.UI
             OnObjectiveAdded.Invoke();
             objectiveID = data.ID;
             SetText(data);
-        }
-
-        public string GetID()
-        {
-            return objectiveID;
         }
 
         /// <summary>
