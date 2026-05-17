@@ -18,6 +18,8 @@ namespace Gameplay.UI
         private QuestEntryUI questEntryPrefab;
         [SerializeField]
         private ObjectiveTrackerUI objectivePrefab;
+        [SerializeField]
+        private GameObject objectiveTrackerParent;
 
         [SerializeField]
         private TMP_Text trackedQuestText;
@@ -108,7 +110,14 @@ namespace Gameplay.UI
                 return;
             }
             //clear old quest list
+            for (int i = currentTrackedObjectives.Count - 1; i >= 0; i--)
+            {
+                Destroy(currentTrackedObjectives[i].gameObject);
+            }
+            currentTrackedObjectives.Clear();
             trackedQuestText.text = string.Empty;
+
+            //get the new one
             trackedQuest = questID;
             List<ObjectiveData> data = database.GetObjectives(questID);
 
@@ -141,6 +150,15 @@ namespace Gameplay.UI
             }
             trackedQuestText.text = questID.questName;
 
+            //if (currentTrackedObjectives.Count > 0)
+            //{
+            //    for (int i = currentTrackedObjectives.Count - 1; i >= 0; i--)
+            //    {
+            //        Destroy(currentTrackedObjectives[i].gameObject);
+            //    }
+            //    currentTrackedObjectives.Clear();
+            //}
+
             if (data.IsComplete)
             {
                 ObjectiveTrackerUI completedObjective = currentTrackedObjectives.Find(d => d.ObjectiveID == data.ID);
@@ -150,7 +168,7 @@ namespace Gameplay.UI
                 return;
             }
 
-            ObjectiveTrackerUI newObjectiveText = Instantiate(objectivePrefab, transform);
+            ObjectiveTrackerUI newObjectiveText = Instantiate(objectivePrefab, objectiveTrackerParent.transform);
             newObjectiveText.GetComponent<TMP_Text>().text = data.ObjectiveText;
             newObjectiveText.Initialize(data);
 

@@ -3,6 +3,7 @@
  */
 using Service.Core;
 using Service.Framework.Goals;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gameplay.System.Actions
@@ -14,6 +15,22 @@ namespace Gameplay.System.Actions
         [SerializeField]
         private CollisionActionComponent[] collisionActionComponent;
 
+        [Header("Collision Settings")]
+
+        [Tooltip("Should the player be required to collide with all objects in the list?")]
+        [SerializeField]
+        private bool requireAllCollisions = false;
+
+        [Tooltip("Should the object we collide with be deactivated?")]
+        [SerializeField]
+        private bool deactivateCollisionObject = false;
+
+        [Tooltip("Should the next object in the list be activated?")]
+        [SerializeField]
+        private bool activateNextCollisionObject = false;
+
+        private HashSet<GameObject> remainingCollisionObjects = new HashSet<GameObject>();
+
         private void Start()
         {
             if (collisionActionComponent.Length == 0)
@@ -24,18 +41,56 @@ namespace Gameplay.System.Actions
             for (int i = 0; i < collisionActionComponent.Length; i++)
             {
                 collisionActionComponent[i].OnCollided.AddListener(OnCollided);
+                remainingCollisionObjects.Add(collisionActionComponent[i].gameObject);
             }
         }
 
         /// <summary>
         /// Called when we first collided with any one of the specified collision objects
         /// </summary>
-        private void OnCollided()
+        private void OnCollided(GameObject collidedObject)
         {
             if (State == ActionState.Inactive)
             {
                 return;
             }
+
+            if (deactivateCollisionObject)
+            {
+                collidedObject.SetActive(false);
+            }
+
+            if (activateNextCollisionObject)
+            {
+                
+                for (int i = 0; i < collisionActionComponent.Length; i++)
+                {
+                    if (collisionActionComponent[i].gameObject == collidedObject)
+                    {
+                        int nextIndex = i + 1;
+
+                        if (nextIndex < collisionActionComponent.Length)
+                        {
+                            collisionActionComponent[nextIndex].gameObject.SetActive(true);
+                        }
+                        break;
+                    }
+                }
+            }
+
+            if (requireAllCollisions)
+            {
+                if (!remainingCollisionObjects.Remove(collidedObject))
+                {
+                    return;
+                }
+
+                if (remainingCollisionObjects.Count > 0)
+                {
+                    return;
+                }
+            }
+
             SetComplete();
             ResetValues();
         }
@@ -44,7 +99,7 @@ namespace Gameplay.System.Actions
         {
             for (int i = 0; i < collisionActionComponent.Length; i++)
             {
-                collisionActionComponent[i].OnCollided.RemoveListener(OnCollided);
+                //collisionActionComponent[i].OnCollided.RemoveListener(OnCollided);
             }
         }
 

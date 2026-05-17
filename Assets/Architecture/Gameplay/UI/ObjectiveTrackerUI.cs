@@ -36,5 +36,10 @@ namespace Gameplay.UI
                 objectiveText.text = $"<s>{objectiveData.ObjectiveText}</s>";
             }
         }
+
+        public void DestroyObject()
+        {
+            Destroy(gameObject);
+        }
     }
 }

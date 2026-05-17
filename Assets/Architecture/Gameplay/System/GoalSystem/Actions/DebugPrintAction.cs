@@ -8,9 +8,19 @@ using UnityEngine;
 [Submenu("Debug/Initialize Print")]
 public class DebugPrintAction : ObjectiveAction
 {
+    [SerializeField]
+    private string textToPrint;
+
     public override void InitializeAction()
     {
-        Debug.Log($"Completed action on {gameObject.name}", gameObject);
+        if (textToPrint == string.Empty)
+        { 
+            Debug.Log($"Completed action on {gameObject.name}", gameObject);
+        }
+        else
+        {
+            Debug.Log(textToPrint);
+        }
         SetComplete();
     }
 }

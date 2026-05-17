@@ -9,7 +9,7 @@ namespace Gameplay.System.Actions
     public class CollisionActionComponent : MonoBehaviour
     {
         [HideInInspector]
-        public UnityEvent OnCollided = new UnityEvent();
+        public UnityEvent<GameObject> OnCollided = new UnityEvent<GameObject>();
 
         [Tooltip("Is this a Trigger collider?")]
         [SerializeField]
@@ -31,7 +31,7 @@ namespace Gameplay.System.Actions
 
             if (collision.gameObject.CompareTag(TagData.PLAYER_TAG))
             {
-                OnCollided.Invoke();
+                OnCollided.Invoke(gameObject);
             }
         }
 
@@ -44,7 +44,7 @@ namespace Gameplay.System.Actions
 
             if (collision.gameObject.CompareTag(TagData.PLAYER_TAG))
             {
-                OnCollided.Invoke();
+                OnCollided.Invoke(gameObject);
             }
         }
 
@@ -61,7 +61,7 @@ namespace Gameplay.System.Actions
 
             if (other.gameObject.CompareTag(TagData.PLAYER_TAG))
             {
-                OnCollided.Invoke();
+                OnCollided.Invoke(gameObject);
             }
         }
 
@@ -74,7 +74,7 @@ namespace Gameplay.System.Actions
 
             if (other.gameObject.CompareTag(TagData.PLAYER_TAG))
             {
-                OnCollided.Invoke();
+                OnCollided.Invoke(gameObject);
             }
         }
     }

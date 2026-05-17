@@ -444,7 +444,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3877447017038810092
 RectTransform:
   m_ObjectHideFlags: 0
@@ -479,7 +479,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::QuestLogUI
   questContent: {fileID: 6492795442073816453}
   questEntryPrefab: {fileID: 79297168729941176, guid: 1c7e52c5552b4f24a8da1314fac5c732, type: 3}
-  hideCompletedObjectives: 0
+  objectivePrefab: {fileID: 0}
+  trackedQuestText: {fileID: 0}
+  hideCompletedObjectives: 1
+  hideCompletedQuests: 1
 --- !u!223 &4578439874656616120
 Canvas:
   m_ObjectHideFlags: 0

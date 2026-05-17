@@ -133,6 +133,10 @@ namespace Gameplay.UI
                 return;
             }
             trackedQuestText.text = questID.questName;
+            
+            //ObjectiveTrackerUI completedObjective = currentTrackedObjectives.Find(d => d.ObjectiveID == data.ID);
+            //Destroy(completedObjective.gameObject);
+            //currentTrackedObjectives.Remove(completedObjective);
 
             if (data.IsComplete)
             {
