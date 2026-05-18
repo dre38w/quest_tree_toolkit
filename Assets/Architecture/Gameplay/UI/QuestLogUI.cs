@@ -18,6 +18,10 @@ namespace Gameplay.UI
         private QuestEntryUI questEntryPrefab;
         [SerializeField]
         private ObjectiveTrackerUI objectivePrefab;
+
+        [SerializeField]
+        private LogEntryEffects entryEffects;
+
         [SerializeField]
         private GameObject objectiveTrackerParent;
 
@@ -42,10 +46,12 @@ namespace Gameplay.UI
         }
 
         private QuestID trackedQuest;
-        private List<ObjectiveTrackerUI> currentTrackedObjectives = new List<ObjectiveTrackerUI>();
+        //private List<ObjectiveTrackerUI> currentTrackedObjectives = new List<ObjectiveTrackerUI>();
 
+        private Dictionary<string, ObjectiveTrackerUI> currentTrackedObjectives = new Dictionary<string, ObjectiveTrackerUI>();
         private Dictionary<QuestID, QuestEntryUI> activeQuests = new Dictionary<QuestID, QuestEntryUI>();
-        private Dictionary<QuestID, int> objectiveCounts = new Dictionary<QuestID, int>();
+        private Dictionary<QuestID, Dictionary<string, ObjectiveEntryUI>> activeObjectives = new Dictionary<QuestID, Dictionary<string, ObjectiveEntryUI>>();
+        //private Dictionary<QuestID, int> objectiveCounts = new Dictionary<QuestID, int>();
 
         private GoalTrackerDatabase database;
 
@@ -75,32 +81,111 @@ namespace Gameplay.UI
                 questUI.Initialize(id);
 
                 activeQuests.Add(id, questUI);
-                objectiveCounts[id] = 0;
-
+                activeObjectives[id] = new Dictionary<string, ObjectiveEntryUI>();
+               // objectiveCounts[id] = 0;
 
             }
 
             QuestEntryUI questEntry = activeQuests[id];
-            int currentCount = objectiveCounts[id];
 
-            //add a new objective
-            for (int i = currentCount; i < objectives.Count; i++)
+            foreach (ObjectiveData objective in objectives)
             {
-                questEntry.AddObjective(objectives[i]);
-            }
-
-            //refresh the objective entries in the event any of them just completed
-            questEntry.RefreshObjectives(objectives, hideCompletedObjectives);
-            questEntry.RefreshQuestState(database.IsQuestComplete(id), hideCompletedQuests);
-
-            if (currentTrackedObjectives.Count > 0)
-            {
-                for (int i = 0; i < currentTrackedObjectives.Count; i++)
+                if (!activeObjectives[id].ContainsKey(objective.ID))
                 {
-                    currentTrackedObjectives[i].RefreshObjectives(id);
+                    ObjectiveEntryUI objectiveUI = questEntry.AddObjective(objective);
+                    activeObjectives[id].Add(objective.ID, objectiveUI);
                 }
+                RefreshObjectiveVisual(id, objective);
             }
-            objectiveCounts[id] = objectives.Count;
+            RefreshQuestVisual(id);
+
+            //int currentCount = objectiveCounts[id];
+
+            ////add a new objective
+            //for (int i = currentCount; i < objectives.Count; i++)
+            //{
+            //    questEntry.AddObjective(objectives[i]);
+            //}
+
+            ////refresh the objective entries in the event any of them just completed
+            //questEntry.RefreshObjectives(objectives, hideCompletedObjectives);
+            //questEntry.RefreshQuestState(database.IsQuestComplete(id), hideCompletedQuests);
+
+            RefreshTrackedObjectives(id, objectives);
+            //if (currentTrackedObjectives.Count > 0)
+            //{
+            //    for (int i = 0; i < currentTrackedObjectives.Count; i++)
+            //    {
+            //        currentTrackedObjectives[i].RefreshObjectives(id);
+            //    }
+            //}
+            //objectiveCounts[id] = objectives.Count;
+        }
+
+        private void RefreshObjectiveVisual(QuestID questID, ObjectiveData objective)
+        {
+            if (!activeObjectives.TryGetValue(questID, out Dictionary<string, ObjectiveEntryUI> objectiveEntries))
+            {
+                return;
+            }
+            if (!objectiveEntries.TryGetValue(objective.ID, out ObjectiveEntryUI objectiveUI))
+            {
+                return;
+            }
+
+            if (objective.IsFailed)
+            {
+                entryEffects.ApplyObjectiveFailed(objectiveUI, objective);
+                //ApplyObjectiveFailedEffect(objectiveUI, objective);
+                //return;
+            }
+            else if (objective.IsComplete)
+            {
+                entryEffects.ApplyObjectiveComplete(objectiveUI, objective, hideCompletedObjectives);
+                //return;
+            }
+            else
+            {
+                entryEffects.ApplyObjectiveNormal(objectiveUI, objective);
+            }
+        }
+
+        //private void ApplyObjectiveActiveEffect(ObjectiveEntryUI objectiveUI, ObjectiveData objective)
+        //{
+        //    objectiveUI.SetNormal(objective);
+        //}
+
+        //private void ApplyObjectiveCompleteEffect(ObjectiveEntryUI objectiveUI, ObjectiveData objective)
+        //{
+        //    if (hideCompletedObjectives)
+        //    {
+        //        objectiveUI.Hide();
+        //    }
+        //    else
+        //    {
+        //        objectiveUI.SetComplete();
+        //    }
+        //}
+
+        //private void ApplyObjectiveFailedEffect(ObjectiveEntryUI objectiveUI, ObjectiveData objective)
+        //{
+        //    objectiveUI.SetFailed(objective);
+        //}
+
+        private void RefreshQuestVisual(QuestID id)
+        {
+            if (!activeQuests.TryGetValue(id, out QuestEntryUI questEntry))
+            {
+                return;
+            }
+            if (database.IsQuestComplete(id))
+            {
+                entryEffects.ApplyQuestComplete(questEntry, id, hideCompletedQuests);
+            }
+            else
+            {
+                entryEffects.ApplyQuestNormal(questEntry, id);
+            }
         }
 
         public void SetTrackedQuest(QuestID questID)
@@ -110,69 +195,130 @@ namespace Gameplay.UI
                 return;
             }
             //clear old quest list
-            for (int i = currentTrackedObjectives.Count - 1; i >= 0; i--)
-            {
-                Destroy(currentTrackedObjectives[i].gameObject);
-            }
-            currentTrackedObjectives.Clear();
-            trackedQuestText.text = string.Empty;
+            ClearTrackedObjectives();
+            //for (int i = currentTrackedObjectives.Count - 1; i >= 0; i--)
+            //{
+            //    Destroy(currentTrackedObjectives[i].gameObject);
+            //}
+            //currentTrackedObjectives.Clear();
+            //trackedQuestText.text = string.Empty;
 
             //get the new one
             trackedQuest = questID;
-            List<ObjectiveData> data = database.GetObjectives(questID);
+            trackedQuestText.text = questID.questName;
 
-            for (int i = 0; i < data.Count; i++)
+            List<ObjectiveData> data = database.GetObjectives(questID);
+            if (data == null)
             {
-                if (data[i].IsComplete)
-                {
-                    continue;
-                }
-                UpdateActiveQuest(trackedQuest, data[i]);
+                return;
             }
+            RefreshTrackedObjectives(questID, data);
+            //for (int i = 0; i < data.Count; i++)
+            //{
+            //    if (data[i].IsComplete)
+            //    {
+            //        continue;
+            //    }
+            //    UpdateActiveQuest(trackedQuest, data[i]);
+            //}
         }
 
-        private void UpdateActiveQuest(QuestID questID, ObjectiveData data)
+        private void ClearTrackedObjectives()
         {
-            //may not need this check
+            foreach (ObjectiveTrackerUI tracker in currentTrackedObjectives.Values)
+            {
+                if (tracker != null)
+                {
+                    Destroy(tracker.gameObject);
+                }
+            }
+            currentTrackedObjectives.Clear();
+            trackedQuestText.text = string.Empty;
+        }
+
+        //private void UpdateActiveQuest(QuestID questID, ObjectiveData data)
+        //{
+        //    //may not need this check
+        //    if (trackedQuest != questID)
+        //    {
+        //        return;
+        //    }
+        //    if (database.IsQuestComplete(questID))
+        //    {
+        //        //objectiveData.Clear();
+
+        //        //invoke quest complete here
+
+        //        //clear everything
+
+        //        return;
+        //    }
+        //    trackedQuestText.text = questID.questName;
+
+        //    //if (currentTrackedObjectives.Count > 0)
+        //    //{
+        //    //    for (int i = currentTrackedObjectives.Count - 1; i >= 0; i--)
+        //    //    {
+        //    //        Destroy(currentTrackedObjectives[i].gameObject);
+        //    //    }
+        //    //    currentTrackedObjectives.Clear();
+        //    //}
+
+        //    if (data.IsComplete)
+        //    {
+        //        ObjectiveTrackerUI completedObjective = currentTrackedObjectives.Find(d => d.ObjectiveID == data.ID);
+        //        Destroy(completedObjective.gameObject);
+        //        currentTrackedObjectives.Remove(completedObjective);
+        //        data = null;
+        //        return;
+        //    }
+
+        //    ObjectiveTrackerUI newObjectiveText = Instantiate(objectivePrefab, objectiveTrackerParent.transform);
+        //    newObjectiveText.GetComponent<TMP_Text>().text = data.ObjectiveText;
+        //    newObjectiveText.Initialize(data);
+
+        //    currentTrackedObjectives.Add(newObjectiveText);
+        //}
+
+        private void RefreshTrackedObjectives(QuestID questID, List<ObjectiveData> objectives)
+        {
             if (trackedQuest != questID)
             {
                 return;
             }
-            if (database.IsQuestComplete(questID))
+
+            foreach (ObjectiveData objective in objectives)
             {
-                //objectiveData.Clear();
+                if (!currentTrackedObjectives.ContainsKey(objective.ID))
+                {
+                    ObjectiveTrackerUI trackerUI = Instantiate(objectivePrefab, objectiveTrackerParent.transform);
+                    trackerUI.Initialize(objective);
 
-                //invoke quest complete here
+                    currentTrackedObjectives.Add(objective.ID, trackerUI);
+                }
+                RefreshTrackedObjectiveVisuals(objective);
+            }
+        }
 
-                //clear everything
-
+        private void RefreshTrackedObjectiveVisuals(ObjectiveData objective)
+        {
+            if (!currentTrackedObjectives.TryGetValue(objective.ID, out ObjectiveTrackerUI trackerUI))
+            {
                 return;
             }
-            trackedQuestText.text = questID.questName;
-
-            //if (currentTrackedObjectives.Count > 0)
-            //{
-            //    for (int i = currentTrackedObjectives.Count - 1; i >= 0; i--)
-            //    {
-            //        Destroy(currentTrackedObjectives[i].gameObject);
-            //    }
-            //    currentTrackedObjectives.Clear();
-            //}
-
-            if (data.IsComplete)
+            if (objective.IsFailed)
             {
-                ObjectiveTrackerUI completedObjective = currentTrackedObjectives.Find(d => d.ObjectiveID == data.ID);
-                Destroy(completedObjective.gameObject);
-                currentTrackedObjectives.Remove(completedObjective);
-                data = null;
-                return;
+                entryEffects.ApplyTrackedObjectiveFailed(trackerUI, objective);
             }
-
-            ObjectiveTrackerUI newObjectiveText = Instantiate(objectivePrefab, objectiveTrackerParent.transform);
-            newObjectiveText.GetComponent<TMP_Text>().text = data.ObjectiveText;
-            newObjectiveText.Initialize(data);
-
-            currentTrackedObjectives.Add(newObjectiveText);
+            else if (objective.IsComplete)
+            {
+                entryEffects.ApplyTrackedObjectiveComplete(trackerUI, objective, hideCompletedObjectives);
+                //return;
+            }
+            else
+            {
+                entryEffects.ApplyTrackedObjectiveNormal(trackerUI, objective);
+            }
         }
     }
 }

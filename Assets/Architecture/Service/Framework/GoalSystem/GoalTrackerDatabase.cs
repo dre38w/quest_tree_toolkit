@@ -21,13 +21,19 @@ namespace Service.Framework.Goals
         /// <param name="id"></param>
         /// <param name="objectiveText">The text we want to access for more front end gameplay</param>
         public ObjectiveData AddObjective(QuestID id, string objectiveText, bool isSubObjective, string parentID = null)
-        {
+        {            
             if (!questObjectives.ContainsKey(id))
             {
                 questObjectives[id] = new List<ObjectiveData>();
             }
 
             ObjectiveData data = new ObjectiveData(objectiveText, isSubObjective, parentID);
+            
+            //if this objective was already added, do not continue
+            //if (questObjectives[id].Contains(questObjectives[id].Find(d => d.ID == data.ID)))
+            //{
+            //    return null;
+            //}
             questObjectives[id].Add(data);
 
             if (isSubObjective && parentID != null)
@@ -57,6 +63,49 @@ namespace Service.Framework.Goals
             }
         }
 
+        public void MarkObjectiveFailed(QuestID id, string objectiveID, bool markComplete = false)
+        {
+            if (!questObjectives.ContainsKey(id))
+            {
+                return;
+            }
+
+            List<ObjectiveData> dataList = questObjectives[id];
+            ObjectiveData target = dataList.Find(o => o.ID == objectiveID);
+
+            if (target == null)
+            {
+                return;
+            }
+            target.IsFailed = true;
+
+            if (markComplete)
+            {
+                target.IsComplete = true;
+            }
+            OnObjectivesChanged.Invoke(id);
+        }
+
+        public void RestartObjective(QuestID id, string objectiveID)
+        {
+            if (!questObjectives.ContainsKey(id))
+            {
+                return;
+            }
+
+            List<ObjectiveData> dataList = questObjectives[id];
+            ObjectiveData target = dataList.Find(o => o.ID == objectiveID);
+
+            if (target == null)
+            {
+                return;
+            }
+            target.IsFailed = false;
+            target.IsComplete = false;
+
+            OnObjectivesChanged.Invoke(id);
+        }
+
         /// <summary>
         /// Marks a specific objective complete
         /// </summary>
@@ -71,7 +120,12 @@ namespace Service.Framework.Goals
             List<ObjectiveData> dataList = questObjectives[id];
             ObjectiveData target = dataList.Find(o => o.ID == objectiveID);
 
+            if (target == null)
+            {
+                return;
+            }
             target.IsComplete = true;
+            target.IsFailed = false;
 
             if (target.IsSubObjective && !string.IsNullOrEmpty(target.ParentObjectiveID))
             {
@@ -119,6 +173,34 @@ namespace Service.Framework.Goals
                 return questObjectives[id][objectiveIndex].ObjectiveText;
             }
             return string.Empty;
+        }
+
+        public ObjectiveData GetObjective(QuestID id, int objectiveIndex)
+        {
+            if (!questObjectives.ContainsKey(id))
+            {
+                return null;
+            }
+            List<ObjectiveData> objectives = questObjectives[id];
+
+            if (objectiveIndex < 0 || objectiveIndex >= objectives.Count)
+            {
+                return null;
+            }
+            return objectives[objectiveIndex];
+        }
+
+        public ObjectiveData GetObjective(QuestID id, string objectiveID)
+        {
+            if (string.IsNullOrEmpty(objectiveID))
+            {
+                return null;
+            }
+            if (!questObjectives.TryGetValue(id, out List<ObjectiveData> objectives))
+            {
+                return null;
+            }
+            return objectives.Find(o => o.ID == objectiveID);
         }
 
         /// <summary>

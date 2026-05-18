@@ -1,9 +1,7 @@
 /*
  * Description: Marks an objective complete.
  */
-using NUnit.Framework;
 using Service.Core;
-using Service.Framework;
 using Service.Framework.GoalManagement;
 using Service.Framework.Goals;
 using UnityEngine;
@@ -31,8 +29,7 @@ namespace Gameplay.System.Actions
             {
                 if (targetObjective != null)
                 {
-                    string objectiveID = targetObjective.CreatedObjectiveID;
-                    GoalManager.Instance.GoalTracker.MarkObjectiveComplete(ActionQuestID, objectiveID);
+                    GoalManager.Instance.GoalTracker.MarkObjectiveComplete(ActionQuestID, targetObjective.CreatedObjectiveID);
                 }
             }
             else

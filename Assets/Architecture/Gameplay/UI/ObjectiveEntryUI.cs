@@ -24,6 +24,7 @@ namespace Gameplay.UI
 
         [SerializeField]
         private TMP_Text objectiveText;
+        public TMP_Text ObjectiveText => objectiveText;
 
         /// <summary>
         /// Can do text enter effects here.
@@ -33,7 +34,8 @@ namespace Gameplay.UI
         {
             OnObjectiveAdded.Invoke();
             objectiveID = data.ID;
-            SetText(data);
+            objectiveText.text = data.ObjectiveText;
+            //SetText(data);
         }
 
         /// <summary>
@@ -49,36 +51,36 @@ namespace Gameplay.UI
     ///****NOTE:  Below is some simple coded effects to show completing the objective****///
             
             //if we want to hide the text
-            if (hideComplete)
-            {
-                gameObject.SetActive(false);
-            }
-            //if we want to visually complete the text
-            else
-            {
-                //set the text with a strike through
-                objectiveText.text = $"<s>{data.ObjectiveText}</s>";
-            }
+            //if (hideComplete)
+            //{
+            //    gameObject.SetActive(false);
+            //}
+            ////if we want to visually complete the text
+            //else
+            //{
+            //    //set the text with a strike through
+            //    objectiveText.text = $"<s>{data.ObjectiveText}</s>";
+            //}
         }
 
-        private void SetText(ObjectiveData data)
-        {
-            objectiveText.text = data.ObjectiveText;
+        //private void SetText(ObjectiveData data)
+        //{
+        //    objectiveText.text = data.ObjectiveText;
 
-        }
+        //}
 
-        public void RefreshEntry(ObjectiveData data, bool hideComplete)
-        {
-            //not complete, so just display normal
-            if (!data.IsComplete)
-            {
-                SetText(data);
-            }
-            //is complete
-            else
-            {
-                CompleteEntry(data, hideComplete);
-            }
-        }
+        //public void RefreshEntry(ObjectiveData data, bool hideComplete)
+        //{
+        //    //not complete, so just display normal
+        //    if (!data.IsComplete)
+        //    {
+        //        SetText(data);
+        //    }
+        //    //is complete
+        //    else
+        //    {
+        //        CompleteEntry(data, hideComplete);
+        //    }
+        //}
     }
 }

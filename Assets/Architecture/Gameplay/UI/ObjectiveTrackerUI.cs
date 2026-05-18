@@ -17,6 +17,7 @@ namespace Gameplay.UI
         private ObjectiveData objectiveData;
 
         private TMP_Text objectiveText;
+        public TMP_Text ObjectiveText => objectiveText;
 
         public void Initialize(ObjectiveData data)
         {

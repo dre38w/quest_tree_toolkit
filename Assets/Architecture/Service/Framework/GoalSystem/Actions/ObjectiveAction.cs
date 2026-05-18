@@ -33,6 +33,8 @@ namespace Service.Framework.Goals
         /// </summary>
         public QuestID ActionQuestID { get; private set; }
          
+        //public string ActionObjectiveID { get; private set; }
+
         protected bool isComplete { get; set; }
 
         //if this action is part of a sequence, is it the last one?
@@ -59,6 +61,7 @@ namespace Service.Framework.Goals
         {
             isComplete = false;
             isBranching = false;
+            //ActionObjectiveID = null;
             SetState(ActionState.Inactive);
         }
 
@@ -71,6 +74,11 @@ namespace Service.Framework.Goals
         {
             ActionQuestID = id;
         }
+
+        //public void SetObjectiveID(string id)
+        //{
+        //    ActionObjectiveID = id;
+        //}
 
         public virtual void ActionUpdate(float deltaTime)
         {

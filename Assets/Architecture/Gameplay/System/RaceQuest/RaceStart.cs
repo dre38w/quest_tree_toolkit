@@ -11,7 +11,7 @@ namespace Gameplay.System
         {
             if (other.CompareTag(TagData.PLAYER_TAG))
             {
-                raceQuest.StartRace();
+                //raceQuest.StartRace();
             }
         }
     }

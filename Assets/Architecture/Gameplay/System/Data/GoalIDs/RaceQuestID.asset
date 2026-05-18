@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05dfde8488e0bc647b18b4ea00ef240d, type: 3}
   m_Name: RaceQuestID
   m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.QuestID
-  questName: 
+  questName: Race to the Finish
   description: 

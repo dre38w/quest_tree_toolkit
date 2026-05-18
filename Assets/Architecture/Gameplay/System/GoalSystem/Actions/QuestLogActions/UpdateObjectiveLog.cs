@@ -28,6 +28,16 @@ namespace Gameplay.System.Actions
 
         public override void InitializeAction()
         {
+            if (!string.IsNullOrEmpty(CreatedObjectiveID))
+            {
+                ObjectiveData existingObjective = GoalManager.Instance.GoalTracker.GetObjective(ActionQuestID, CreatedObjectiveID);
+
+                if (existingObjective != null)
+                {
+                    SetComplete();
+                    return;
+                }
+            }
             string parentID = null;
 
             if (isSubObjective && parentObjective != null)
@@ -36,9 +46,15 @@ namespace Gameplay.System.Actions
             }
 
             ObjectiveData data = GoalManager.Instance.GoalTracker.AddObjective(ActionQuestID, textBox, isSubObjective, parentID);
-            CreatedObjectiveID = data.ID;
+            
+            if (data == null)
+            {
+                return;
+            }
 
-            //GoalManager.Instance.GoalTracker.NotifyObjectiveChanges(ActionQuestID);
+            CreatedObjectiveID = data.ID;
+            //SetObjectiveID(data.ID);
+
             SetComplete();
         }
     }

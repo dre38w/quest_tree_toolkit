@@ -1008,6 +1008,7 @@ GameObject:
   - component: {fileID: 3687076264880022324}
   - component: {fileID: 9014071601711174139}
   - component: {fileID: 2488011786717460668}
+  - component: {fileID: 1748935652755486941}
   m_Layer: 5
   m_Name: MainUI
   m_TagString: MainUI
@@ -1134,6 +1135,7 @@ MonoBehaviour:
   questContent: {fileID: 7772485224642022743}
   questEntryPrefab: {fileID: 79297168729941176, guid: 1c7e52c5552b4f24a8da1314fac5c732, type: 3}
   objectivePrefab: {fileID: 1788506802868703622, guid: c0a9a46a2e3c548468ddc6e8fa727326, type: 3}
+  entryEffects: {fileID: 1748935652755486941}
   objectiveTrackerParent: {fileID: 641459061043273108}
   trackedQuestText: {fileID: 1329185077222786047}
   hideCompletedObjectives: 0
@@ -1151,6 +1153,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RaceTimerUI
   timerText: {fileID: 759174876232885631}
+--- !u!114 &1748935652755486941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7576169723602953007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5803b1ca1bc51c1488786bf82ae2d0dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.UI.LogEntryEffects
 --- !u!1 &7826872305442273243
 GameObject:
   m_ObjectHideFlags: 0

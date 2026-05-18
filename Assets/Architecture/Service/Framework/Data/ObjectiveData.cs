@@ -13,6 +13,7 @@ namespace Service.Framework
         public string ID;
         public string ObjectiveText;
         public bool IsComplete;
+        public bool IsFailed;
         public bool IsSubObjective;
 
         public string ParentObjectiveID;
@@ -20,7 +21,10 @@ namespace Service.Framework
 
         public ObjectiveData(string textEntry, bool isSubObjective, string parentID = null)
         {
-            ID = Guid.NewGuid().ToString();
+            if (ID == null)
+            {
+                ID = Guid.NewGuid().ToString();
+            }
             ObjectiveText = textEntry;
             IsComplete = false;
             IsSubObjective = isSubObjective;

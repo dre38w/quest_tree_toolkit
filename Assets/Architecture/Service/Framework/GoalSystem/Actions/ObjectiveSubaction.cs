@@ -184,7 +184,7 @@ namespace Service.Framework.Goals
             if (currentSubAction && currentSubAction.IsComplete())
             {
                 int nextSubactionIndex = objectiveSubactions.FindIndex(data => data == currentSubAction);
-                SetNextActiveAction(nextSubactionIndex + 1);
+                SetNextActiveAction(nextSubactionIndex + 1, currentSubAction);
                 //reset to 0 to avoid potential garbage data
                 nextSubactionIndex = 0;
             }
@@ -194,7 +194,7 @@ namespace Service.Framework.Goals
         /// Handle activating the next action we are wanting to start
         /// </summary>
         /// <param name="subActionIndex"></param>
-        private void SetNextActiveAction(int subActionIndex)
+        private void SetNextActiveAction(int subActionIndex, ObjectiveAction previousAction = null)
         {
             //if this is a non sequential action, activate all actions to allow completing them in any order
             if (!isSequential)
@@ -210,6 +210,12 @@ namespace Service.Framework.Goals
                 if (subActionIndex < objectiveSubactions.Count)
                 {
                     currentSubAction = objectiveSubactions[subActionIndex];
+
+                    //if (previousAction != null && !string.IsNullOrEmpty(previousAction.ActionObjectiveID))
+                    //{
+                    //    currentSubAction.SetObjectiveID(previousAction.ActionObjectiveID);
+                    //}
+
                     currentSubAction.SetState(ActionState.Active);
                 }
             }
