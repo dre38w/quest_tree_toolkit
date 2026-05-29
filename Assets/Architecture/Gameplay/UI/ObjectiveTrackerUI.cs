@@ -19,6 +19,12 @@ namespace Gameplay.UI
         private TMP_Text objectiveText;
         public TMP_Text ObjectiveText => objectiveText;
 
+        [Tooltip("The duration to wait between state changes. \n" +
+            "Ex. Before playing a UI effect, activating/deactivating the UI element, etc.")]
+        [SerializeField]
+        private float stateChangeDelay = 0f;
+        public float StateChangeDelay => stateChangeDelay;
+
         public void Initialize(ObjectiveData data)
         {
             objectiveText = GetComponent<TMP_Text>();

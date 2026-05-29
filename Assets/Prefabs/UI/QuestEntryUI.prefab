@@ -333,6 +333,7 @@ MonoBehaviour:
   questTitle: {fileID: 4858908014918296273}
   objectivesContent: {fileID: 4280779770871093433}
   objectivePrefab: {fileID: 2726838591782328719, guid: 25dfa77fcbed1444d8be75736565d0b1, type: 3}
+  stateChangeDelay: 1
 --- !u!114 &4362886863244542081
 MonoBehaviour:
   m_ObjectHideFlags: 0

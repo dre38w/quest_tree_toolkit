@@ -700,6 +700,28 @@ namespace Support.Editor
                 actionParent = currentNode;
                 actionIndexToDelete = list.index;
             };
+
+            nestedActionsList.onReorderCallbackWithDetails = (list, oldIndex, newIndex) =>
+            {
+                SerializedProperty property = list.serializedProperty;
+
+                List<ObjectiveAction> reorderedActions = new List<ObjectiveAction>();
+
+                for (int i = 0; i < property.arraySize; i++)
+                {
+                    ObjectiveAction action = property.GetArrayElementAtIndex(i).objectReferenceValue as ObjectiveAction;
+                    if (action != null)
+                    {
+                        reorderedActions.Add(action);
+                    }
+                }
+
+                for (int i = 0; i < reorderedActions.Count; i++)
+                {
+                    Undo.RecordObject(reorderedActions[i].transform, "Reorder Action GameObjects");
+                    reorderedActions[i].transform.SetSiblingIndex(i);
+                }
+            };
         }
 
         private void DuplicateNode(ObjectiveAction sourceAction)

@@ -11,12 +11,23 @@ namespace Service.Framework.Goals
     [Submenu("Logic/Conditional Branch")]
     public class BranchingSubaction : ObjectiveSubaction
     {
+        public override void SetComplete()
+        {
+            base.SetComplete();
+
+            if (ParentSubaction != null)
+            {
+                ParentSubaction.SetComplete();
+            }
+        }
+
         public override bool HandleBranch(ObjectiveAction sourceAction)
         {
             if (!ObjectiveSubactions.Contains(sourceAction))
             {
                 return false;
             }
+
             //override the current subaction to be the action that was passed
             //which was the branching action and thus needs to activate
             CurrentSubaction = sourceAction;

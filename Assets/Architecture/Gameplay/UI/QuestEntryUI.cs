@@ -25,6 +25,12 @@ namespace Gameplay.UI
         [SerializeField]
         private ObjectiveEntryUI objectivePrefab;
 
+        [Tooltip("The duration to wait between state changes. \n" +
+            "Ex. Before playing a UI effect, activating/deactivating the UI element, etc.")]
+        [SerializeField]
+        private float stateChangeDelay = 0f;
+        public float StateChangeDelay => stateChangeDelay;
+
         //private List<ObjectiveEntryUI> spawnedObjectives = new List<ObjectiveEntryUI>();
 
         private QuestID questID;

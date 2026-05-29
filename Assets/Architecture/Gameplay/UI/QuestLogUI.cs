@@ -20,7 +20,7 @@ namespace Gameplay.UI
         private ObjectiveTrackerUI objectivePrefab;
 
         [SerializeField]
-        private LogEntryEffects entryEffects;
+        private ApplyLogEntryEffects entryEffects;
 
         [SerializeField]
         private GameObject objectiveTrackerParent;
@@ -135,7 +135,7 @@ namespace Gameplay.UI
 
             if (objective.IsFailed)
             {
-                entryEffects.ApplyObjectiveFailed(objectiveUI, objective);
+                entryEffects.ApplyObjectiveFailed(objectiveUI, objective, hideCompletedObjectives);
                 //ApplyObjectiveFailedEffect(objectiveUI, objective);
                 //return;
             }
@@ -312,7 +312,7 @@ namespace Gameplay.UI
             }
             else if (objective.IsComplete)
             {
-                entryEffects.ApplyTrackedObjectiveComplete(trackerUI, objective, hideCompletedObjectives);
+                entryEffects.ApplyTrackedObjectiveComplete(trackerUI, objective);
                 //return;
             }
             else

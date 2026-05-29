@@ -20,19 +20,23 @@ namespace Gameplay.System.Actions
         [SerializeField]
         private bool isPermaFail;
 
+        [Tooltip("Do we need to target a specific objective to fail or the last added objective?")]
+        [SerializeField]
+        private bool isTargettedObjective;
+
         [Tooltip("The objective we want to perma fail.")]
         [SerializeField]
         private UpdateObjectiveLog targetObjective;
 
-        [Tooltip("How long before restarting the objective if perma fail is false?")]
+        [Tooltip("How long before completing the action?")]
         [SerializeField]
-        private float resetObjectiveWaitTime = 1f;
+        private float completeActionWaitTime = 1f;
 
-        private WaitForSeconds resetObjectiveWait;
+        private WaitForSeconds completeActionWait;
 
         private void Start()
         {
-            resetObjectiveWait = new WaitForSeconds(resetObjectiveWaitTime);
+            completeActionWait = new WaitForSeconds(completeActionWaitTime);
         }
 
         public override void InitializeAction()
@@ -44,27 +48,41 @@ namespace Gameplay.System.Actions
             GoalManager.Instance.GoalTracker.MarkObjectiveFailed(ActionQuestID, targetObjective.CreatedObjectiveID, isPermaFail);
             OnObjectiveFailed.Invoke();
 
-            if (isPermaFail)
-            {
-                //if (targetObjective != null)
-                //{
-                //    string objectiveID = targetObjective.CreatedObjectiveID;
-                //    GoalManager.Instance.GoalTracker.MarkObjectiveComplete(ActionQuestID, objectiveID);
-                //}
-                SetComplete();
-            }
-            else
-            {
+            //if (isPermaFail)
+            //{
+            //    //if (targetObjective != null)
+            //    //{
+            //    //    string objectiveID = targetObjective.CreatedObjectiveID;
+            //    //    GoalManager.Instance.GoalTracker.MarkObjectiveComplete(ActionQuestID, objectiveID);
+            //    //}
+            //    SetComplete();
+            //}
+            //else
+            //{
                 StartCoroutine(ResetObjectiveWaitTimer(targetObjective.CreatedObjectiveID));
-            }
+            //}
             //OnObjectiveFailed.Invoke();
+
+            //if (isTargettedObjective)
+            //{
+            //    StartCoroutine(ResetObjectiveWaitTimer(targetObjective.CreatedObjectiveID));
+            //}
+            //else
+            //{
+            //    //
+            //}
         }
 
         private IEnumerator ResetObjectiveWaitTimer(string objectiveID)
         {
-            yield return resetObjectiveWait;
-            GoalManager.Instance.GoalTracker.RestartObjective(ActionQuestID, objectiveID);
-            OnObjectiveRestart.Invoke();
+            yield return completeActionWait;
+
+            if (!isPermaFail)
+            {
+                GoalManager.Instance.GoalTracker.RestartObjective(ActionQuestID, objectiveID);
+
+            }
+            //OnObjectiveRestart.Invoke();
             SetComplete();
         }
     }

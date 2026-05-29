@@ -283,53 +283,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.SetActiveQuest
   questID: {fileID: 11400000, guid: 32b57a814f7187647b9f8ceba0b0d4be, type: 2}
---- !u!1 &1797040429261677694
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1994120865329354579}
-  - component: {fileID: 232260209481918691}
-  m_Layer: 0
-  m_Name: Activate Race Start
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1994120865329354579
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1797040429261677694}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5040314466295622629}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &232260209481918691
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1797040429261677694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44b1731982b372842a74de6b93eab970, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.ToggleObjectActiveAction
-  objectsToToggle:
-  - {fileID: 2854528149466445655}
-  setObjectActive: 1
 --- !u!1 &1977138079232079259
 GameObject:
   m_ObjectHideFlags: 0
@@ -724,51 +677,6 @@ MonoBehaviour:
       m_Calls: []
   isTrigger: 1
   isExitEvent: 0
---- !u!1 &2786994958028449733
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5152330513885855847}
-  - component: {fileID: 1214655497714234988}
-  m_Layer: 0
-  m_Name: Print Failed
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5152330513885855847
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2786994958028449733}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5040314466295622629}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1214655497714234988
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2786994958028449733}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a7fe9b830b82704e95d25666e0a408b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DebugPrintAction
-  textToPrint: Failed the race!
 --- !u!1 &2854528149466445655
 GameObject:
   m_ObjectHideFlags: 0
@@ -1614,6 +1522,59 @@ MonoBehaviour:
       m_Calls: []
   isTrigger: 1
   isExitEvent: 0
+--- !u!1 &6658143829836265308
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 656135725099651769}
+  - component: {fileID: 6692230723799575346}
+  m_Layer: 0
+  m_Name: Turn off all checkpoints
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &656135725099651769
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6658143829836265308}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5040314466295622629}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6692230723799575346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6658143829836265308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44b1731982b372842a74de6b93eab970, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.ToggleObjectActiveAction
+  objectsToToggle:
+  - {fileID: 8501411805299172677}
+  - {fileID: 2053787384267484248}
+  - {fileID: 169388883831919083}
+  - {fileID: 2752511544850315257}
+  - {fileID: 5836624818036413602}
+  - {fileID: 4028218658857465995}
+  - {fileID: 6039070271334952558}
+  setObjectActive: 0
 --- !u!1 &7484098529383535386
 GameObject:
   m_ObjectHideFlags: 0
@@ -1644,10 +1605,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 656135725099651769}
   - {fileID: 757412846517142159}
-  - {fileID: 5152330513885855847}
-  - {fileID: 1994120865329354579}
-  - {fileID: 673548877221833562}
   - {fileID: 1941674569888429539}
   m_Father: {fileID: 3423058869560368822}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1664,11 +1623,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.BranchingSubaction
   objectiveSubactions:
+  - {fileID: 6692230723799575346}
   - {fileID: 137017643927603595}
-  - {fileID: 1214655497714234988}
   - {fileID: 3091686146972173703}
-  - {fileID: 232260209481918691}
-  - {fileID: 8798441822722407530}
   isSequential: 1
   isRandomAtStart: 0
 --- !u!1 &7821219473673380566
@@ -1808,53 +1765,6 @@ MonoBehaviour:
   - {fileID: 4028218658857465995}
   - {fileID: 6039070271334952558}
   setObjectActive: 0
---- !u!1 &7935693157764735097
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 673548877221833562}
-  - component: {fileID: 8798441822722407530}
-  m_Layer: 0
-  m_Name: Restart Race
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &673548877221833562
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7935693157764735097}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5040314466295622629}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8798441822722407530
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7935693157764735097}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6a1456731114844b968f3c333b702f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.RestartIncompleteGoalAction
-  goalToCheck: {fileID: 11400000, guid: c883ea5f1a158f74da730946910aa516, type: 2}
-  goalsToRestart:
-  - {fileID: 11400000, guid: c883ea5f1a158f74da730946910aa516, type: 2}
 --- !u!1 &8228330764928906075
 GameObject:
   m_ObjectHideFlags: 0
@@ -1905,9 +1815,10 @@ MonoBehaviour:
   OnObjectiveRestart:
     m_PersistentCalls:
       m_Calls: []
-  isPermaFail: 0
+  isPermaFail: 1
+  isTargettedObjective: 0
   targetObjective: {fileID: 8664314070374297689}
-  resetObjectiveWaitTime: 2
+  completeActionWaitTime: 3
 --- !u!1 &8299833132847922139
 GameObject:
   m_ObjectHideFlags: 0

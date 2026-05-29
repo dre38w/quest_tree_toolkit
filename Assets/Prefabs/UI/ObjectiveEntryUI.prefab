@@ -50,7 +50,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5d9005dd2126a44680baa2992edd025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObjectiveEntryUI
+  OnObjectiveAdded:
+    m_PersistentCalls:
+      m_Calls: []
+  OnObjectiveCompleted:
+    m_PersistentCalls:
+      m_Calls: []
   objectiveText: {fileID: 6151535150233760145}
+  stateChangeDelay: 1
 --- !u!114 &7406372665714295208
 MonoBehaviour:
   m_ObjectHideFlags: 0
