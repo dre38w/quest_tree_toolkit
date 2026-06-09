@@ -1,3 +1,6 @@
+/*
+ * Description: Handles displaying the quest title on the tracked quest UI
+ */
 using Service.Framework;
 using Service.Framework.Goals;
 using TMPro;
@@ -28,13 +31,20 @@ namespace Gameplay.UI
 
         public void Initialize(QuestID id)
         {
+            //add the quest and set its name
             OnTrackedQuestAdded.Invoke();
             questTitle.text = id.questName;
         }
 
+        /// <summary>
+        /// Spawn the associated objectives
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
         public ObjectiveTrackerUI AddObjective(ObjectiveData data)
         {
             ObjectiveTrackerUI newObjective = Instantiate(objectivePrefab, objectivesContent);
+            //initialize data
             newObjective.Initialize(data);
             return newObjective;
         }

@@ -16,11 +16,14 @@ namespace Service.Framework
         public bool IsFailed;
         public bool IsSubObjective;
 
+        //The ID of this objective's parent objective.  Useful for conditional branches
         public string ParentObjectiveID;
+        //if this is a parent objective, reference a list of the IDs of any child objectives
         public List<string> SubObjectivesIDs = new List<string>();
 
         public ObjectiveData(string textEntry, bool isSubObjective, string parentID = null)
         {
+            //set a unique GUID to allow for easy and foolproof ID marking
             if (ID == null)
             {
                 ID = Guid.NewGuid().ToString();

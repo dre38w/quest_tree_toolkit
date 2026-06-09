@@ -13,7 +13,6 @@ namespace Gameplay.UI
         public UnityEvent OnQuestHidden = new UnityEvent();
         public UnityEvent OnObjectiveHidden = new UnityEvent();
 
-        #region Normal Objectives
         /// <summary>
         /// Handle displaying an active/incomplete objective in the objective log
         /// </summary>
@@ -43,7 +42,6 @@ namespace Gameplay.UI
             }
             entry.gameObject.SetActive(true); //may not need this line
         }
-        #endregion
 
         /// <summary>
         /// Handle tracked objective
@@ -168,12 +166,6 @@ namespace Gameplay.UI
                 StartCoroutine(TrackedQuestUIHideDelay(entry, entry.StateChangeDelay));
             }
         }
-
-        //private IEnumerator HideQuestTitleUI(QuestEntryUI entry, float delay)
-        //{
-        //    yield return new WaitForSeconds(delay);
-        //    entry.gameObject.SetActive(false);
-        //}
 
         private IEnumerator ObjectiveUIHideDelay(ObjectiveEntryUI entry, float delay)
         {

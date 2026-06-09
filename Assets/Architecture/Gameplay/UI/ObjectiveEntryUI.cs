@@ -43,8 +43,6 @@ namespace Gameplay.UI
             OnObjectiveAdded.Invoke();
             objectiveID = data.ID;
             objectiveText.text = data.ObjectiveText;
-
-            //StartCoroutine(UIEffects.StateDelay(objectiveText.text, data.ObjectiveText));
         }
 
         /// <summary>

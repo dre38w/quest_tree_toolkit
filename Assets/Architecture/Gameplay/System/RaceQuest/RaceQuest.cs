@@ -1,14 +1,15 @@
+/*
+ * Description: Handles the logic and conditions for the race mission
+ */
 using Service.Framework;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Gameplay.UI;
 
 namespace Gameplay.System
 {
     public class RaceQuest : MonoBehaviour
     {
-        //[SerializeField]
-        //private GenericQuestTreeMessenger questCompleteMessenger;
         [SerializeField]
         private GenericQuestTreeMessenger questFailedMessenger;
 
@@ -16,38 +17,22 @@ namespace Gameplay.System
         private float raceDuration = 15f;
         private float currentRaceTime;
 
-        //[SerializeField]
-        //private List<Checkpoint> checkpoints = new List<Checkpoint>();
-
+        [SerializeField]
         private RaceTimerUI raceTimerUI;
-
-        //private int currentCheckpoint = 0;
 
         private Coroutine raceTimerCoroutine;
 
-        private void Start()
-        {
-            raceTimerUI = ReferenceRegistry.Instance.MainUI.GetComponent<RaceTimerUI>();
-
-            //StartCoroutine(Initialize());
-        }
-
-        //private IEnumerator Initialize()
-        //{
-        //    yield return null;
-        //    for (int i = 0; i < checkpoints.Count; i++)
-        //    {
-        //        checkpoints[i].gameObject.SetActive(false);
-        //    }
-        //}
-
+        /// <summary>
+        /// Perform the timer count
+        /// </summary>
+        /// <returns></returns>
         private IEnumerator RaceTimer()
         {
             currentRaceTime = raceDuration;
             while (currentRaceTime > 0)
             {
                 currentRaceTime -= Time.deltaTime;
-                raceTimerUI.DisplayTimer(currentRaceTime);
+                raceTimerUI.DisplayTimer(Mathf.Abs(currentRaceTime));
                 yield return null;
             }
             raceTimerUI.DisplayTimer(0);
@@ -55,28 +40,24 @@ namespace Gameplay.System
             yield return null;
         }
 
+        /// <summary>
+        /// Called by external systems to start the race timer
+        /// </summary>
         public void StartRace()
         {
-            //checkpoints[0].gameObject.SetActive(true);
-
             if (raceTimerCoroutine == null)
             {
                 raceTimerCoroutine = StartCoroutine(RaceTimer());
             }
         }
 
+        /// <summary>
+        /// Notifies an Action in the goal tree that the race has failed
+        /// </summary>
         private void FailedRace()
         {
             questFailedMessenger.OnTriggerAction();
-
             StopTimer();
-
-            //for (int i = 0; i < checkpoints.Count; i++)
-            //{
-            //    checkpoints[i].gameObject.SetActive(false);
-            //}
-            //startRace.SetActive(true);
-            //currentCheckpoint = 0;
         }
 
         public void StopTimer()
@@ -86,14 +67,6 @@ namespace Gameplay.System
                 StopCoroutine(raceTimerCoroutine);
                 raceTimerCoroutine = null;
             }
-        }
-
-        private void OnDestroy()
-        {
-            //for (int i = 0; i < checkpoints.Count; i++)
-            //{
-            //    //checkpoints[i].OnReachedCheckpoint.RemoveListener(ReachedCheckpoint);
-            //}
         }
     }
 }

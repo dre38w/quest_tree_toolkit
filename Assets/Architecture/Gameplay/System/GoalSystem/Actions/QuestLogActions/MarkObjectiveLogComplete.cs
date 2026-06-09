@@ -36,7 +36,7 @@ namespace Gameplay.System.Actions
             {
                 GoalManager.Instance.GoalTracker.CompleteLatestObjective(ActionQuestID);
             }
-            //does this objective also complete the quest its associated with?
+            //does this objective also complete the quest it's associated with?
             if (doesCompleteQuest)
             {
                 GoalManager.Instance.GoalTracker.CompleteQuest(ActionQuestID);

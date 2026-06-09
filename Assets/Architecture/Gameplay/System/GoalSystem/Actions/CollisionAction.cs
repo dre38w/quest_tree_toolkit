@@ -29,6 +29,10 @@ namespace Gameplay.System.Actions
         [SerializeField]
         private bool activateNextCollisionObject = false;
 
+        [Tooltip("Do we want to be able to collide with the objects more than once?")]
+        [SerializeField]
+        private bool multiCollision = false;
+
         private HashSet<GameObject> remainingCollisionObjects = new HashSet<GameObject>();
 
         private void Start()
@@ -62,7 +66,7 @@ namespace Gameplay.System.Actions
 
             if (activateNextCollisionObject)
             {
-                
+                //activate the next collision object in the list
                 for (int i = 0; i < collisionActionComponent.Length; i++)
                 {
                     if (collisionActionComponent[i].gameObject == collidedObject)
@@ -78,13 +82,19 @@ namespace Gameplay.System.Actions
                 }
             }
 
+            //require all objects in the list to be collided with
             if (requireAllCollisions)
             {
+                //if we already removed this object, early out.
+                //if was not removed yet, remove it.
+                //this allows us to process a collision event once,
+                //since the goal is to require the player to collide with all in the list, we only care if they did so once
                 if (!remainingCollisionObjects.Remove(collidedObject))
                 {
                     return;
                 }
 
+                //still have objects to collide with, early out
                 if (remainingCollisionObjects.Count > 0)
                 {
                     return;
@@ -97,9 +107,15 @@ namespace Gameplay.System.Actions
 
         public override void ResetValues()
         {
+            //don't remove the listeners if we want to allow multi collision detection 
+            if (multiCollision)
+            {
+                return;
+            }
+            //remove the listeners to avoid collisions from triggering 
             for (int i = 0; i < collisionActionComponent.Length; i++)
             {
-                //collisionActionComponent[i].OnCollided.RemoveListener(OnCollided);
+                collisionActionComponent[i].OnCollided.RemoveListener(OnCollided);
             }
         }
 

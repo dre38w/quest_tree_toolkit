@@ -1,3 +1,6 @@
+/*
+ * Description: Automatically sets a quest as the current tracked quest.
+ */
 using Gameplay.UI;
 using Service.Core;
 using Service.Framework.Goals;

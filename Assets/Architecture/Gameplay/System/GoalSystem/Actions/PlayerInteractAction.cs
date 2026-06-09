@@ -10,6 +10,7 @@ namespace Gameplay.System.Actions
     [Submenu("Player/Player Interact")]
     public class PlayerInteractAction : ObjectiveAction
     {
+        //the object that will trigger the interaction button
         [SerializeField]
         private InteractableObject interactableObject;
 

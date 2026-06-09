@@ -165,8 +165,6 @@ namespace Service.Framework.Goals
             //after all sub actions are complete, we can now complete the action
             if (objectiveSubactions.All(a => a.IsComplete()))
             {
-                //isComplete = true;
-                //OnActionCompleted.Invoke(this);
                 SetComplete();
                 ResetValues();
                 return;
@@ -211,12 +209,6 @@ namespace Service.Framework.Goals
                 if (subActionIndex < objectiveSubactions.Count)
                 {
                     currentSubAction = objectiveSubactions[subActionIndex];
-
-                    //if (previousAction != null && !string.IsNullOrEmpty(previousAction.ActionObjectiveID))
-                    //{
-                    //    currentSubAction.SetObjectiveID(previousAction.ActionObjectiveID);
-                    //}
-
                     currentSubAction.SetState(ActionState.Active);
                 }
             }
@@ -233,7 +225,6 @@ namespace Service.Framework.Goals
         /// <param name="action"></param>
         private void OnSubactionCompleted(ObjectiveAction action)
         {
-            //HandleBranch(action);
             if (!action.IsBranching)
             {
                 return;
@@ -264,7 +255,6 @@ namespace Service.Framework.Goals
 
         public override void ResetValues()
         {
-            //SetState(ActionState.Inactive);
             currentSubAction = null;
         }
 

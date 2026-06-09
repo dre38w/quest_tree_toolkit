@@ -28,6 +28,7 @@ namespace Gameplay.System.Actions
 
         public override void InitializeAction()
         {
+            //if the objective is the same, complete and ignore any updating
             if (!string.IsNullOrEmpty(CreatedObjectiveID))
             {
                 ObjectiveData existingObjective = GoalManager.Instance.GoalTracker.GetObjective(ActionQuestID, CreatedObjectiveID);
@@ -38,6 +39,8 @@ namespace Gameplay.System.Actions
                     return;
                 }
             }
+
+            //set the parent id for the new objective
             string parentID = null;
 
             if (isSubObjective && parentObjective != null)
@@ -45,6 +48,7 @@ namespace Gameplay.System.Actions
                 parentID = parentObjective.CreatedObjectiveID;
             }
 
+            //now add and create the new objective in the database
             ObjectiveData data = GoalManager.Instance.GoalTracker.AddObjective(ActionQuestID, textBox, isSubObjective, parentID);
             
             if (data == null)
@@ -52,8 +56,8 @@ namespace Gameplay.System.Actions
                 return;
             }
 
+            //we created the new ID when adding to the database, so reference it
             CreatedObjectiveID = data.ID;
-            //SetObjectiveID(data.ID);
 
             SetComplete();
         }

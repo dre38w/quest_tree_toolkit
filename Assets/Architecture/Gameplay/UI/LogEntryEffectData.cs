@@ -1,5 +1,6 @@
-using UnityEngine;
-
+/*
+ * Description: Holds reusable text or other frequently used data
+ */
 namespace Gameplay.UI
 {
     public class LogEntryEffectData

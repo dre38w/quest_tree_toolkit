@@ -6,11 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Events;
 
-/*
- * get reference to the quest
- * we do not have a reference to a quest so how do we create it?
- * a quest is a higher level than a goal, so we need a quest manager (maybe rename goal manager to quest manager?)
- */
 namespace Service.Framework.Goals
 {
     public class GoalTrackerDatabase
@@ -21,18 +16,26 @@ namespace Service.Framework.Goals
         private Dictionary<QuestID, List<ObjectiveData>> questObjectives = new Dictionary<QuestID, List<ObjectiveData>>();
         private Dictionary<QuestID, bool> questCompletion = new Dictionary<QuestID, bool>();
 
+        /// <summary>
+        /// Add a quest
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public QuestData AddQuest(QuestID id)
         {
+            //create a new one if not yet created
             if (!quests.ContainsKey(id))
             {
                 quests[id] = new List<QuestData>();
             }
             QuestData data = new QuestData(id);
 
+            //if we find this already exists, early exit
             if (quests[id].Contains(quests[id].Find(d => d.ID == data.ID)))
             {
                 return null;
             }
+            //add the new quest
             quests[id].Add(data);
             return data;
         }
@@ -51,11 +54,6 @@ namespace Service.Framework.Goals
 
             ObjectiveData data = new ObjectiveData(objectiveText, isSubObjective, parentID);
             
-            //if this objective was already added, do not continue
-            //if (questObjectives[id].Contains(questObjectives[id].Find(d => d.ID == data.ID)))
-            //{
-            //    return null;
-            //}
             questObjectives[id].Add(data);
 
             if (isSubObjective && parentID != null)
@@ -101,6 +99,7 @@ namespace Service.Framework.Goals
             }
             target.IsFailed = true;
 
+            //mark complete if this fail state is meant to permanently fail the objective 
             if (markComplete)
             {
                 target.IsComplete = true;
@@ -113,6 +112,11 @@ namespace Service.Framework.Goals
             OnObjectivesChanged.Invoke(id);
         }
 
+        /// <summary>
+        /// Force restart an objective
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="objectiveID"></param>
         public void RestartObjective(QuestID id, string objectiveID)
         {
             if (!questObjectives.ContainsKey(id))
@@ -158,6 +162,7 @@ namespace Service.Framework.Goals
             {
                 ObjectiveData parentObjective = dataList.Find(p => p.ID == target.ParentObjectiveID);
 
+                //if all subobjectives are complete, complete the parent
                 if (parentObjective.SubObjectivesIDs.All(subID => dataList.Find(o => o.ID == subID).IsComplete == true))
                 {
                     parentObjective.IsComplete = true;

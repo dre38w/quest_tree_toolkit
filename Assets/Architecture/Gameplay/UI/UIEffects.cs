@@ -2,9 +2,6 @@
  * Description:  Example class that holds some UI effects
  */
 
-using System.Collections;
-using UnityEngine;
-
 namespace Gameplay.UI
 {
     public class UIEffects

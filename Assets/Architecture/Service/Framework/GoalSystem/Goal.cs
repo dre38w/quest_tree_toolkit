@@ -163,10 +163,14 @@ namespace Service.Framework.Goals
             SetState(GoalState.Inactive);
         }
 
+        /// <summary>
+        /// Force the goal to complete
+        /// </summary>
         public virtual void ForceCompleteGoal()
         {
             SetComplete();
 
+            //force all the objectives to complete
             for (int i = 0; i < objectiveActions.Count; i++)
             {
                 objectiveActions[i].ForceCompleteAction();

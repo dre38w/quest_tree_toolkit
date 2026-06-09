@@ -1,5 +1,7 @@
+/*
+ * Description: Holds data for the quest
+ */
 using Service.Framework.Goals;
-using UnityEngine;
 
 namespace Service.Framework
 {

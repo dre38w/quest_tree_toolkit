@@ -57,35 +57,8 @@ namespace Gameplay.System.Actions
                 //TODO:  add ability to fail previous added entry
             }
 
-            //if (doesFailQuest)
-            //{
-            //    GoalManager.Instance.GoalTracker.FailQuest(ActionQuestID);
-            //}
             OnObjectiveFailed.Invoke();
-
-            //if (isPermaFail)
-            //{
-            //    //if (targetObjective != null)
-            //    //{
-            //    //    string objectiveID = targetObjective.CreatedObjectiveID;
-            //    //    GoalManager.Instance.GoalTracker.MarkObjectiveComplete(ActionQuestID, objectiveID);
-            //    //}
-            //    SetComplete();
-            //}
-            //else
-            //{
-                StartCoroutine(ResetObjectiveWaitTimer(targetObjective.CreatedObjectiveID));
-            //}
-            //OnObjectiveFailed.Invoke();
-
-            //if (isTargettedObjective)
-            //{
-            //    StartCoroutine(ResetObjectiveWaitTimer(targetObjective.CreatedObjectiveID));
-            //}
-            //else
-            //{
-            //    //
-            //}
+            StartCoroutine(ResetObjectiveWaitTimer(targetObjective.CreatedObjectiveID));
         }
 
         private IEnumerator ResetObjectiveWaitTimer(string objectiveID)
@@ -97,7 +70,7 @@ namespace Gameplay.System.Actions
                 GoalManager.Instance.GoalTracker.RestartObjective(ActionQuestID, objectiveID);
 
             }
-            //OnObjectiveRestart.Invoke();
+            OnObjectiveRestart.Invoke();
             SetComplete();
         }
     }

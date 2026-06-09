@@ -1,3 +1,6 @@
+/*
+ * Description: Handles displaying the tracked objective
+ */
 using Service.Framework;
 using TMPro;
 using UnityEngine;
@@ -31,29 +34,16 @@ namespace Gameplay.UI
         private float stateChangeDelay = 0f;
         public float StateChangeDelay => stateChangeDelay;
 
+        /// <summary>
+        /// Initialize data
+        /// </summary>
+        /// <param name="data"></param>
         public void Initialize(ObjectiveData data)
         {
+            //set the ID and display the text
             OnTrackedObjectiveAdded.Invoke();
             objectiveID = data.ID;
             objectiveText.text = data.ObjectiveText;
-            //objectiveData = data;
         }
-
-        //public void RefreshObjectives(QuestID id)
-        //{
-        //    if (!objectiveData.IsComplete)
-        //    {
-        //        objectiveText.text = objectiveData.ObjectiveText;
-        //    }
-        //    else
-        //    {
-        //        objectiveText.text = $"<s>{objectiveData.ObjectiveText}</s>";
-        //    }
-        //}
-
-        //public void DestroyObject()
-        //{
-        //    Destroy(gameObject);
-        //}
     }
 }

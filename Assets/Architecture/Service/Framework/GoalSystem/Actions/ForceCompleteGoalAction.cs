@@ -1,3 +1,6 @@
+/*
+ * Description: Forces a goal into complete state
+ */
 using Service.Core;
 using Service.Framework.GoalManagement;
 using UnityEngine;
@@ -24,6 +27,7 @@ namespace Service.Framework.Goals
                 OnQuestFailed.Invoke(ActionQuestID);
             }
 
+            //complete the goals
             for (int i = 0; i < goalsToComplete.Length; i++)
             {
                 GoalManager.Instance.GetGoal(goalsToComplete[i]).ForceCompleteGoal();
