@@ -6,14 +6,36 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Events;
 
+/*
+ * get reference to the quest
+ * we do not have a reference to a quest so how do we create it?
+ * a quest is a higher level than a goal, so we need a quest manager (maybe rename goal manager to quest manager?)
+ */
 namespace Service.Framework.Goals
 {
     public class GoalTrackerDatabase
     {
         public UnityEvent<QuestID> OnObjectivesChanged = new UnityEvent<QuestID>();
 
+        private Dictionary<QuestID, List<QuestData>> quests = new Dictionary<QuestID, List<QuestData>>();
         private Dictionary<QuestID, List<ObjectiveData>> questObjectives = new Dictionary<QuestID, List<ObjectiveData>>();
         private Dictionary<QuestID, bool> questCompletion = new Dictionary<QuestID, bool>();
+
+        public QuestData AddQuest(QuestID id)
+        {
+            if (!quests.ContainsKey(id))
+            {
+                quests[id] = new List<QuestData>();
+            }
+            QuestData data = new QuestData(id);
+
+            if (quests[id].Contains(quests[id].Find(d => d.ID == data.ID)))
+            {
+                return null;
+            }
+            quests[id].Add(data);
+            return data;
+        }
 
         /// <summary>
         /// Adds a new objective
@@ -63,7 +85,7 @@ namespace Service.Framework.Goals
             }
         }
 
-        public void MarkObjectiveFailed(QuestID id, string objectiveID, bool markComplete = false)
+        public void MarkObjectiveFailed(QuestID id, string objectiveID, bool failQuest, bool markComplete = false)
         {
             if (!questObjectives.ContainsKey(id))
             {
@@ -82,6 +104,11 @@ namespace Service.Framework.Goals
             if (markComplete)
             {
                 target.IsComplete = true;
+            }
+
+            if (failQuest)
+            {
+                FailQuest(id);
             }
             OnObjectivesChanged.Invoke(id);
         }
@@ -175,6 +202,12 @@ namespace Service.Framework.Goals
             return string.Empty;
         }
 
+        /// <summary>
+        /// Get the objective by its index
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="objectiveIndex"></param>
+        /// <returns></returns>
         public ObjectiveData GetObjective(QuestID id, int objectiveIndex)
         {
             if (!questObjectives.ContainsKey(id))
@@ -190,6 +223,12 @@ namespace Service.Framework.Goals
             return objectives[objectiveIndex];
         }
 
+        /// <summary>
+        /// Get the objective by its ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="objectiveID"></param>
+        /// <returns></returns>
         public ObjectiveData GetObjective(QuestID id, string objectiveID)
         {
             if (string.IsNullOrEmpty(objectiveID))
@@ -215,6 +254,16 @@ namespace Service.Framework.Goals
                 return objectives;
             }
             return null;
+        }
+
+        public QuestData GetQuest(QuestID id)
+        {
+            return quests[id].Find(q => q.ID == id);
+        }
+
+        public void FailQuest(QuestID id)
+        {
+            GetQuest(id).IsFailed = true;
         }
 
         /// <summary>

@@ -14,6 +14,8 @@ namespace Gameplay.UI
         public UnityEvent OnObjectiveAdded = new UnityEvent();
         [Tooltip("Use this event to do effects when the objective is completed.")]
         public UnityEvent OnObjectiveCompleted = new UnityEvent();
+        [Tooltip("Use this event to do effects when the objective fails.")]
+        public UnityEvent OnObjectiveFailed = new UnityEvent();
 
         private string objectiveID;
         public string ObjectiveID
@@ -41,7 +43,8 @@ namespace Gameplay.UI
             OnObjectiveAdded.Invoke();
             objectiveID = data.ID;
             objectiveText.text = data.ObjectiveText;
-            //SetText(data);
+
+            //StartCoroutine(UIEffects.StateDelay(objectiveText.text, data.ObjectiveText));
         }
 
         /// <summary>
@@ -53,40 +56,11 @@ namespace Gameplay.UI
         {
             //can also use this event in the inspector to call your effects
             OnObjectiveCompleted.Invoke();
-
-    ///****NOTE:  Below is some simple coded effects to show completing the objective****///
-            
-            //if we want to hide the text
-            //if (hideComplete)
-            //{
-            //    gameObject.SetActive(false);
-            //}
-            ////if we want to visually complete the text
-            //else
-            //{
-            //    //set the text with a strike through
-            //    objectiveText.text = $"<s>{data.ObjectiveText}</s>";
-            //}
         }
 
-        //private void SetText(ObjectiveData data)
-        //{
-        //    objectiveText.text = data.ObjectiveText;
-
-        //}
-
-        //public void RefreshEntry(ObjectiveData data, bool hideComplete)
-        //{
-        //    //not complete, so just display normal
-        //    if (!data.IsComplete)
-        //    {
-        //        SetText(data);
-        //    }
-        //    //is complete
-        //    else
-        //    {
-        //        CompleteEntry(data, hideComplete);
-        //    }
-        //}
+        public void ObjectiveFailed()
+        {
+            OnObjectiveFailed.Invoke();
+        }
     }
 }

@@ -24,6 +24,10 @@ namespace Gameplay.System.Actions
         [SerializeField]
         private bool isTargettedObjective;
 
+        [Tooltip("Does failing this objective fail the quest?")]
+        [SerializeField]
+        private bool doesFailQuest;
+
         [Tooltip("The objective we want to perma fail.")]
         [SerializeField]
         private UpdateObjectiveLog targetObjective;
@@ -41,11 +45,22 @@ namespace Gameplay.System.Actions
 
         public override void InitializeAction()
         {
-            if (targetObjective == null)
+            if (isTargettedObjective)
             {
-                return;
+                if (targetObjective != null)
+                {
+                    GoalManager.Instance.GoalTracker.MarkObjectiveFailed(ActionQuestID, targetObjective.CreatedObjectiveID, doesFailQuest, isPermaFail);
+                }
             }
-            GoalManager.Instance.GoalTracker.MarkObjectiveFailed(ActionQuestID, targetObjective.CreatedObjectiveID, isPermaFail);
+            else
+            {
+                //TODO:  add ability to fail previous added entry
+            }
+
+            //if (doesFailQuest)
+            //{
+            //    GoalManager.Instance.GoalTracker.FailQuest(ActionQuestID);
+            //}
             OnObjectiveFailed.Invoke();
 
             //if (isPermaFail)

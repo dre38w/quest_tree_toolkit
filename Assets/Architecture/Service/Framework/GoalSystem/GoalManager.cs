@@ -60,6 +60,7 @@ namespace Service.Framework.GoalManagement
         public static void AddGoal(Goal goal)
         {
             Instance.goals.Add(goal);
+            Instance.GoalTracker.AddQuest(goal.questID);
         }
 
         /// <summary>

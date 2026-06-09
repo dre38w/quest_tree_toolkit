@@ -1,12 +1,19 @@
 using Service.Framework;
-using Service.Framework.Goals;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Gameplay.UI
 {
     public class ObjectiveTrackerUI : MonoBehaviour
     {
+        [Tooltip("Use this event to do effects when the objective is added.")]
+        public UnityEvent OnTrackedObjectiveAdded = new UnityEvent();
+        [Tooltip("Use this event to do effects when the objective is completed.")]
+        public UnityEvent OnTrackedObjectiveCompleted = new UnityEvent();
+        [Tooltip("Use this event to do effects when the objective fails.")]
+        public UnityEvent OnTrackedObjectiveFailed = new UnityEvent();
+
         private string objectiveID;
         public string ObjectiveID
         {
@@ -14,8 +21,7 @@ namespace Gameplay.UI
             set { objectiveID = value; }
         }
 
-        private ObjectiveData objectiveData;
-
+        [SerializeField]
         private TMP_Text objectiveText;
         public TMP_Text ObjectiveText => objectiveText;
 
@@ -27,26 +33,27 @@ namespace Gameplay.UI
 
         public void Initialize(ObjectiveData data)
         {
-            objectiveText = GetComponent<TMP_Text>();
+            OnTrackedObjectiveAdded.Invoke();
             objectiveID = data.ID;
-            objectiveData = data;
+            objectiveText.text = data.ObjectiveText;
+            //objectiveData = data;
         }
 
-        public void RefreshObjectives(QuestID id)
-        {
-            if (!objectiveData.IsComplete)
-            {
-                objectiveText.text = objectiveData.ObjectiveText;
-            }
-            else
-            {
-                objectiveText.text = $"<s>{objectiveData.ObjectiveText}</s>";
-            }
-        }
+        //public void RefreshObjectives(QuestID id)
+        //{
+        //    if (!objectiveData.IsComplete)
+        //    {
+        //        objectiveText.text = objectiveData.ObjectiveText;
+        //    }
+        //    else
+        //    {
+        //        objectiveText.text = $"<s>{objectiveData.ObjectiveText}</s>";
+        //    }
+        //}
 
-        public void DestroyObject()
-        {
-            Destroy(gameObject);
-        }
+        //public void DestroyObject()
+        //{
+        //    Destroy(gameObject);
+        //}
     }
 }

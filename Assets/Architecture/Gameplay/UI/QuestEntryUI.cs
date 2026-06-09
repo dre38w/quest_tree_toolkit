@@ -5,7 +5,6 @@
 using Gameplay.System;
 using Service.Framework;
 using Service.Framework.Goals;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -16,6 +15,7 @@ namespace Gameplay.UI
     {
         public UnityEvent OnQuestAdded = new UnityEvent();
         public UnityEvent OnQuestCompleted = new UnityEvent();
+        public UnityEvent OnQuestFailed = new UnityEvent();
 
         [SerializeField]
         private TMP_Text questTitle;
@@ -30,8 +30,6 @@ namespace Gameplay.UI
         [SerializeField]
         private float stateChangeDelay = 0f;
         public float StateChangeDelay => stateChangeDelay;
-
-        //private List<ObjectiveEntryUI> spawnedObjectives = new List<ObjectiveEntryUI>();
 
         private QuestID questID;
 
@@ -56,51 +54,21 @@ namespace Gameplay.UI
             ObjectiveEntryUI newObjective = Instantiate(objectivePrefab, objectivesContent);
             newObjective.Initialize(data);
             return newObjective;
-            //spawnedObjectives.Add(newObjective);
         }
 
+        /// <summary>
+        /// Called via external systems to set the active quest
+        /// </summary>
         public void SetActiveQuest()
         {
             ReferenceRegistry.Instance.MainUI.GetComponent<QuestLogUI>().SetTrackedQuest(questID);
         }
-
-        //public void RefreshObjectives(List<ObjectiveData> objectives, bool hideComplete)
-        //{
-        //    for (int i = 0; i < spawnedObjectives.Count; i++)
-        //    {
-        //        //do some safety checks when completing the objective
-        //        //since there are many ways to handle visually completing the objectives on the ui log
-        //        if (hideComplete && objectives[i].IsComplete)
-        //        {
-        //            //in the event we destroyed the object
-        //            //check null to make sure that's what we did 
-        //            //and then remove it
-        //            if (spawnedObjectives[i] == null)
-        //            {
-        //                spawnedObjectives.RemoveAt(i);
-        //                continue;
-        //            }
-        //        }
-        //        spawnedObjectives[i].RefreshEntry(objectives[i], hideComplete);
-        //    }
-        //}
 
         public void RefreshQuestState(bool isComplete, bool hideComplete)
         {
             if (isComplete)
             {
                 OnQuestCompleted.Invoke();
-
-    ///****NOTE:  Below is some simple coded effects to show completing the quest****///
-
-                //if (hideComplete)
-                //{
-                //    gameObject.SetActive(false);
-                //}
-                //else
-                //{
-                //    questTitle.text = $"<s>{questID.questName}</s>";
-                //}
             }
         }
     }

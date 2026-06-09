@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1902168708026211184}
   - component: {fileID: 1788506802868703622}
   m_Layer: 5
-  m_Name: tracked objective
+  m_Name: TrackedObjectiveEntryUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -150,4 +150,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 636233c9d55126444bd2d0d10d7e2b1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.UI.ObjectiveTrackerUI
+  OnTrackedObjectiveAdded:
+    m_PersistentCalls:
+      m_Calls: []
+  OnTrackedObjectiveCompleted:
+    m_PersistentCalls:
+      m_Calls: []
+  OnTrackedObjectiveFailed:
+    m_PersistentCalls:
+      m_Calls: []
+  objectiveText: {fileID: 1902168708026211184}
   stateChangeDelay: 3

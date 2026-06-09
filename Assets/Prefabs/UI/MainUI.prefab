@@ -220,7 +220,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -301.27, y: 149.71}
+  m_AnchoredPosition: {x: 301.3, y: 149.68}
   m_SizeDelta: {x: 300.6681, y: 208.7201}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7517722149537447125
@@ -1135,6 +1135,7 @@ MonoBehaviour:
   questContent: {fileID: 7772485224642022743}
   questEntryPrefab: {fileID: 79297168729941176, guid: 1c7e52c5552b4f24a8da1314fac5c732, type: 3}
   objectivePrefab: {fileID: 1788506802868703622, guid: c0a9a46a2e3c548468ddc6e8fa727326, type: 3}
+  trackedQuestPrefab: {fileID: 4902811891098680457, guid: dee4527ca6d5f83459d87ef085b13a77, type: 3}
   entryEffects: {fileID: 1748935652755486941}
   objectiveTrackerParent: {fileID: 641459061043273108}
   trackedQuestText: {fileID: 1329185077222786047}

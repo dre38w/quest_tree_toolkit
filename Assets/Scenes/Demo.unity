@@ -488,6 +488,7 @@ MonoBehaviour:
       m_Calls: []
   isPermaFail: 1
   isTargettedObjective: 0
+  doesFailQuest: 0
   targetObjective: {fileID: 238274927}
   completeActionWaitTime: 3
 --- !u!1 &180314094 stripped
@@ -1313,7 +1314,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   isPermaFail: 1
-  isTargettedObjective: 0
+  isTargettedObjective: 1
+  doesFailQuest: 1
   targetObjective: {fileID: 238274927}
   completeActionWaitTime: 3
 --- !u!1001 &446541982
@@ -1324,14 +1326,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 347674713571588873, guid: b1b56145c3a2ed0438079f44ba12d592, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 301.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 347674713571588873, guid: b1b56145c3a2ed0438079f44ba12d592, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 149.68
-      objectReference: {fileID: 0}
     - target: {fileID: 4077192591861258866, guid: b1b56145c3a2ed0438079f44ba12d592, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1425,15 +1419,12 @@ PrefabInstance:
       value: MainUI
       objectReference: {fileID: 0}
     - target: {fileID: 9014071601711174139, guid: b1b56145c3a2ed0438079f44ba12d592, type: 3}
-      propertyPath: hideCompletedQuests
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9014071601711174139, guid: b1b56145c3a2ed0438079f44ba12d592, type: 3}
-      propertyPath: hideCompletedObjectives
-      value: 0
-      objectReference: {fileID: 0}
+      propertyPath: objectiveTrackerParent
+      value: 
+      objectReference: {fileID: 1939689573}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 3959470582299106528, guid: b1b56145c3a2ed0438079f44ba12d592, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1b56145c3a2ed0438079f44ba12d592, type: 3}
@@ -4515,7 +4506,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   isPermaFail: 1
-  isTargettedObjective: 0
+  isTargettedObjective: 1
+  doesFailQuest: 1
   targetObjective: {fileID: 238274927}
   completeActionWaitTime: 3
 --- !u!1 &1734564695
@@ -5152,6 +5144,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 648793983}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!224 &1939689573 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 347674713571588873, guid: b1b56145c3a2ed0438079f44ba12d592, type: 3}
+  m_PrefabInstance: {fileID: 446541982}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1945289049 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 774182441501943353, guid: 2badd9644319b014f880da8205b910c3, type: 3}
