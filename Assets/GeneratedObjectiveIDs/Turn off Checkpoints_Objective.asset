@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dda6d5419ba2c7a43b1f13e3b77a09b2, type: 3}
+  m_Name: Turn off Checkpoints_Objective
+  m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.ObjectiveID
+  ownerID: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-7856037185401922415-3826340092120455699

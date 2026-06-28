@@ -3,6 +3,7 @@
  *              completion status, description, etc.
  */
 
+using Service.Framework.Goals;
 using System;
 using System.Collections.Generic;
 
@@ -10,6 +11,7 @@ namespace Service.Framework
 {
     public class ObjectiveData
     {
+        public ObjectiveID TrackedID;
         public string ID;
         public string ObjectiveText;
         public bool IsComplete;
@@ -21,13 +23,11 @@ namespace Service.Framework
         //if this is a parent objective, reference a list of the IDs of any child objectives
         public List<string> SubObjectivesIDs = new List<string>();
 
-        public ObjectiveData(string textEntry, bool isSubObjective, string parentID = null)
+        public ObjectiveData(string textEntry, bool isSubObjective, string parentID = null, ObjectiveID objectiveID = null)
         {
             //set a unique GUID to allow for easy and foolproof ID marking
-            if (ID == null)
-            {
-                ID = Guid.NewGuid().ToString();
-            }
+            ID = Guid.NewGuid().ToString();
+            TrackedID = objectiveID;
             ObjectiveText = textEntry;
             IsComplete = false;
             IsSubObjective = isSubObjective;

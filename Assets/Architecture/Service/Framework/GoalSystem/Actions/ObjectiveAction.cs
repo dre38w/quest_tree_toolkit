@@ -5,6 +5,12 @@ Description: Base class for all objective actions.
 
 using UnityEngine;
 using UnityEngine.Events;
+using Service.Framework.GoalManagement;
+
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace Service.Framework.Goals
 {
@@ -23,6 +29,15 @@ namespace Service.Framework.Goals
         public OnActionCompleteEvent OnActionCompleted = new OnActionCompleteEvent();
 
         public ActionState State { get; set; } = ActionState.Inactive;
+
+        [Tooltip("Should this objective be added to the tracking database?")]
+        [SerializeField]
+        private bool isTracked;
+        public bool IsTracked => isTracked;
+
+        [SerializeField]
+        private ObjectiveID actionID;
+        public ObjectiveID ActionID => actionID;
 
         /// <summary>
         /// The goal this action is part of
@@ -47,6 +62,76 @@ namespace Service.Framework.Goals
 
         public ObjectiveSubaction ParentSubaction { get; set; }
 
+#if UNITY_EDITOR
+        protected virtual void OnValidate()
+        {
+            if (EditorApplication.isPlayingOrWillChangePlaymode || Application.isPlaying)
+            {
+                return;
+            }
+            if (!isTracked || actionID != null)
+            {
+                return;
+            }
+            string ownerID = GetEditorOwnerID();
+
+            if (string.IsNullOrEmpty(ownerID))
+            {
+                return;
+            }
+
+
+            CreateObjectiveID(ownerID);
+            //if (string.IsNullOrEmpty(actionID))
+            //{
+            //    actionID = Guid.NewGuid().ToString();
+            //    UnityEditor.EditorUtility.SetDirty(this);
+            //}
+        }
+
+        public string GetEditorOwnerID()
+        {
+            GlobalObjectId globalID = GlobalObjectId.GetGlobalObjectIdSlow(this);
+
+            string id = globalID.ToString();
+
+            if (string.IsNullOrEmpty(id) || id.Contains("0000000000000000000"))
+            {
+                return null;
+            }
+            return id;
+        }
+
+        public void CreateObjectiveID(string ownerID)
+        {
+            if (actionID != null)
+            {
+                return;
+            }
+            const string folder = "Assets/GeneratedObjectiveIDs"; //change the path and move the variable
+
+            if (!AssetDatabase.IsValidFolder(folder))
+            {
+                AssetDatabase.CreateFolder("Assets", "GeneratedObjectiveIDs");
+            }
+
+            ObjectiveID newID = ScriptableObject.CreateInstance<ObjectiveID>();
+            newID.SetOwner(ownerID);
+
+            string idName = gameObject.name.Replace("/", "_");
+            string path = AssetDatabase.GenerateUniqueAssetPath($"{folder}/{idName}_Objective.asset");
+
+            AssetDatabase.CreateAsset(newID, path);
+            AssetDatabase.SaveAssets();
+
+            Undo.RecordObject(this, "Create Objectived ID");
+
+            actionID = newID;
+
+            EditorUtility.SetDirty(this);
+        }
+#endif
+
         public virtual void InitializeAction()
         {
             
@@ -70,6 +155,21 @@ namespace Service.Framework.Goals
         public void SetQuestID(QuestID id)
         {
             ActionQuestID = id;
+            RegisterTrackedObjective();
+        }
+
+        protected virtual void RegisterTrackedObjective()
+        {
+            if (!isTracked)
+            {
+                return;
+            }
+            if (actionID == null)
+            {
+                return;
+            }
+
+            GoalManager.Instance.GoalTracker.AddTrackedObjective(ActionQuestID, actionID);
         }
 
         public virtual void ActionUpdate(float deltaTime)
@@ -99,6 +199,11 @@ namespace Service.Framework.Goals
         public virtual void SetComplete()
         {
             isComplete = true;
+
+            if (isTracked && actionID != null)
+            {
+                GoalManager.Instance.GoalTracker.MarkObjectiveComplete(ActionQuestID, actionID);
+            }
 
             SetState(ActionState.Inactive);
             OnActionCompleted.Invoke(this);

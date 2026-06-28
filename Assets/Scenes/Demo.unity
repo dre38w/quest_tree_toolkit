@@ -148,6 +148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbabd57db01b1f24ea72c17c54fd2289, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.MarkObjectiveLogComplete
+  isTracked: 0
+  actionID: {fileID: 0}
   targetObjective: {fileID: 1711634356}
   doesCompleteTargetObjective: 1
   doesCompleteQuest: 0
@@ -262,6 +264,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a4f07eff0964a348b2721cd0a85126f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.PlayTimelineAction
+  isTracked: 0
+  actionID: {fileID: 0}
   timelineDirector: {fileID: 72218485}
   timeline: {fileID: 11400000, guid: d2dae1a1bc8b3db4d81754fe2aeeb37e, type: 2}
 --- !u!1 &85016875
@@ -293,6 +297,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 124a104ac8de25e44904a90ddb0a42d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.ObjectiveSubaction
+  isTracked: 0
+  actionID: {fileID: 0}
   objectiveSubactions:
   - {fileID: 1830694759}
   - {fileID: 2086269011}
@@ -613,6 +619,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbabd57db01b1f24ea72c17c54fd2289, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.MarkObjectiveLogComplete
+  isTracked: 0
+  actionID: {fileID: 0}
   targetObjective: {fileID: 682575713}
   doesCompleteTargetObjective: 1
   doesCompleteQuest: 0
@@ -660,6 +668,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c66841c98d81c7d49bd9697f34e0d1dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.PlayerInteractAction
+  isTracked: 0
+  actionID: {fileID: 0}
   interactableObject: {fileID: 1443308397}
 --- !u!1001 &286189676
 PrefabInstance:
@@ -766,6 +776,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44b1731982b372842a74de6b93eab970, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.ToggleObjectActiveAction
+  isTracked: 0
+  actionID: {fileID: 0}
   objectsToToggle:
   - {fileID: 887249135}
   setObjectActive: 0
@@ -813,6 +825,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c66841c98d81c7d49bd9697f34e0d1dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.PlayerInteractAction
+  isTracked: 0
+  actionID: {fileID: 0}
   interactableObject: {fileID: 201333258}
 --- !u!1 &372159590
 GameObject:
@@ -1002,6 +1016,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 124a104ac8de25e44904a90ddb0a42d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.ObjectiveSubaction
+  isTracked: 0
+  actionID: {fileID: 0}
   objectiveSubactions:
   - {fileID: 350240074}
   - {fileID: 72218486}
@@ -1427,6 +1443,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 124a104ac8de25e44904a90ddb0a42d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.ObjectiveSubaction
+  isTracked: 0
+  actionID: {fileID: 0}
   objectiveSubactions:
   - {fileID: 1428076235}
   - {fileID: 1056128667}
@@ -1483,6 +1501,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3420cffd1f4d124a9fa1f7f5f64e975, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.UpdateObjectiveLog
+  isTracked: 0
+  actionID: {fileID: 0}
   textBox: Power on generator 2
   isSubObjective: 1
   parentObjective: {fileID: 1937457291}
@@ -1530,6 +1550,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d029f6786047ced42961395ae524d59c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.DialogAction
+  isTracked: 0
+  actionID: {fileID: 0}
   dialogBox: Restore power!
   displayText: {fileID: 737914327}
   actionButton: {fileID: 1759032855}
@@ -1589,6 +1611,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44b1731982b372842a74de6b93eab970, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.ToggleObjectActiveAction
+  isTracked: 0
+  actionID: {fileID: 0}
   objectsToToggle:
   - {fileID: 235077218}
   setObjectActive: 0
@@ -1807,6 +1831,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44b1731982b372842a74de6b93eab970, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.ToggleObjectActiveAction
+  isTracked: 0
+  actionID: {fileID: 0}
   objectsToToggle:
   - {fileID: 1043962277}
   setObjectActive: 0
@@ -2092,6 +2118,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbabd57db01b1f24ea72c17c54fd2289, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.MarkObjectiveLogComplete
+  isTracked: 0
+  actionID: {fileID: 0}
   targetObjective: {fileID: 0}
   doesCompleteTargetObjective: 0
   doesCompleteQuest: 1
@@ -2154,6 +2182,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d029f6786047ced42961395ae524d59c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.DialogAction
+  isTracked: 0
+  actionID: {fileID: 0}
   dialogBox: Power restored!
   displayText: {fileID: 737914327}
   actionButton: {fileID: 1759032855}
@@ -2187,6 +2217,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44b1731982b372842a74de6b93eab970, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.ToggleObjectActiveAction
+  isTracked: 0
+  actionID: {fileID: 0}
   objectsToToggle:
   - {fileID: 1272420671}
   - {fileID: 1428388084}
@@ -2278,6 +2310,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a4f07eff0964a348b2721cd0a85126f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.PlayTimelineAction
+  isTracked: 0
+  actionID: {fileID: 0}
   timelineDirector: {fileID: 1021804145}
   timeline: {fileID: 11400000, guid: d2dae1a1bc8b3db4d81754fe2aeeb37e, type: 2}
 --- !u!1 &1039785392
@@ -2309,6 +2343,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dc93f9edafd4584f8b17a024a20fee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.DelayCompleteAction
+  isTracked: 0
+  actionID: {fileID: 0}
   delayDuration: 3
 --- !u!4 &1039785394
 Transform:
@@ -2364,6 +2400,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 124a104ac8de25e44904a90ddb0a42d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.ObjectiveSubaction
+  isTracked: 0
+  actionID: {fileID: 0}
   objectiveSubactions:
   - {fileID: 1251860214}
   - {fileID: 2001329804}
@@ -2493,6 +2531,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44b1731982b372842a74de6b93eab970, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.ToggleObjectActiveAction
+  isTracked: 0
+  actionID: {fileID: 0}
   objectsToToggle:
   - {fileID: 1043962277}
   setObjectActive: 1
@@ -2545,6 +2585,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44b1731982b372842a74de6b93eab970, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.ToggleObjectActiveAction
+  isTracked: 0
+  actionID: {fileID: 0}
   objectsToToggle:
   - {fileID: 1043962277}
   setObjectActive: 0
@@ -2602,6 +2644,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c66841c98d81c7d49bd9697f34e0d1dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.PlayerInteractAction
+  isTracked: 0
+  actionID: {fileID: 0}
   interactableObject: {fileID: 1448856763}
 --- !u!1 &1230544086
 GameObject:
@@ -2742,6 +2786,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 124a104ac8de25e44904a90ddb0a42d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.ObjectiveSubaction
+  isTracked: 0
+  actionID: {fileID: 0}
   objectiveSubactions:
   - {fileID: 1213192834}
   - {fileID: 2132660907}
@@ -2803,6 +2849,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dc76c22c53c5fa41bc584d3a4d372f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.TogglePlayerControlAction
+  isTracked: 0
+  actionID: {fileID: 0}
   playerHasControl: 0
   isCursorLocked: 0
 --- !u!1 &1428388084 stripped
@@ -3082,6 +3130,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dc76c22c53c5fa41bc584d3a4d372f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.TogglePlayerControlAction
+  isTracked: 0
+  actionID: {fileID: 0}
   playerHasControl: 1
   isCursorLocked: 1
 --- !u!1 &1606827284
@@ -3128,6 +3178,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3420cffd1f4d124a9fa1f7f5f64e975, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.UpdateObjectiveLog
+  isTracked: 0
+  actionID: {fileID: 0}
   textBox: Power on generator 1
   isSubObjective: 1
   parentObjective: {fileID: 1937457291}
@@ -3315,6 +3367,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3420cffd1f4d124a9fa1f7f5f64e975, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.UpdateObjectiveLog
+  isTracked: 0
+  actionID: {fileID: 0}
   textBox: Power on generator 3
   isSubObjective: 1
   parentObjective: {fileID: 1937457291}
@@ -3382,6 +3436,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44b1731982b372842a74de6b93eab970, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.ToggleObjectActiveAction
+  isTracked: 0
+  actionID: {fileID: 0}
   objectsToToggle:
   - {fileID: 1272420671}
   - {fileID: 1428388084}
@@ -3463,6 +3519,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a2a217c15c865648bfa9be0093435cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.UI.ButtonMessenger
+--- !u!1 &1783719656
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1783719658}
+  - component: {fileID: 1783719657}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1783719657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1783719656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdc5d9c57ad7ad742b17f9e747bb679d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RecallTest
+  questID: {fileID: 11400000, guid: 32b57a814f7187647b9f8ceba0b0d4be, type: 2}
+  goalID: {fileID: 11400000, guid: c883ea5f1a158f74da730946910aa516, type: 2}
+  objectiveID: {fileID: 11400000, guid: 5d80ff632556c9b40a8b26e50b94a80b, type: 2}
+--- !u!4 &1783719658
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1783719656}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.06416, y: -1.9844, z: 7.67347}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1826029698
 GameObject:
   m_ObjectHideFlags: 0
@@ -3597,6 +3700,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dc76c22c53c5fa41bc584d3a4d372f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.TogglePlayerControlAction
+  isTracked: 0
+  actionID: {fileID: 0}
   playerHasControl: 0
   isCursorLocked: 0
 --- !u!1 &1833265910
@@ -3643,6 +3748,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dc76c22c53c5fa41bc584d3a4d372f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.TogglePlayerControlAction
+  isTracked: 0
+  actionID: {fileID: 0}
   playerHasControl: 1
   isCursorLocked: 1
 --- !u!1 &1863881502
@@ -3843,6 +3950,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3420cffd1f4d124a9fa1f7f5f64e975, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.UpdateObjectiveLog
+  isTracked: 0
+  actionID: {fileID: 0}
   textBox: Power on all 3 generators
   isSubObjective: 0
   parentObjective: {fileID: 0}
@@ -3915,6 +4024,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44b1731982b372842a74de6b93eab970, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.ToggleObjectActiveAction
+  isTracked: 0
+  actionID: {fileID: 0}
   objectsToToggle:
   - {fileID: 216597643}
   setObjectActive: 0
@@ -3978,6 +4089,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 124a104ac8de25e44904a90ddb0a42d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.ObjectiveSubaction
+  isTracked: 0
+  actionID: {fileID: 0}
   objectiveSubactions:
   - {fileID: 278286533}
   - {fileID: 1021804146}
@@ -4029,6 +4142,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbabd57db01b1f24ea72c17c54fd2289, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gameplay.System.Actions.MarkObjectiveLogComplete
+  isTracked: 0
+  actionID: {fileID: 0}
   targetObjective: {fileID: 1606827286}
   doesCompleteTargetObjective: 1
   doesCompleteQuest: 0
@@ -4076,6 +4191,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44b1731982b372842a74de6b93eab970, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.ToggleObjectActiveAction
+  isTracked: 0
+  actionID: {fileID: 0}
   objectsToToggle:
   - {fileID: 1043962277}
   setObjectActive: 1
@@ -4148,6 +4265,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a4f07eff0964a348b2721cd0a85126f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Service.Framework.Goals.PlayTimelineAction
+  isTracked: 0
+  actionID: {fileID: 0}
   timelineDirector: {fileID: 2132660906}
   timeline: {fileID: 11400000, guid: d2dae1a1bc8b3db4d81754fe2aeeb37e, type: 2}
 --- !u!1001 &487443702126007408
@@ -4335,6 +4454,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8031279147680333343, guid: 97b6b05b77c28ec4da5e59d2d05994cd, type: 3}
+      propertyPath: actionID
+      value: 
+      objectReference: {fileID: 11400000, guid: 702f3604c9252a4478cd172860ea07fc, type: 2}
+    - target: {fileID: 8031279147680333343, guid: 97b6b05b77c28ec4da5e59d2d05994cd, type: 3}
+      propertyPath: isTracked
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8970835636176052357, guid: 97b6b05b77c28ec4da5e59d2d05994cd, type: 3}
       propertyPath: m_Name
       value: Lost cat mission
@@ -4501,6 +4628,22 @@ PrefabInstance:
     - target: {fileID: 6372572512249301427, guid: 10dc77ca32b3b464c8237a76e65be627, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6621378805538968894, guid: 10dc77ca32b3b464c8237a76e65be627, type: 3}
+      propertyPath: actionID
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6621378805538968894, guid: 10dc77ca32b3b464c8237a76e65be627, type: 3}
+      propertyPath: isTracked
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7856037185401922415, guid: 10dc77ca32b3b464c8237a76e65be627, type: 3}
+      propertyPath: actionID
+      value: 
+      objectReference: {fileID: 11400000, guid: 5d80ff632556c9b40a8b26e50b94a80b, type: 2}
+    - target: {fileID: 7856037185401922415, guid: 10dc77ca32b3b464c8237a76e65be627, type: 3}
+      propertyPath: isTracked
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9054943707357017364, guid: 10dc77ca32b3b464c8237a76e65be627, type: 3}
       propertyPath: m_Name
@@ -4782,3 +4925,4 @@ SceneRoots:
   - {fileID: 446541982}
   - {fileID: 586743011}
   - {fileID: 780331974}
+  - {fileID: 1783719658}

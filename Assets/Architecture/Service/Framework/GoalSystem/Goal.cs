@@ -84,6 +84,7 @@ namespace Service.Framework.Goals
             for (int actionIndex = 0; actionIndex < objectiveActions.Count; actionIndex++)
             {
                 objectiveActions[actionIndex].OnActionCompleted.AddListener(CheckActionsComplete);
+                //set the quest that the objectives are part of
                 objectiveActions[actionIndex].SetQuestID(questID);
             }
         }
@@ -223,6 +224,8 @@ namespace Service.Framework.Goals
         public virtual void SetComplete()
         {
             isComplete = true;
+            //ensure the database is updated
+            GoalManager.Instance.GoalTracker.GetGoal(goalID).IsComplete = true;
             OnCompleteGoal.Invoke(this);
         }
 

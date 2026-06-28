@@ -44,6 +44,7 @@ namespace Service.Framework.GoalManagement
             }
             Instance = this;
 
+            //create database instances
             BlackBoard = new GoalBlackboard();
             GoalTracker = new GoalTrackerDatabase();
         }
@@ -60,6 +61,7 @@ namespace Service.Framework.GoalManagement
         public static void AddGoal(Goal goal)
         {
             Instance.goals.Add(goal);
+            Instance.GoalTracker.AddGoal(goal.goalID);
             Instance.GoalTracker.AddQuest(goal.questID);
         }
 
