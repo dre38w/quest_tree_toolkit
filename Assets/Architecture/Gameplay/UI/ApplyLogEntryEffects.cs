@@ -50,7 +50,6 @@ namespace Gameplay.UI
         /// <param name="data"></param>
         public void ApplyTrackedObjectiveNormal(ObjectiveTrackerUI entry, ObjectiveData data)
         {
-            //entry.gameObject.SetActive(true);
             entry.ObjectiveText.text = data.ObjectiveText;
         }
 

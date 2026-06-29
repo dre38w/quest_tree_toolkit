@@ -15,6 +15,7 @@ namespace Service.Framework.Goals
 
         public override void InitializeAction()
         {
+            //run the delay
             StartCoroutine(DelayAction());
         }
 

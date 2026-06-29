@@ -1,3 +1,6 @@
+/*
+ * Description: The ID used to references a past action
+ */
 using UnityEngine;
 
 namespace Service.Framework.Goals

@@ -48,6 +48,10 @@ namespace Gameplay.System.Player
             }
         }
 
+        /// <summary>
+        /// Do stuff when pressing the interact button
+        /// </summary>
+        /// <param name="context"></param>
         protected virtual void OnInteract(InputAction.CallbackContext context)
         {
             if (context.started)

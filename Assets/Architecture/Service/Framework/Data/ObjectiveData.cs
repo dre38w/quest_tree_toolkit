@@ -11,6 +11,9 @@ namespace Service.Framework
 {
     public class ObjectiveData
     {
+        /// <summary>
+        /// The SO ID used for gameplay such as referencing a past action, etc.
+        /// </summary>
         public ObjectiveID TrackedID;
         public string ID;
         public string ObjectiveText;

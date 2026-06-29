@@ -9,7 +9,7 @@ namespace Service.Framework
     public interface IInteractable
     {
         /// <summary>
-        /// 
+        /// Used to determine whether or not the interactable object is currently able to be interacted with
         /// </summary>
         /// <param name="interactor"></param>
         /// <returns></returns>

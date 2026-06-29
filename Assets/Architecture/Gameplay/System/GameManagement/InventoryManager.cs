@@ -20,7 +20,7 @@ namespace Gameplay.System.GameManagement
             set { questItems = value; }
         }
 
-        //generic list of inventory items that can be used in future
+        //generic list of inventory items
         private List<GameObject> inventoryItems = new List<GameObject>();
 
         private void Awake()

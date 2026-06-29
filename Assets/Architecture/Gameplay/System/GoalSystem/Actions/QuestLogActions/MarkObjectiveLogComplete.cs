@@ -23,13 +23,17 @@ namespace Gameplay.System.Actions
         [SerializeField]
         private bool doesCompleteQuest;
 
+        [Tooltip("If this is a parent objective, does it complete itself after completing all sub objectives?")]
+        [SerializeField]
+        private bool doesCompleteViaSubObjectives = true;
+
         public override void InitializeAction()
         {
             if (doesCompleteTargetObjective)
             {
                 if (targetObjective != null)
                 {
-                    GoalManager.Instance.GoalTracker.MarkObjectiveComplete(ActionQuestID, targetObjective.CreatedObjectiveID);
+                    GoalManager.Instance.GoalTracker.MarkObjectiveComplete(ActionQuestID, targetObjective.CreatedObjectiveID, doesCompleteViaSubObjectives);
                 }
             }
             else

@@ -10,9 +10,6 @@ namespace Gameplay.System.Actions
     [Submenu("Quest Log Management/Fail Objective")]
     public class FailObjectiveAction : ObjectiveAction
     {
-        /*
-         * TODO:  add the ability to fail last added objective
-         */
         public UnityEvent OnObjectiveFailed = new UnityEvent();
         public UnityEvent OnObjectiveRestart = new UnityEvent();
 
@@ -47,14 +44,16 @@ namespace Gameplay.System.Actions
         {
             if (isTargettedObjective)
             {
+                //mark target objective 
                 if (targetObjective != null)
                 {
                     GoalManager.Instance.GoalTracker.MarkObjectiveFailed(ActionQuestID, targetObjective.CreatedObjectiveID, doesFailQuest, isPermaFail);
                 }
             }
+            //mark the previously added objective
             else
             {
-                //TODO:  add ability to fail previous added entry
+                GoalManager.Instance.GoalTracker.FailLatestObjective(ActionQuestID);
             }
 
             OnObjectiveFailed.Invoke();

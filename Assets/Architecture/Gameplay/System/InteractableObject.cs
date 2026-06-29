@@ -52,6 +52,7 @@ namespace Gameplay.System
             mainUI = ReferenceRegistry.Instance.MainUI;
             interactor = ReferenceRegistry.Instance.Player.GetComponent<PlayerInteractor>();
 
+            //fires when the player performs the action that triggers the interaction
             interactor.OnInteracted.AddListener(OnPlayerInteracted);
 
             interactableObject.OnEnteredTriggerObject.AddListener(OnInteracting);

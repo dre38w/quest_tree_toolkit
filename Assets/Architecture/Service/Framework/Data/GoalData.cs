@@ -1,3 +1,6 @@
+/*
+ * Description: Holds data relevent to the Goal class
+ */
 using Service.Framework.Goals;
 
 namespace Service.Framework

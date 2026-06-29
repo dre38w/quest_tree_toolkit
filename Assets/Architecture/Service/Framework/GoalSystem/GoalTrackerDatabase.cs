@@ -12,10 +12,13 @@ namespace Service.Framework.Goals
     {
         public UnityEvent<QuestID> OnObjectivesChanged = new UnityEvent<QuestID>();
 
+        /// <summary>
+        /// Dictionaries that hold the backend data
+        /// </summary>
         private Dictionary<QuestID, List<QuestData>> quests = new Dictionary<QuestID, List<QuestData>>();
         private Dictionary<GoalID, List<GoalData>> goals = new Dictionary<GoalID, List<GoalData>>();
         private Dictionary<QuestID, List<ObjectiveData>> questObjectives = new Dictionary<QuestID, List<ObjectiveData>>();
-        private Dictionary<QuestID, Dictionary<ObjectiveID, ObjectiveData>> trackedObjectives = new Dictionary<QuestID, Dictionary<ObjectiveID, ObjectiveData>>();
+        private Dictionary<QuestID, Dictionary<ObjectiveID, ObjectiveData>> recordedObjectives = new Dictionary<QuestID, Dictionary<ObjectiveID, ObjectiveData>>();
         private Dictionary<QuestID, bool> questCompletion = new Dictionary<QuestID, bool>();
 
         /// <summary>
@@ -25,38 +28,31 @@ namespace Service.Framework.Goals
         /// <returns></returns>
         public QuestData AddQuest(QuestID id)
         {
+            //if it doesn't exist, create a list to place it in
             if (!quests.TryGetValue(id, out List<QuestData> questList))
             {
                 questList = new List<QuestData>();
                 quests[id] = questList;
             }
 
+            //check to see if we already added this quest
             if (questList.Any(q => q.ID == id))
             {
                 return null;
             }
 
+            //no quest was found, so create one
             QuestData data = new QuestData(id);
             questList.Add(data);
 
-
-            //create a new one if not yet created
-            //if (!quests.ContainsKey(id))
-            //{
-            //    quests[id] = new List<QuestData>();
-            //}
-            //QuestData data = new QuestData(id);
-
-            ////if we find this already exists, early exit
-            //if (quests[id].Contains(quests[id].Find(d => d.ID == data.ID)))
-            //{
-            //    return null;
-            //}
-            ////add the new quest
-            //quests[id].Add(data);
             return data;
         }
 
+        /// <summary>
+        /// Add a goal
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public GoalData AddGoal(GoalID id)
         {
             if (!goals.TryGetValue(id, out List<GoalData> goalList))
@@ -69,38 +65,12 @@ namespace Service.Framework.Goals
             {
                 return null;
             }
+            //no matching goal was found, create one
             GoalData data = new GoalData(id);
             goalList.Add(data);
 
             return data;
         }
-
-        //public ObjectiveData AddObjective(QuestID questID, ObjectiveID objectiveID)
-        //{
-        //    if (objectiveID == null)
-        //    {
-        //        return null;
-        //    }
-
-        //    if (!questObjectives.TryGetValue(questID, out List<ObjectiveData> objectives))
-        //    {
-        //        objectives = new List<ObjectiveData>();
-        //        questObjectives[questID] = objectives;
-        //    }
-
-        //    ObjectiveData existingData = objectives.Find(o => o.TrackedID == objectiveID);
-
-        //    if (existingData != null)
-        //    {
-        //        return existingData;
-        //    }
-
-        //    ObjectiveData data = new ObjectiveData(textEntry: "", isSubObjective: false, parentID: null, objectiveID);
-            
-        //    objectives.Add(data);
-
-        //    return data;
-        //}
 
         /// <summary>
         /// Adds a new objective
@@ -109,71 +79,25 @@ namespace Service.Framework.Goals
         /// <param name="objectiveText">The text we want to access for more front end gameplay</param>
         public ObjectiveData AddObjective(QuestID id, string objectiveText, bool isSubObjective, string parentID = null, ObjectiveID objectiveID = null)
         {
-            //if (!questObjectives.TryGetValue(id, out List<ObjectiveData> objectives))
-            //{
-            //    objectives = new List<ObjectiveData>();
-            //    questObjectives[id] = objectives;
-            //}
-            //ObjectiveData data = null;
-
-            //if (objectiveID != null)
-            //{
-            //    Dictionary<ObjectiveID, ObjectiveData> trackedMap = GetTrackedObjectiveMap(id);
-            //    trackedMap.TryGetValue(objectiveID, out data);
-            //}
-
-            //if (data == null)
-            //{
-            //    data = new ObjectiveData(objectiveText, isSubObjective, parentID, objectiveID);
-            //}
-            //else
-            //{
-            //    data.ObjectiveText = objectiveText;
-            //    data.IsSubObjective = isSubObjective;
-            //    data.ParentObjectiveID = parentID;
-
-            //    if (data.TrackedID == null)
-            //    {
-            //        data.TrackedID = objectiveID;
-            //    }
-            //}
-
-            //if (!objectives.Contains(data))
-            //{
-            //    objectives.Add(data);
-            //}
-
-            //if (objectiveID != null)
-            //{
-            //    Dictionary<ObjectiveID, ObjectiveData> trackedMap = GetTrackedObjectiveMap(id);
-            //    trackedMap[objectiveID] = data;
-            //}
-
-            //if (isSubObjective && !string.IsNullOrEmpty(parentID))
-            //{
-            //    ObjectiveData parentObjective = objectives.Find(o => o.ID == parentID);
-
-            //    if (parentObjective != null && !parentObjective.SubObjectivesIDs.Contains(data.ID))
-            //    {
-            //        parentObjective.SubObjectivesIDs.Add(data.ID);
-            //    }
-            //}
-            //OnObjectivesChanged.Invoke(id);
-            //return data;
-
+            //no list of quest objectives was found, so create one
             if (!questObjectives.ContainsKey(id))
             {
                 questObjectives[id] = new List<ObjectiveData>();
             }
 
+            //create a new data instance
             ObjectiveData data = new ObjectiveData(objectiveText, isSubObjective, parentID, objectiveID);
 
+            //add to the new one to the dictionary
             questObjectives[id].Add(data);
 
+            //handle sub objectives
             if (isSubObjective && parentID != null)
             {
+                //find the objective this is a child of
                 ObjectiveData baseObjective = questObjectives[id].Find(b => b.ID == parentID);
 
+                //add this objective's id to the parent's list of sub objectives to properly track
                 if (baseObjective != null)
                 {
                     baseObjective.SubObjectivesIDs.Add(data.ID);
@@ -184,39 +108,32 @@ namespace Service.Framework.Goals
             return data;
         }
 
-        public ObjectiveData AddTrackedObjective(QuestID questID, ObjectiveID objectiveID)
+        /// <summary>
+        /// Adds a recorded objective 
+        /// </summary>
+        /// <param name="questID"></param>
+        /// <param name="objectiveID"></param>
+        /// <returns></returns>
+        public ObjectiveData AddRecordedObjective(QuestID questID, ObjectiveID objectiveID)
         {
             if (objectiveID == null)
             {
                 return null;
             }
 
-            if (!trackedObjectives.TryGetValue(questID, out Dictionary<ObjectiveID, ObjectiveData> objectiveMap))
+            if (!recordedObjectives.TryGetValue(questID, out Dictionary<ObjectiveID, ObjectiveData> objectiveMap))
             {
                 objectiveMap = new Dictionary<ObjectiveID, ObjectiveData>();
-                trackedObjectives[questID] = objectiveMap;
+                recordedObjectives[questID] = objectiveMap;
             }
             if (objectiveMap.TryGetValue(objectiveID, out ObjectiveData existingData))
             {
                 return existingData;
             }
-            //ObjectiveData existingData = objectiveMap.Find(o => o.TrackedID == objectiveID);
-            //if (existingData != null)
-            //{
-            //    return existingData;
-            //}
-
-
-            //Dictionary<ObjectiveID, ObjectiveData> trackedMap = GetTrackedObjectiveMap(questID);
-
-            //if (trackedMap.TryGetValue(objectiveID, out ObjectiveData existingData))
-            //{
-            //    return existingData;
-            //}
 
             ObjectiveData data = new ObjectiveData(textEntry: string.Empty, isSubObjective: false, parentID: null, objectiveID: objectiveID);
-            //trackedMap[objectiveID] = data;
             objectiveMap.Add(objectiveID, data);
+
             return data;
         }
 
@@ -233,6 +150,13 @@ namespace Service.Framework.Goals
             }
         }
 
+        /// <summary>
+        /// Used to fail an objective that is displayed via UI
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="objectiveID"></param>
+        /// <param name="failQuest"></param>
+        /// <param name="markComplete"></param>
         public void MarkObjectiveFailed(QuestID id, string objectiveID, bool failQuest, bool markComplete = false)
         {
             if (!questObjectives.ContainsKey(id))
@@ -262,6 +186,13 @@ namespace Service.Framework.Goals
             OnObjectivesChanged.Invoke(id);
         }
 
+        /// <summary>
+        /// Used to set the fail state of a backend recorded objective action
+        /// </summary>
+        /// <param name="questID"></param>
+        /// <param name="objectiveID"></param>
+        /// <param name="failQuest"></param>
+        /// <param name="markComplete"></param>
         public void MarkObjectiveFailed(QuestID questID, ObjectiveID objectiveID, bool failQuest, bool markComplete = false)
         {
             ObjectiveData target = GetObjective(questID, objectiveID);
@@ -280,6 +211,24 @@ namespace Service.Framework.Goals
             if (failQuest)
             {
                 FailQuest(questID);
+            }
+        }
+
+        /// <summary>
+        /// Fail the previously added objective
+        /// </summary>
+        /// <param name="id"></param>
+        public void FailLatestObjective(QuestID id)
+        {
+            if (questObjectives.ContainsKey(id))
+            {
+                List<ObjectiveData> objectives = questObjectives[id];
+
+                if (objectives.Count > 0)
+                {
+                    objectives[objectives.Count - 1].IsFailed = true;
+                    OnObjectivesChanged.Invoke(id);
+                }
             }
         }
 
@@ -313,15 +262,17 @@ namespace Service.Framework.Goals
         /// </summary>
         /// <param name="id"></param>
         /// <param name="objectiveIndex"></param>
-        public void MarkObjectiveComplete(QuestID id, string objectiveID)
+        public void MarkObjectiveComplete(QuestID id, string objectiveID, bool subObjectivesComplete)
         {
             if (!questObjectives.ContainsKey(id))
             {
                 return;
             }
+            //find the target objective
             List<ObjectiveData> dataList = questObjectives[id];
             ObjectiveData target = dataList.Find(o => o.ID == objectiveID);
 
+            //early out if there is no target to handle
             if (target == null)
             {
                 return;
@@ -329,7 +280,8 @@ namespace Service.Framework.Goals
             target.IsComplete = true;
             target.IsFailed = false;
 
-            if (target.IsSubObjective && !string.IsNullOrEmpty(target.ParentObjectiveID))
+            //handle auto completing a parent objective
+            if (target.IsSubObjective && !string.IsNullOrEmpty(target.ParentObjectiveID) && subObjectivesComplete)
             {
                 ObjectiveData parentObjective = dataList.Find(p => p.ID == target.ParentObjectiveID);
 
@@ -342,6 +294,11 @@ namespace Service.Framework.Goals
             OnObjectivesChanged.Invoke(id);
         }
 
+        /// <summary>
+        /// Overload that handles completing a recorded objective
+        /// </summary>
+        /// <param name="questID"></param>
+        /// <param name="objectiveID"></param>
         public void MarkObjectiveComplete(QuestID questID, ObjectiveID objectiveID)
         {
             ObjectiveData target = GetObjective(questID, objectiveID);
@@ -355,7 +312,7 @@ namespace Service.Framework.Goals
             target.IsFailed = false;
 
             //OnObjectivesChanged.Invoke(questID);
-        }
+        }        
 
         /// <summary>
         /// Completes the previously added objective.
@@ -377,18 +334,8 @@ namespace Service.Framework.Goals
             }
         }
 
-        private Dictionary<ObjectiveID, ObjectiveData> GetTrackedObjectiveMap(QuestID id)
-        {
-            if (!trackedObjectives.TryGetValue(id, out Dictionary<ObjectiveID, ObjectiveData> map))
-            {
-                map = new Dictionary<ObjectiveID, ObjectiveData>();
-                trackedObjectives[id] = map;
-            }
-            return map;
-        }
-
         /// <summary>
-        /// Get a reference to a specific objective entry.
+        /// Get a reference to a specific objective text entry.
         /// Useful for 'recalling' a past event
         /// </summary>
         /// <param name="id"></param>
@@ -398,11 +345,22 @@ namespace Service.Framework.Goals
         {
             if (questObjectives.ContainsKey(id))
             {
-                return questObjectives[id][objectiveIndex].ObjectiveText;
+                string objectiveText = questObjectives[id][objectiveIndex].ObjectiveText;
+
+                if (!string.IsNullOrEmpty(objectiveText))
+                {
+                    return objectiveText;
+                }
             }
             return string.Empty;
         }
 
+        /// <summary>
+        /// Get a reference to a specific recorded objective.
+        /// </summary>
+        /// <param name="questID"></param>
+        /// <param name="objectiveID"></param>
+        /// <returns></returns>
         public ObjectiveData GetObjective(QuestID questID, ObjectiveID objectiveID)
         {
             if (objectiveID == null)
@@ -410,13 +368,14 @@ namespace Service.Framework.Goals
                 return null;
             }
 
-            if (!trackedObjectives.TryGetValue(questID, out Dictionary<ObjectiveID, ObjectiveData> objectiveMap))
+            //if the recorded objective map doesn't exist, early out
+            if (!recordedObjectives.TryGetValue(questID, out Dictionary<ObjectiveID, ObjectiveData> objectiveMap))
             {
                 return null;
             }
+            //try to get the objective's data within that map
             objectiveMap.TryGetValue(objectiveID, out ObjectiveData data);
             return data;
-            //return objectives.Find(o => o.TrackedID == objectiveID);
         }
 
         /// <summary>
@@ -441,7 +400,7 @@ namespace Service.Framework.Goals
         }
 
         /// <summary>
-        /// Get the objective by its ID
+        /// Get the objective by its GUID
         /// </summary>
         /// <param name="id"></param>
         /// <param name="objectiveID"></param>
@@ -473,16 +432,30 @@ namespace Service.Framework.Goals
             return null;
         }
 
+        /// <summary>
+        /// Find a specific quest
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public QuestData GetQuest(QuestID id)
         {
             return quests[id].Find(q => q.ID == id);
         }
 
+        /// <summary>
+        /// Find a specific goal
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public GoalData GetGoal(GoalID id)
         {
             return goals[id].Find(g => g.ID == id);
         }
 
+        /// <summary>
+        /// Set a quest as failed
+        /// </summary>
+        /// <param name="id"></param>
         public void FailQuest(QuestID id)
         {
             GetQuest(id).IsFailed = true;

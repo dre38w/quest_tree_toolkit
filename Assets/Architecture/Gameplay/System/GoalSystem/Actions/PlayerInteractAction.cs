@@ -16,6 +16,7 @@ namespace Gameplay.System.Actions
 
         public override void InitializeAction()
         {
+            //when the player performed the action that triggers the interaction
             interactableObject.OnInteracted.AddListener(OnPlayerInteracted);
         }
 

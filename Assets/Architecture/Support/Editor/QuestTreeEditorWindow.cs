@@ -403,7 +403,26 @@ namespace Support.Editor
             DrawNestedActionsList();
 
             EditorGUILayout.EndScrollView();
+
+            DrawCenterPanelFooter();
+
             EditorGUILayout.EndVertical();
+        }
+
+        /// <summary>
+        /// Draw the footer
+        /// </summary>
+        private void DrawCenterPanelFooter()
+        {
+            EditorGUILayout.BeginHorizontal(EditorStyles.helpBox);
+            GUILayout.FlexibleSpace();
+
+            //create a button to validate any invalid objective IDs
+            if (GUILayout.Button("Validate Objective IDs", GUILayout.Width(170)))
+            {
+                ValidateObjectiveIDs();
+            }
+            EditorGUILayout.EndHorizontal();
         }
 
         /// <summary>
@@ -1206,6 +1225,30 @@ namespace Support.Editor
             isRebuildGoalList = true;
         }
         #endregion
+
+        /// <summary>
+        /// Validate the objective ID ownership to ensure no game objects share the same ID
+        /// </summary>
+        private void ValidateObjectiveIDs()
+        {
+            ObjectiveAction[] actions = UnityEngine.Object.FindObjectsByType<ObjectiveAction>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            
+            int objectCount = 0;
+
+            foreach (ObjectiveAction action in actions)
+            {
+                if (action == null)
+                {
+                    continue;
+                }
+                //is this a valid ID owner?
+                if (action.IsObjectiveIdOwnerInvalid())
+                {
+                    objectCount++;
+                }
+            }
+            Debug.Log($"Validated Objective IDs.  {objectCount} ObjectiveActions were fixed.");
+        }
 
         /// <summary>
         /// If the hiearchy is updated, make sure the tool syncs
